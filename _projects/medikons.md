@@ -17,6 +17,8 @@ category: community
 
 >[***Medikons App link***](https://www.medikons.com "Your AI Health Assistant")
 
+## 💤 Project currently not active 
+
 # 🌎 Overview 
 
 Medikons is an Albanian-language AI health assistant that simplifies clinical test results, enabling Albanian-speaking users to understand their health data and access specialist recommendations. Focused on bridging public health data gaps in Albania and Kosovo, Medikons provides secure data storage and promotes health awareness.
