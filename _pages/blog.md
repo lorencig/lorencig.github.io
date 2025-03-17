@@ -23,7 +23,7 @@ nav_order: 3
 {: .block-tip }
 
 > ##### 26/02/2025
-> ###### Is God part of the Universe?
+> ##### Is God part of the Universe?
 > 
 >
 > If yes, when the Universe will be destroyed (see "Heat death"), will also the God destroyed?
