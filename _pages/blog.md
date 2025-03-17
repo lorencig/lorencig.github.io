@@ -29,7 +29,7 @@ nav_order: 3
 > There is a slight chance that the questions are intentionally wrong.
 {: .block-tip }
 
-> ##### 31/08/2025
+> ##### 31/08/2024
 >
 > Considering the true event itself as an independent constant without a unit.
 >
@@ -39,7 +39,7 @@ nav_order: 3
 > b) using this scale of measurement, religious scriptures, and other philosophical teachings become more relevant in daily life as their mystical elements diminish.
 {: .block-tip }
 
-> ##### 31/07/2025
+> ##### 31/07/2024
 >
 > Whenever truth is discussed, relativity is used as a counterargument for the existence of an achievable objective truth.
 >
