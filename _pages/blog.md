@@ -9,22 +9,28 @@ nav_order: 3
 > ##### 16/03/2025
 >
 > Illusion is the proof of sense limitations.
+> 
 > Imagination is the proof of the mind's unbounded spectrum.
+> 
 > As such, non-superficial questions require senseless (theoretical) thinking, or as God thinks, as Him a sentient being without organ of senses.
 {: .block-tip }
 
 > ##### 28/02/2025
 >
-> If entropy is chaos, then love is the anti-entropy. 
+> If entropy is chaos, then love is the anti-entropy.
+> 
 > As love is the nature of true order.
 {: .block-tip }
 
 > ##### 26/02/2025
-> Is God part of the Universe?
+> #### Is God part of the Universe?
+> 
 >
 > If yes, when the Universe will be destroyed (see "Heat death"), will also the God destroyed?
+> 
 > If not, how do we communicate with the outer Universe?
 >
+> 
 > There is a slight chance that the questions are intentionally wrong.
 {: .block-tip }
 
@@ -35,6 +41,7 @@ nav_order: 3
 > The narrative about the event may have only binary results (tending towards true/false) with <u>time as the unit</u>.
 > 
 > a) a recent narrative about an event, even if it is absolutely true, is not as reliable as an older narrative that has stayed true over time. ("some infinities are bigger than others" Cantor)
+> 
 > b) using this scale of measurement, religious scriptures, and other philosophical teachings become more relevant in daily life as their mystical elements diminish.
 {: .block-tip }
 
