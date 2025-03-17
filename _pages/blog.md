@@ -21,7 +21,7 @@ nav_order: 3
 
 > ##### 26/02/2025
 >
-> ***Is God part of the Universe?***
+> **Is God part of the Universe?**
 >
 > If yes, when the Universe will be destroyed (see "Heat death"), will also the God destroyed?
 > If not, how do we communicate with the outer Universe?
@@ -33,7 +33,7 @@ nav_order: 3
 >
 > Considering the true event itself as an independent constant without a unit.
 >
-> The narrative about the event may have only binary results (tending towards true/false) with ***time as the unit***.
+> The narrative about the event may have only binary results (tending towards true/false) with **time as the unit**.
 > 
 > a) a recent narrative about an event, even if it is absolutely true, is not as reliable as an older narrative that has stayed true over time. ("some infinities are bigger than others" Cantor)
 > b) using this scale of measurement, religious scriptures, and other philosophical teachings become more relevant in daily life as their mystical elements diminish.
