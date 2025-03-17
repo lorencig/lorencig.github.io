@@ -19,7 +19,7 @@ nav_order: 3
 >
 > If entropy is chaos, then love is the anti-entropy.
 > 
-> As love is the nature of true order.
+> As love is the nature true order.
 {: .block-tip }
 
 > ##### 26/02/2025
