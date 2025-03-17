@@ -1,9 +1,11 @@
 ---
-layout: default
+layout: post
 permalink: /thoughts/
 title: thoughts
 nav: true
 nav_order: 3
+toc:
+  sidebar: left
 pagination:
   enabled: true
   collection: posts
