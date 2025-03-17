@@ -1,8 +1,8 @@
 ---
 layout: page
 permalink: /thoughts/
-title: nonchalant thoughts
-description: things I think, but I might change my mind
+title: thoughts
+description: nonchalant things I think, but I might change my mind
 nav: true
 nav_order: 3
 ---
