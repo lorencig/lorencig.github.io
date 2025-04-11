@@ -11,6 +11,8 @@ nav_order: 3
 > Just as you cannot start building and inventing new physical laws without harmonizing with the scientific work done through millennials.
 >
 > To the 'modern progressist': You cannot create new rules of collective behavior while disregarding the history and work of philosophers who long ago have already addressed extensively the questions you're just beginning to wonder.
+{: .block-tip }
+
 > ###### 16/03/2025
 >
 > Illusion is the proof of sense limitations.
