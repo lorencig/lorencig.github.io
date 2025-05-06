@@ -1,7 +1,7 @@
-
-import React, { useState } from 'react';
+import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
+import ThemeToggle from './ThemeToggle';
 
 const Navigation: React.FC = () => {
   const location = useLocation();
@@ -12,51 +12,41 @@ const Navigation: React.FC = () => {
 
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
-      <div className="container px-4 md:px-6 mx-auto flex justify-between items-center h-16">
-        <Link to="/" className="font-bold text-xl">
+      <div className="container-padding max-w-7xl mx-auto flex justify-between items-center h-16">
+        <Link to="/" className="font-bold text-xl hover-link">
           PhD Researcher
         </Link>
         
-        <nav className="hidden md:flex space-x-8">
+        <nav className="hidden md:flex items-center space-x-8">
           <Link 
             to="/" 
-            className={cn(
-              "relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left", 
-              isActive("/") && "text-primary font-medium"
-            )}
+            className={cn("hover-link", isActive("/") && "text-primary font-medium")}
           >
             Home
           </Link>
           <Link 
             to="/projects" 
-            className={cn(
-              "relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left", 
-              isActive("/projects") && "text-primary font-medium"
-            )}
+            className={cn("hover-link", isActive("/projects") && "text-primary font-medium")}
           >
             Projects
           </Link>
           <Link 
             to="/publications" 
-            className={cn(
-              "relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left", 
-              isActive("/publications") && "text-primary font-medium"
-            )}
+            className={cn("hover-link", isActive("/publications") && "text-primary font-medium")}
           >
             Publications
           </Link>
           <Link 
             to="/blog" 
-            className={cn(
-              "relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left", 
-              isActive("/blog") && "text-primary font-medium"
-            )}
+            className={cn("hover-link", isActive("/blog") && "text-primary font-medium")}
           >
             Blog
           </Link>
+          <ThemeToggle />
         </nav>
         
-        <div className="md:hidden">
+        <div className="md:hidden flex items-center space-x-4">
+          <ThemeToggle />
           <MobileNav />
         </div>
       </div>
