@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from "@/lib/utils";
 import ThemeToggle from './ThemeToggle';
@@ -55,7 +56,7 @@ const Navigation: React.FC = () => {
 };
 
 const MobileNav: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, useState] = React.useState(false);
 
   return (
     <div>
