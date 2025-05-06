@@ -56,7 +56,7 @@ const Navigation: React.FC = () => {
 };
 
 const MobileNav: React.FC = () => {
-  const [isOpen, useState] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
     <div>
