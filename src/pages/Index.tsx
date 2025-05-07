@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import SocialIcons from '@/components/SocialIcons';
 import PageLayout from '@/components/PageLayout';
-import { Beaker, Brain, Database, Code } from 'lucide-react';
+import { Beaker, Brain, Database, Code, BeakerIcon, FlaskRound, FlaskRoundIcon, Pi, BrainCircuit, BrainCircuitIcon, Atom, Compass, DraftingCompass } from 'lucide-react';
 import {
   Card,
   CardContent,
@@ -28,14 +28,53 @@ const Index: React.FC = () => {
       <section className="py-20 md:py-32 container px-4 md:px-6 mx-auto overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6">
-            <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-in">
-              PhD Candidate in <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">Nanochemistry</span>
-            </h1>
-            <p className="text-xl text-muted-foreground animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
-              Integrating scientific research with data science and programming to advance nanomaterials for biomedical applications.
-            </p>
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight animate-fade-in">
+            <span className="bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">
+              Lorenci
+            </span>
+            {' '} {/* This adds a space between the names */}
+            Gjurgjaj
+          </h1>
+            {/* Container for the list of roles/positions */}
+          <div className="mt-4"> {/* Add some margin-top if needed */}
+            <ul className="space-y-3"> {/* space-y-3 adds margin between list items */}
+              <li
+                className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
+                style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
+              >
+                <span>Fellow Researcher - Italian Institute of Technology</span>
+                <img
+                  src="/flags/it.svg" // Replace with the actual path to your Italian flag SVG/PNG
+                  alt="Italian Flag"
+                  className="ml-2 h-5 w-auto" // Adjust size as needed (h-5 is 20px)
+                />
+              </li>
+              <li
+                className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
+                style={{ animationDelay: "0.5s", animationFillMode: "forwards" }} // Staggered animation
+              >
+                <span>PhD Candidate - The Open University</span>
+                <img
+                  src="/flags/gb.svg" // Replace with the actual path to your UK flag SVG/PNG
+                  alt="UK Flag"
+                  className="ml-2 h-5 w-auto"
+                />
+              </li>
+              <li
+                className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
+                style={{ animationDelay: "0.7s", animationFillMode: "forwards" }} // Staggered animation
+              >
+                <span>Researcher, Technology PM - Ivodent Academy</span>
+                <img
+                  src="/flags/al.svg" // Replace with the actual path to your Albanian flag SVG/PNG
+                  alt="Albanian Flag"
+                  className="ml-2 h-5 w-auto"
+                />
+              </li>
+            </ul>
+          </div>
             <div className="flex space-x-4 pt-4 animate-fade-in opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
-              <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-blue-600 to-violet-600 hover:opacity-90 transition-all">
+              <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-[#A10100] to-[#F33C04] hover:opacity-90 transition-all">
                 <Link to="/projects">View Projects</Link>
               </Button>
               <Button variant="outline" asChild size="lg" className="rounded-full border-2">
@@ -43,32 +82,32 @@ const Index: React.FC = () => {
               </Button>
             </div>
           </div>
-          <div className="relative h-96 rounded-2xl bg-gradient-to-br from-blue-500/10 via-violet-500/10 to-purple-500/10 flex items-center justify-center p-8 animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
+          <div className="relative h-96 rounded-2xl bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 flex items-center justify-center p-8 animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
             <div className="bg-background/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-white/10">
               <h2 className="text-2xl font-semibold mb-4">Research Focus</h2>
               <div className="flex flex-col space-y-4">
                 <div className="flex items-start space-x-3">
-                  <Beaker className="h-6 w-6 text-blue-500 mt-1" />
+                  <Atom className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                    Novel nanomaterial synthesis for drug delivery
+                  Scalable Synthesis of Magnetic and Inorganic Nanoparticles
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Brain className="h-6 w-6 text-violet-500 mt-1" />
+                  <Pi className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                    Advanced computational models for nanoscience
+                  Design, Modeling, and Assembly of Fluidic Systems for Chemical Processes
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Database className="h-6 w-6 text-purple-500 mt-1" />
+                  <Code className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                    Data-driven optimization of material properties
-                  </p>
+                  Automation and Software Solutions for Chemical Research Workflows
+                  </p>  
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Code className="h-6 w-6 text-blue-600 mt-1" />
+                  <DraftingCompass className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                    Scientific software development for research workflows
+                  Machine Learning for Optimization and Predictive Modeling
                   </p>
                 </div>
               </div>
@@ -83,19 +122,43 @@ const Index: React.FC = () => {
       {/* About Section */}
       <section className="py-24 bg-gradient-to-b from-background to-secondary/30">
         <div className="container px-4 md:px-6 mx-auto">
-          <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">About Me</h2>
+          <h2 className="text-3xl md:text-4xl font-bold italic mb-12 text-center bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Qui Sum</h2>
           
           <div className="max-w-3xl mx-auto bg-background/80 backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/10">
-            <p className="text-lg mb-6 leading-relaxed">
-              I am a PhD candidate specializing in Nanochemistry with a strong foundation in physical chemistry and expertise in data science. My research focuses on developing novel nanomaterials for biomedical applications, particularly in drug delivery systems and biomedical imaging.
-            </p>
+          <p className="text-lg mb-6 leading-relaxed  text-justify">
+            Greetings! 👋 I’m Lorenci Gjurgjaj. Currently, I’m pursuing my PhD at <a href="https://www.open.ac.uk/" className="underline">The Open University</a> {/* GB Flag */}
+  <img
+    src="/flags/gb.svg" 
+    alt="Great Britain Flag"
+    className="inline-block h-5 w-auto mx-1 align-middle" 
+  /> within the IIT Open University Affiliated Research Centre. My primary focus is on advancing research at the intersection of nanomaterials and biomedical applications. Specifically, I’m based at the <a href="https://nanobio.iit.it/" className="underline">Istituto Italiano di Tecnologia</a> {/* Italian Flag */}
+  <img
+    src="/flags/it.svg" 
+    alt="Italian Flag"
+    className="inline-block h-5 w-auto mx-1 align-middle" 
+  /> where I’m involved in the Nanomaterials for Biomedical Applications department. Here, my work centers around the development of scalable methods for producing magnetic-inorganic nanomaterials tailored for applications in cancer theragnostics and other biomedical areas.            </p>
             
-            <p className="text-lg mb-8 leading-relaxed">
-              My cross-disciplinary approach combines traditional wet-lab research with cutting-edge computational methods. I develop algorithms and software tools that enable more efficient analysis of experimental data, prediction of nanomaterial properties, and optimization of synthesis parameters. This unique integration of scientific knowledge with programming skills allows me to tackle complex problems in nanomaterial research from multiple perspectives.
+            <p className="text-lg mb-8 leading-relaxed text-justify">
+            My academic journey began with a Master of Science degree in Chemistry, which I obtained from the Uni of Tirana {/* Albanian Flag */}
+  <img
+    src="/flags/al.svg"
+    alt="Albanian Flag"
+    className="inline-block h-5 w-auto mx-1 align-middle" 
+  /> and the Uni of Maribor {/* Slovenian Flag */}
+  <img
+    src="/flags/si.svg" 
+    alt="Slovenian Flag"
+    className="inline-block h-5 w-auto mx-1 align-middle" 
+  />. Additionally, I had the opportunity to visit through a Short-Term-Scientific Mobility, The Institute of Bioorganic Chemistry at the Uni of Saarland {/* German Flag */}
+  <img
+    src="/flags/de.svg" 
+    alt="German Flag"
+    className="inline-block h-5 w-auto mx-1 align-middle" 
+  />, where I focused on the bioactivity of different medicinal plant extractions.
             </p>
 
             <div className="mt-12 flex flex-col items-center">
-              <h3 className="text-xl font-medium mb-4">Connect With Me</h3>
+              <h3 className="text-xl font-medium mb-4">Connect</h3>
               <SocialIcons iconSize={28} />
             </div>
           </div>

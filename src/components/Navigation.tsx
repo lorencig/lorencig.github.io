@@ -14,34 +14,34 @@ const Navigation: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container-padding max-w-7xl mx-auto flex justify-between items-center h-16">
-        <Link to="/" className="font-bold text-xl hover-link">
-          PhD Researcher
-        </Link>
+      <Link to="/" className="text-xl hover-link">
+        <span className="font-bold">Lorenci</span> Gjurgjaj
+         </Link>
         
         <nav className="hidden md:flex items-center space-x-8">
           <Link 
             to="/" 
             className={cn("hover-link", isActive("/") && "text-primary font-medium")}
           >
-            Home
+            dashboard
           </Link>
           <Link 
             to="/projects" 
             className={cn("hover-link", isActive("/projects") && "text-primary font-medium")}
           >
-            Projects
+            projects
           </Link>
           <Link 
             to="/publications" 
             className={cn("hover-link", isActive("/publications") && "text-primary font-medium")}
           >
-            Publications
+            publications
           </Link>
           <Link 
             to="/blog" 
             className={cn("hover-link", isActive("/blog") && "text-primary font-medium")}
           >
-            Blog
+            thoughts
           </Link>
           <ThemeToggle />
         </nav>
