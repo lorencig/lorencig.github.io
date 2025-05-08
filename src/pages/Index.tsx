@@ -231,17 +231,20 @@ interface ProjectCardProps {
   category: "Scientific" | "Community";
   image: string;
   description: string;
+  id?: number;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, category, image, description }) => {
+const ProjectCard: React.FC<ProjectCardProps> = ({ title, category, image, description, id }) => {
   return (
     <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px] border border-border/50 bg-card/50 backdrop-blur-sm">
       <div className="h-48 overflow-hidden">
-        <img 
-          src={image} 
-          alt={title} 
-          className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-        />
+        <Link to={id ? `/projects/${id}` : "/projects"}>
+          <img 
+            src={image} 
+            alt={title} 
+            className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+          />
+        </Link>
       </div>
       <CardHeader className="pb-2">
         <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-1 ${
@@ -249,7 +252,11 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, category, image, descr
         }`}>
           {category}
         </span>
-        <CardTitle className="text-xl">{title}</CardTitle>
+        <CardTitle className="text-xl">
+          <Link to={id ? `/projects/${id}` : "/projects"} className="hover:text-blue-500 transition-colors">
+            {title}
+          </Link>
+        </CardTitle>
       </CardHeader>
       <CardContent>
         <p className="text-muted-foreground">{description}</p>
@@ -285,26 +292,30 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ title, authors, journ
 // Sample data for featured projects
 const featuredProjects = [
   {
+    id: 1,
     title: "Nanomaterial Synthesis Optimizer",
-    category: "Scientific",
+    category: "Scientific" as const,
     image: "/placeholder.svg",
     description: "Algorithm for predicting optimal synthesis parameters for targeted nanomaterials."
   },
   {
+    id: 2,
     title: "Drug Delivery Simulation",
-    category: "Scientific",
+    category: "Scientific" as const,
     image: "/placeholder.svg",
     description: "Computational model for simulating drug release from nanocarriers in different environments."
   },
   {
+    id: 4,
     title: "Data Visualization Dashboard",
-    category: "Community",
+    category: "Community" as const,
     image: "/placeholder.svg",
     description: "Interactive platform for exploring nanomaterial characterization data."
   },
   {
+    id: 3,
     title: "ML-powered Property Prediction",
-    category: "Scientific",
+    category: "Scientific" as const,
     image: "/placeholder.svg",
     description: "Machine learning models to predict physical properties of novel nanomaterials."
   }
