@@ -126,7 +126,7 @@ const Index: React.FC = () => {
           
           <div className="max-w-3xl mx-auto bg-background/80 backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/10">
           <p className="text-lg mb-6 leading-relaxed  text-justify">
-            Greetings! 👋 I’m Lorenci Gjurgjaj. Currently, I’m pursuing my PhD at <a href="https://www.open.ac.uk/" className="underline">The Open University</a> {/* GB Flag */}
+            Greetings! 👋 I’m Lorenci Gjurgjaj. Currently, I’m pursuing my PhD at The Open University {/* GB Flag */}
   <img
     src="/flags/gb.svg" 
     alt="Great Britain Flag"
@@ -155,6 +155,13 @@ const Index: React.FC = () => {
     alt="German Flag"
     className="inline-block h-5 w-auto mx-1 align-middle" 
   />, where I focused on the bioactivity of different medicinal plant extractions.
+            </p>
+            <p className="text-lg mb-8 leading-relaxed text-justify">
+            Prior to embarking on my doctoral studies, I accumulated experience working in various research and industry settings. For five years, I was part of the Research Department at Ivodent Academy <img
+    src="/flags/al.svg" 
+    alt="Albanian Flag"
+    className="inline-block h-5 w-auto mx-1 align-middle" 
+  />. where I engaged in diverse projects spanning high-pressure applications, medical and aromatic plant extraction studies, and thermal characterization of inorganic materials. Furthermore, I gained practical experience as a product technologist for the distributor of leading scientific equipment brands such as Netzch, Sartorius, Bruker, Memmert, and Thermo Fischer in Albania.
             </p>
 
             <div className="mt-12 flex flex-col items-center">
