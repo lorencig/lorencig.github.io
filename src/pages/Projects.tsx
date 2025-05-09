@@ -68,7 +68,7 @@ const Projects: React.FC = () => {
         
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Projects Portfolio</h1>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Projects Portfolio</h1>
             <p className="text-lg text-muted-foreground backdrop-blur-sm bg-background/30 p-3 rounded-lg inline-block">
               Exploring the intersection of nanochemistry and data science through research and innovation.
             </p>
@@ -77,17 +77,17 @@ const Projects: React.FC = () => {
           <Tabs defaultValue="all" className="w-full">
             <div className="flex justify-center mb-12">
               <TabsList className="backdrop-blur-sm bg-background/30 p-1 rounded-xl">
-                <TabsTrigger value="all" onClick={() => setActiveCategory("all")} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white rounded-lg">All Projects</TabsTrigger>
-                <TabsTrigger value="scientific" onClick={() => setActiveCategory("scientific")} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white rounded-lg">Scientific</TabsTrigger>
-                <TabsTrigger value="community" onClick={() => setActiveCategory("community")} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-purple-600 data-[state=active]:text-white rounded-lg">Community</TabsTrigger>
+                <TabsTrigger value="all" onClick={() => setActiveCategory("all")} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#A10100] data-[state=active]:to-[#F33C04] data-[state=active]:text-white rounded-lg">All Projects</TabsTrigger>
+                <TabsTrigger value="scientific" onClick={() => setActiveCategory("scientific")} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#A10100] data-[state=active]:to-[#F33C04] data-[state=active]:text-white rounded-lg">Scientific</TabsTrigger>
+                <TabsTrigger value="community" onClick={() => setActiveCategory("community")} className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#A10100] data-[state=active]:to-[#F33C04] data-[state=active]:text-white rounded-lg">Community</TabsTrigger>
               </TabsList>
             </div>
             
             <TabsContent value="all" className="mt-0">
-              <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">Scientific Projects</h2>
+              <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Scientific Projects</h2>
               <ProjectGrid projects={scientificProjects} category="Scientific" />
               
-              <h2 className="text-2xl font-semibold mb-8 mt-16 bg-gradient-to-r from-purple-600 to-purple-400 bg-clip-text text-transparent">Community Projects</h2>
+              <h2 className="text-2xl font-semibold mb-8 mt-16 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Community Projects</h2>
               <ProjectGrid projects={communityProjects} category="Community" />
             </TabsContent>
             
@@ -136,7 +136,7 @@ interface ProjectCardProps {
 const ProjectCard: React.FC<ProjectCardProps> = ({ project, category }) => {
   return (
     <Link to={`/projects/${project.id}`} className="group">
-      <div className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10 hover:border-blue-500/30 backdrop-blur-sm bg-background/40 h-full transform group-hover:translate-y-[-5px]">
+      <div className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 backdrop-blur-sm bg-background/40 h-full transform group-hover:translate-y-[-5px]">
         <div className="relative">
           <AspectRatio ratio={16/9}>
             <img 
@@ -146,7 +146,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, category }) => {
             />
             <div className="absolute top-2 left-2">
               <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium ${
-                category === "Scientific" ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300" : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                category === "Scientific" ? "bg-[#ADCDFF] text-[#3a86ff] dark:bg-[#ADCDFF] dark:text-[#3a86ff]" : "bg-[#DCC7FA] text-[#8338ec] dark:bg-[#DCC7FA] dark:text-[#8338ec]"
               }`}>
                 {category}
               </span>
@@ -154,14 +154,14 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project, category }) => {
           </AspectRatio>
         </div>
         <div className="p-6">
-          <h3 className="text-xl font-semibold mb-2 group-hover:text-blue-500">{project.title}</h3>
+          <h3 className="text-xl font-semibold mb-2 group-hover:text-[#F33C04]">{project.title}</h3>
           <p className="text-muted-foreground mb-4">{project.description}</p>
           <div className="flex flex-wrap gap-2 mb-4">
             {project.tags.map(tag => (
               <Badge key={tag} variant="secondary" className="bg-white/10 backdrop-blur-sm text-xs">{tag}</Badge>
             ))}
           </div>
-          <div className="flex items-center text-sm font-medium text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="flex items-center text-sm font-medium text-[#F33C04] opacity-0 group-hover:opacity-100 transition-opacity">
             <span>View details</span>
             <ArrowRight className="ml-1 h-4 w-4" />
           </div>

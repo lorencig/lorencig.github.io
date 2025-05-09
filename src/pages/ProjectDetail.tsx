@@ -11,8 +11,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 const projectsData = [
   {
     id: 1,
-    title: "Nanomaterial Synthesis Optimizer",
-    description: "Machine learning algorithm for predicting optimal synthesis parameters for targeted nanomaterials with specific properties.",
+    title: "NanoDB - Research Activity Data Management System",
+    description: "NanoDB is a Python-based application developed to optimize the management of experimental data in research settings. Designed with flexibility in mind, it supports the collection, organization, and export of laboratory metadata across diverse research line types. Built on the FAIR principles, by ensuring clean and well-structured datasets, NanoDB also lays the foundation for integrating machine learning, enabling more advanced data analysis and modeling in future research stages.",
     fullDescription: "This project explores the use of advanced machine learning techniques to optimize the synthesis parameters for creating nanomaterials with specific desired properties. By analyzing large datasets of synthesis conditions and resulting material characteristics, the algorithm can predict the optimal conditions for producing nanomaterials with tailored properties, significantly reducing the time and resources required for experimental optimization.",
     image: "/placeholder.svg",
     tags: ["ML", "Nanoparticles", "Material Design"],

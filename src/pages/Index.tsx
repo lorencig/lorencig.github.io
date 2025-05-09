@@ -176,7 +176,7 @@ const Index: React.FC = () => {
       <section className="py-24">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Featured Projects</h2>
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Featured Projects</h2>
             <Button variant="outline" asChild className="rounded-full">
               <Link to="/projects">View All</Link>
             </Button>
@@ -209,7 +209,7 @@ const Index: React.FC = () => {
       <section className="py-24 bg-gradient-to-t from-background to-secondary/30">
         <div className="container px-4 md:px-6 mx-auto">
           <div className="flex justify-between items-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Recent Publications</h2>
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Recent Publications</h2>
             <Button variant="outline" asChild className="rounded-full">
               <Link to="/publications">View All</Link>
             </Button>
@@ -248,7 +248,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ title, category, image, descr
       </div>
       <CardHeader className="pb-2">
         <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-1 ${
-          category === "Scientific" ? "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300" : "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+          category === "Scientific" ? "bg-[#ADCDFF] text-[#3a86ff] dark:bg-[#ADCDFF] dark:text-[#3a86ff]" : "bg-[#DCC7FA] text-[#8338ec] dark:bg-[#DCC7FA] dark:text-[#8338ec]"
         }`}>
           {category}
         </span>
@@ -281,7 +281,7 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ title, authors, journ
       </CardHeader>
       <CardContent className="pt-0">
         <div className="flex justify-between text-sm">
-          <span className="font-medium text-blue-600 dark:text-blue-400">{journal}</span>
+          <span className="font-medium text-[#A10100] dark:text-[#F33C04]">{journal}</span>
           <span className="text-muted-foreground">{year}</span>
         </div>
       </CardContent>
@@ -293,10 +293,10 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ title, authors, journ
 const featuredProjects = [
   {
     id: 1,
-    title: "Nanomaterial Synthesis Optimizer",
+    title: "NanoDB - Research Activity Data Management System",
     category: "Scientific" as const,
     image: "/placeholder.svg",
-    description: "Algorithm for predicting optimal synthesis parameters for targeted nanomaterials."
+    description: "NanoDB is a Python-based application developed to optimize the management of experimental data in research settings. Designed with flexibility in mind, it supports the collection, organization, and export of laboratory metadata across diverse research line types. Built on the FAIR principles, by ensuring clean and well-structured datasets, NanoDB also lays the foundation for integrating machine learning, enabling more advanced data analysis and modeling in future research stages."
   },
   {
     id: 2,
