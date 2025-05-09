@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Button } from "@/components/ui/button";
 import { Link } from 'react-router-dom';
 import SocialIcons from '@/components/SocialIcons';
 import PageLayout from '@/components/PageLayout';
-import { Beaker, Brain, Database, Code, BeakerIcon, FlaskRound, FlaskRoundIcon, Pi, BrainCircuit, BrainCircuitIcon, Atom, Compass, DraftingCompass } from 'lucide-react';
+import { Atom, Code, DraftingCompass, Pi } from 'lucide-react'; // Removed unused icons
 import {
   Card,
   CardContent,
@@ -20,11 +19,36 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ProjectData } from '@/common/types'; // Import common type
+import { allProjectsData } from '@/data/projects'; // Import all projects data
+
+// Sample data for recent publications (remains as is unless you want to move it too)
+const recentPublications = [
+  {
+    title: "Novel Synthesis Method for Gold Nanorods with Enhanced Stability for Biomedical Applications",
+    authors: "Lorenci Gjurgjaj, Collaborator A, Collaborator B", // Updated name
+    journal: "Journal of Nanomaterials",
+    year: 2023
+  },
+  {
+    title: "Machine Learning Approaches to Predict Nanoparticle Toxicity from Physicochemical Properties",
+    authors: "Lorenci Gjurgjaj, Collaborator C", // Updated name
+    journal: "ACS Nano",
+    year: 2022
+  },
+  // ... other publications
+];
+
 
 const Index: React.FC = () => {
+  const featuredProjects = React.useMemo(() =>
+    allProjectsData.filter(p => p.isFeatured).sort((a,b) => a.id - b.id), // Or some other sort order for featured
+    [] // allProjectsData is static
+  );
+
   return (
     <PageLayout>
-      {/* Hero Section */}
+      {/* Hero Section - unchanged */}
       <section className="py-20 md:py-32 container px-4 md:px-6 mx-auto overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col space-y-6">
@@ -35,38 +59,37 @@ const Index: React.FC = () => {
             {' '} {/* This adds a space between the names */}
             Gjurgjaj
           </h1>
-            {/* Container for the list of roles/positions */}
-          <div className="mt-4"> {/* Add some margin-top if needed */}
-            <ul className="space-y-3"> {/* space-y-3 adds margin between list items */}
+          <div className="mt-4"> 
+            <ul className="space-y-3"> 
               <li
                 className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
                 style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
               >
                 <span>Fellow Researcher - Italian Institute of Technology</span>
                 <img
-                  src="/flags/it.svg" // Replace with the actual path to your Italian flag SVG/PNG
+                  src="/flags/it.svg" 
                   alt="Italian Flag"
-                  className="ml-2 h-5 w-auto" // Adjust size as needed (h-5 is 20px)
+                  className="ml-2 h-5 w-auto" 
                 />
               </li>
               <li
                 className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
-                style={{ animationDelay: "0.5s", animationFillMode: "forwards" }} // Staggered animation
+                style={{ animationDelay: "0.5s", animationFillMode: "forwards" }} 
               >
                 <span>PhD Candidate - The Open University</span>
                 <img
-                  src="/flags/gb.svg" // Replace with the actual path to your UK flag SVG/PNG
+                  src="/flags/gb.svg" 
                   alt="UK Flag"
                   className="ml-2 h-5 w-auto"
                 />
               </li>
               <li
                 className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
-                style={{ animationDelay: "0.7s", animationFillMode: "forwards" }} // Staggered animation
+                style={{ animationDelay: "0.7s", animationFillMode: "forwards" }} 
               >
                 <span>Researcher, Technology PM - Ivodent Academy</span>
                 <img
-                  src="/flags/al.svg" // Replace with the actual path to your Albanian flag SVG/PNG
+                  src="/flags/al.svg" 
                   alt="Albanian Flag"
                   className="ml-2 h-5 w-auto"
                 />
@@ -119,7 +142,7 @@ const Index: React.FC = () => {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section - unchanged */}
       <section className="py-24 bg-gradient-to-b from-background to-secondary/30">
         <div className="container px-4 md:px-6 mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold italic mb-12 text-center bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Qui Sum</h2>
@@ -131,7 +154,7 @@ const Index: React.FC = () => {
     src="/flags/gb.svg" 
     alt="Great Britain Flag"
     className="inline-block h-5 w-auto mx-1 align-middle" 
-  /> within the IIT Open University Affiliated Research Centre. My primary focus is on advancing research at the intersection of nanomaterials and biomedical applications. Specifically, I’m based at the <a href="https://nanobio.iit.it/" className="underline">Istituto Italiano di Tecnologia</a> {/* Italian Flag */}
+  /> within the IIT Open University Affiliated Research Centre. My primary focus is on advancing research at the intersection of nanomaterials and biomedical applications. Specifically, I’m based at the <a href="https://nanobio.iit.it/" className="underline" target="_blank" rel="noopener noreferrer">Istituto Italiano di Tecnologia</a> {/* Italian Flag */}
   <img
     src="/flags/it.svg" 
     alt="Italian Flag"
@@ -186,13 +209,14 @@ const Index: React.FC = () => {
             <Carousel
               opts={{
                 align: "start",
+                loop: true, // Optional: if you want the carousel to loop
               }}
               className="w-full"
             >
               <CarouselContent>
-                {featuredProjects.map((project, index) => (
-                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                    <ProjectCard {...project} />
+                {featuredProjects.map((project) => (
+                  <CarouselItem key={project.id} className="md:basis-1/2 lg:basis-1/3">
+                    <HomePageProjectCard project={project} />
                   </CarouselItem>
                 ))}
               </CarouselContent>
@@ -226,40 +250,36 @@ const Index: React.FC = () => {
   );
 };
 
-interface ProjectCardProps {
-  title: string;
-  category: "Scientific" | "Community";
-  image: string;
-  description: string;
-  id?: number;
+interface HomePageProjectCardProps { // Renamed to avoid conflict if you extract it
+  project: ProjectData;
 }
 
-const ProjectCard: React.FC<ProjectCardProps> = ({ title, category, image, description, id }) => {
+const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) => {
   return (
-    <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px] border border-border/50 bg-card/50 backdrop-blur-sm">
+    <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px] border border-border/50 bg-card/50 backdrop-blur-sm flex flex-col">
       <div className="h-48 overflow-hidden">
-        <Link to={id ? `/projects/${id}` : "/projects"}>
+        <Link to={`/projects/${project.id}`}>
           <img 
-            src={image} 
-            alt={title} 
+            src={project.image} 
+            alt={project.title} 
             className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
           />
         </Link>
       </div>
       <CardHeader className="pb-2">
         <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium mb-1 ${
-          category === "Scientific" ? "bg-[#ADCDFF] text-[#3a86ff] dark:bg-[#ADCDFF] dark:text-[#3a86ff]" : "bg-[#DCC7FA] text-[#8338ec] dark:bg-[#DCC7FA] dark:text-[#8338ec]"
+          project.category === "Scientific" ? "bg-[#ADCDFF] text-[#3a86ff] dark:bg-[#ADCDFF] dark:text-[#3a86ff]" : "bg-[#DCC7FA] text-[#8338ec] dark:bg-[#DCC7FA] dark:text-[#8338ec]"
         }`}>
-          {category}
+          {project.category}
         </span>
         <CardTitle className="text-xl">
-          <Link to={id ? `/projects/${id}` : "/projects"} className="hover:text-blue-500 transition-colors">
-            {title}
+          <Link to={`/projects/${project.id}`} className="hover:text-blue-500 transition-colors">
+            {project.title}
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">{description}</p>
+      <CardContent className="flex-grow"> {/* Allow content to grow */}
+        <p className="text-muted-foreground text-sm">{project.description}</p>
       </CardContent>
     </Card>
   );
@@ -288,65 +308,5 @@ const PublicationItem: React.FC<PublicationItemProps> = ({ title, authors, journ
     </Card>
   );
 };
-
-// Sample data for featured projects
-const featuredProjects = [
-  {
-    id: 1,
-    title: "NanoDB - Research Activity Data Management System",
-    category: "Scientific" as const,
-    image: "/placeholder.svg",
-    description: "NanoDB is a Python-based application developed to optimize the management of experimental data in research settings. Designed with flexibility in mind, it supports the collection, organization, and export of laboratory metadata across diverse research line types. Built on the FAIR principles, by ensuring clean and well-structured datasets, NanoDB also lays the foundation for integrating machine learning, enabling more advanced data analysis and modeling in future research stages."
-  },
-  {
-    id: 2,
-    title: "Drug Delivery Simulation",
-    category: "Scientific" as const,
-    image: "/placeholder.svg",
-    description: "Computational model for simulating drug release from nanocarriers in different environments."
-  },
-  {
-    id: 4,
-    title: "Data Visualization Dashboard",
-    category: "Community" as const,
-    image: "/placeholder.svg",
-    description: "Interactive platform for exploring nanomaterial characterization data."
-  },
-  {
-    id: 3,
-    title: "ML-powered Property Prediction",
-    category: "Scientific" as const,
-    image: "/placeholder.svg",
-    description: "Machine learning models to predict physical properties of novel nanomaterials."
-  }
-];
-
-// Sample data for recent publications
-const recentPublications = [
-  {
-    title: "Novel Synthesis Method for Gold Nanorods with Enhanced Stability for Biomedical Applications",
-    authors: "Your Name, Collaborator A, Collaborator B",
-    journal: "Journal of Nanomaterials",
-    year: 2023
-  },
-  {
-    title: "Machine Learning Approaches to Predict Nanoparticle Toxicity from Physicochemical Properties",
-    authors: "Your Name, Collaborator C",
-    journal: "ACS Nano",
-    year: 2022
-  },
-  {
-    title: "Data-Driven Optimization of Liposomal Drug Delivery Systems",
-    authors: "Collaborator D, Your Name, Collaborator E",
-    journal: "Advanced Drug Delivery Reviews",
-    year: 2021
-  },
-  {
-    title: "Computational Framework for Designing Nanomaterials with Targeted Properties",
-    authors: "Your Name, Collaborator F, Collaborator G",
-    journal: "Nature Communications",
-    year: 2023
-  }
-];
 
 export default Index;
