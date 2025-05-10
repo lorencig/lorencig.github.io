@@ -28,3 +28,18 @@ export interface ProjectData {
 
     doi?: string; 
 }
+
+export interface PublicationData {
+    id: number;
+    title: string;
+    authors: string;
+    journal: string;
+    volume?: string;
+    issue?: string;
+    pages?: string;
+    year: number;
+    doi: string;
+    isFeatured?: boolean; // Added for homepage feature
+    link?: string; // Optional direct link to the publication PDF or page
+    abstract?: string; 
+  }

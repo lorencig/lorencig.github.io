@@ -1,20 +1,28 @@
-import React, { useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useMemo, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from 'lucide-react';
-import { ProjectData } from '@/common/types'; // Import common type
-import { allProjectsData } from '@/data/projects'; // Import all projects data
+import { ProjectData } from '@/common/types';
+import { allProjectsData } from '@/data/projects';
 
 const Projects: React.FC = () => {
-  // No need for activeCategory state for filtering if Tabs handle content switching
-  // const [activeCategory, setActiveCategory] = useState<string>("all"); 
+  // Control the Tabs value explicitly
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const location = useLocation();
+
+  // Scroll to top on page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    // Reset to "all" tab on initial load
+    setActiveTab("all");
+  }, [location.pathname]); // Trigger on route change
 
   const scientificProjects = useMemo(() =>
     allProjectsData.filter(p => p.category === "Scientific"),
-    [] // allProjectsData is static, so empty dependency array
+    []
   );
 
   const communityProjects = useMemo(() =>
@@ -38,7 +46,7 @@ const Projects: React.FC = () => {
             </p>
           </div>
 
-          <Tabs defaultValue="all" className="w-full">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
             <div className="flex justify-center mb-12">
               <TabsList className="backdrop-blur-sm bg-background/30 p-1 rounded-xl">
                 <TabsTrigger value="all" className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#A10100] data-[state=active]:to-[#F33C04] data-[state=active]:text-white rounded-lg">All Projects</TabsTrigger>
@@ -111,7 +119,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
           <h3 className="text-xl font-semibold mb-2 group-hover:text-[#F33C04]">{project.title}</h3>
           <p className="text-muted-foreground mb-4 text-sm flex-grow">{project.description}</p>
           <div className="flex flex-wrap gap-2 mb-4">
-            {project.tags.slice(0, 3).map(tag => ( // Show limited tags for brevity
+            {project.tags.slice(0, 3).map(tag => (
               <Badge key={tag} variant="secondary" className="bg-white/10 backdrop-blur-sm text-xs">{tag}</Badge>
             ))}
           </div>

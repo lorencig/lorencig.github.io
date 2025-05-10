@@ -142,14 +142,7 @@ const ProjectDetail: React.FC = () => {
 
                     <TabsContent value="details" className="pt-6">
                       <div className="space-y-6"> {/* Increased spacing */}
-                        <div>
-                          <h3 className="font-semibold mb-2">Tags</h3>
-                          <div className="flex flex-wrap gap-2">
-                            {project.tags.map(tag => (
-                              <Badge key={tag} className="bg-white/10 backdrop-blur-sm">{tag}</Badge>
-                            ))}
-                          </div>
-                        </div>
+                        
 
                         {project.collaborators && project.collaborators.length > 0 && (
                           <div>
