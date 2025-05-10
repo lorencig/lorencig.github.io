@@ -15,7 +15,7 @@ const project1Data: ProjectData = {
   results: "NanoDB is an open-source Python tool for managing research data, freely downloadable and customizable from GitHub. It features a user-friendly interface for dynamic data entry, Excel storage, PDF reports, and image management. Available under a Creative Commons BY 4.0 License with Zenodo documentation and a DOI, it supports FAIR-compliant intelligence datasets for machine learning.",
   nextSteps: "Future development aims to create a no-code version with automated field creation, making customization accessible to non-coders. Plans include cloud storage, expanded export options, and machine learning integration, with ongoing community engagement to enhance scalability and inclusivity.",
   isFeatured: true,
-  doi: "https://zenodo.org/records/13912817",
+  doi: "10.5281/zenodo.13912817",
 };
 
 export default project1Data;

@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
   return (
     <footer className="mt-20 py-10 border-t border-border">    
         <p className="text-sm text-muted-foreground text-center">
-          © {currentYear} Lorenci Gjurgjaj. All rights reserved.
+          © {currentYear} Lorenci Gjurgjaj. All rights and lefts reserved.
         </p>
      </footer>
   );

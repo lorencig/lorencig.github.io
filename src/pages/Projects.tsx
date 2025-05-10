@@ -7,18 +7,16 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowRight } from 'lucide-react';
 import { ProjectData } from '@/common/types';
 import { allProjectsData } from '@/data/projects';
+import { Link as LinkIcon } from 'lucide-react'
 
 const Projects: React.FC = () => {
-  // Control the Tabs value explicitly
   const [activeTab, setActiveTab] = useState<string>("all");
   const location = useLocation();
 
-  // Scroll to top on page load
   useEffect(() => {
     window.scrollTo(0, 0);
-    // Reset to "all" tab on initial load
     setActiveTab("all");
-  }, [location.pathname]); // Trigger on route change
+  }, [location.pathname]);
 
   const scientificProjects = useMemo(() =>
     allProjectsData.filter(p => p.category === "Scientific"),
@@ -26,7 +24,7 @@ const Projects: React.FC = () => {
   );
 
   const communityProjects = useMemo(() =>
-    allProjectsData.filter(p => p.category === "Community"),
+    allProjectsData.filter(p => p.category === "Community"), // Assuming you have this category
     []
   );
 
@@ -34,16 +32,18 @@ const Projects: React.FC = () => {
     <PageLayout>
       <section className="py-12 md:py-20 relative overflow-hidden">
         {/* Background elements */}
-        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-1/4 h-1/4 bg-purple-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute top-1/2 left-1/4 w-1/5 h-1/5 bg-red-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute bottom-20 left-20 w-1/4 h-1/4 bg-purple-500/5 rounded-full blur-3xl -z-10"></div>
+        <div className="absolute top-1/2 left-1/4 w-1/5 h-1/5 bg-red-500/5 rounded-full blur-3xl -z-10"></div>
         
         <div className="container px-4 md:px-6 mx-auto relative z-10">
           <div className="max-w-3xl mx-auto text-center mb-12">
-            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Projects Portfolio</h1>
-            <p className="text-lg text-muted-foreground backdrop-blur-sm bg-background/30 p-3 rounded-lg inline-block">
-              Exploring the intersection of nanochemistry and data science through research and innovation.
-            </p>
+            <h1 className="text-3xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent pb-2"> {/* Added pb-2 */}
+              projects
+            </h1>
+            {/* <p className="text-lg text-muted-foreground backdrop-blur-sm bg-background/30 p-3 rounded-lg inline-block">
+            Description
+            </p> */}
           </div>
 
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -56,10 +56,14 @@ const Projects: React.FC = () => {
             </div>
             
             <TabsContent value="all" className="mt-0">
-              <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Scientific Projects</h2>
+              <h2 className="text-2xl font-semibold mb-8 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent pb-1"> {/* Added pb-1 for consistency if descenders are an issue */}
+                Scientific Projects
+              </h2>
               <ProjectGrid projects={scientificProjects} />
               
-              <h2 className="text-2xl font-semibold mb-8 mt-16 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Community Projects</h2>
+              <h2 className="text-2xl font-semibold mb-8 mt-16 bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent pb-1"> {/* Added pb-1 */}
+                Community Projects
+              </h2>
               <ProjectGrid projects={communityProjects} />
             </TabsContent>
             
@@ -77,11 +81,15 @@ const Projects: React.FC = () => {
   );
 };
 
+// ... (ProjectGrid and ProjectCard components remain the same) ...
 interface ProjectGridProps {
   projects: ProjectData[];
 }
 
 const ProjectGrid: React.FC<ProjectGridProps> = ({ projects }) => {
+  if (!projects || projects.length === 0) {
+    return <p className="text-muted-foreground text-center col-span-full">No projects in this category yet.</p>;
+  }
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       {projects.map(project => (
@@ -96,14 +104,19 @@ interface ProjectCardProps {
 }
 
 const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+  // Function to scroll to top, to be used with Link
+  const scrollToTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
-    <Link to={`/projects/${project.id}`} className="group">
+    <Link to={`/projects/${project.id}`} className="group" onClick={scrollToTop}>
       <div className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 backdrop-blur-sm bg-background/40 h-full transform group-hover:translate-y-[-5px] flex flex-col">
         <div className="relative">
           <AspectRatio ratio={16/9}>
-            <img 
-              src={project.image} 
-              alt={project.title} 
+            <img
+              src={project.image}
+              alt={project.title}
               className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
             />
             <div className="absolute top-2 left-2">
@@ -132,5 +145,4 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
     </Link>
   );
 };
-
 export default Projects;

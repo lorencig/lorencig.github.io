@@ -25,6 +25,7 @@ export interface ProjectData {
     repositoryUrl?: string;
     keyTechnologies?: string[];
     fundingSource?: string;
+    externalLink?: string;
 
     doi?: string; 
 }

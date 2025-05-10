@@ -16,7 +16,7 @@ const project2Data: ProjectData = {
   results: "OPC UA Interface is a fully functional, open-source Python tool for automating laboratory pump control, freely downloadable and customizable from its GitHub repository. It offers a robust GUI for creating and executing pump action sequences, with real-time status and timing feedback, published under a Creative Commons Attribution License on GitHub and Zenodo with a DOI for academic referencing.",
   isFeatured: true,
   // --- ADDING DOI ---
-  doi: "https://zenodo.org/records/12799898", // Replace with a real DOI if available
+  doi: "10.5281/zenodo.12799898", // Replace with a real DOI if available
 };
 
 export default project2Data;

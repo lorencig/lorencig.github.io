@@ -9,12 +9,13 @@ const project4Data: ProjectData = {
   tags: ["AI 4 Health", "Public Health"],
   category: "Community",
   date: "2024-10-31",
-  status: "Pasive",
+  status: "Inactive - Upgrading",
   collaborators: ["Fatjon Hallkaj", "Erjon Hysa"],
   features: "Medikons was developed by identifying the need for accessible health data interpretation in Albanian-speaking regions. The platform was designed using AI models to process and simplify clinical test results, with a user-friendly interface for uploading data (PDFs, images, or real-time captures). Secure data storage was implemented to comply with high security standards, and specialist recommendation logic was integrated for abnormal results.",
   impact: "Medikons impacts Albanian-speaking communities by enabling individuals with limited medical knowledge to understand their clinical test results through clear, AI-driven explanations, fostering health literacy and empowerment. Additionally, it creates a secure database of health data, serving as a valuable resource for research and public health studies in Albania and Kosovo.",
   futureEnhancements: "Medikons next steps include reactivating the platform with user profiles for secure health record storage and future download.",
   isFeatured: true,
+  externalLink: ""
 };
 
 export default project4Data;
