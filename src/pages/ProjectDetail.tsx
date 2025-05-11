@@ -131,6 +131,20 @@ const ProjectDetail: React.FC = () => {
                   </div>
                 )}
 
+                {isScientific && project.externalLink && (
+                  <div className="mb-6">
+                    <a
+                      href={project.externalLink} // ← Corrected here
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center px-3 py-1.5 rounded-md text-xs font-medium transition-colors break-all bg-slate-100 text-slate-700 hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                    >
+                      <ExternalLink className="mr-1.5 h-3.5 w-3.5 flex-shrink-0" />
+                      Link: {project.externalLink}
+                    </a>
+                  </div>
+                )}
+
                 {isCommunity && project.externalLink && (
                   <div className="mb-6">
                     <a
@@ -170,14 +184,14 @@ const ProjectDetail: React.FC = () => {
                     </p>
                   )}
 
-                  <Tabs defaultValue="details" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 md:grid-cols-auto md:inline-flex backdrop-blur-sm bg-muted/50 p-1 rounded-lg mb-6">
-                      <TabsTrigger value="details">Details</TabsTrigger>
-                      {isScientific && project.methodology && <TabsTrigger value="methodology">Methodology</TabsTrigger>}
-                      {isScientific && (project.results || project.nextSteps) && <TabsTrigger value="results">Results & Next</TabsTrigger>}
-                      {!isScientific && project.features && <TabsTrigger value="features">Features</TabsTrigger>}
-                      {!isScientific && (project.impact || project.futureEnhancements) && <TabsTrigger value="impact">Impact & Future</TabsTrigger>}
-                    </TabsList>
+<Tabs defaultValue="details" className="w-full">
+  <TabsList className="flex flex-wrap w-full md:inline-flex gap-2 p-1 backdrop-blur-sm bg-muted/50 rounded-lg mb-6 h-fit"> {/* Added h-fit */}
+    <TabsTrigger value="details">Details</TabsTrigger>
+    {isScientific && project.methodology && <TabsTrigger value="methodology">Methodology</TabsTrigger>}
+    {isScientific && (project.results || project.nextSteps) && <TabsTrigger value="results">Results & Next</TabsTrigger>}
+    {!isScientific && project.features && <TabsTrigger value="features">Features</TabsTrigger>}
+    {!isScientific && (project.impact || project.futureEnhancements) && <TabsTrigger value="impact">Impact & Future</TabsTrigger>}
+  </TabsList>
 
                     <TabsContent value="details" className="pt-2">
                       <div className="space-y-6">

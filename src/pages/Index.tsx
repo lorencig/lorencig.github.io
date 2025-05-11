@@ -100,7 +100,7 @@ const Index: React.FC = () => {
               </Button>
             </div>
           </div>
-          <div className="relative h-96 rounded-2xl bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 flex items-center justify-center p-8 animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
+          <div className="relative rounded-2xl bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 flex items-center justify-center p-8 animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
             <div className="bg-background/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-white/10">
               <h2 className="text-2xl font-semibold mb-4">Research Focus</h2>
               <div className="flex flex-col space-y-4">
@@ -142,7 +142,7 @@ const Index: React.FC = () => {
         <div className="container px-4 md:px-6 mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold italic mb-12 text-center bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Qui Sum</h2>
           <div className="max-w-3xl mx-auto bg-background/80 backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/10">
-          <p className="text-lg mb-6 leading-relaxed  text-justify">
+          <p className="text-lg mb-6 leading-relaxed">
             Greetings! 👋 I’m Lorenci Gjurgjaj. Currently, I’m pursuing my PhD at The Open University
   <img
     src="/flags/gb.svg"
@@ -154,7 +154,7 @@ const Index: React.FC = () => {
     alt="Italian Flag"
     className="inline-block h-5 w-auto mx-1 align-middle"
   /> where I’m involved in the Nanomaterials for Biomedical Applications department. Here, my work centers around the development of scalable methods for producing magnetic-inorganic nanomaterials tailored for applications in cancer theragnostics and other biomedical areas.            </p>
-            <p className="text-lg mb-8 leading-relaxed text-justify">
+            <p className="text-lg mb-8 leading-relaxed">
             My academic journey began with a Master of Science degree in Chemistry, which I obtained from the Uni of Tirana
   <img
     src="/flags/al.svg"
@@ -172,7 +172,7 @@ const Index: React.FC = () => {
     className="inline-block h-5 w-auto mx-1 align-middle"
   />, where I focused on the bioactivity of different medicinal plant extractions.
             </p>
-            <p className="text-lg mb-8 leading-relaxed text-justify">
+            <p className="text-lg mb-8 leading-relaxed">
             Prior to embarking on my doctoral studies, I accumulated experience working in various research and industry settings. For five years, I was part of the Research Department at Ivodent Academy <img
     src="/flags/al.svg"
     alt="Albanian Flag"
