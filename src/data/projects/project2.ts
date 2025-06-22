@@ -15,7 +15,6 @@ const project2Data: ProjectData = {
   methodology: "The OPC UA Interface was developed through a streamlined methodology: requirements were gathered to address precise pump control needs in laboratory fluidic systems using the OPC UA protocol. A modular GUI was designed with Tkinter and ttkbootstrap, integrated with python-opcua for server communication, emphasizing action sequencing and monitoring. The application was coded with a program table, action/control buttons, and threaded execution, tested for accuracy with an OPC UA server, and validated via Codacy. It was released on GitHub with comprehensive documentation and a Zenodo DOI, licensed under Creative Commons for open customization.",
   results: "OPC UA Interface is a fully functional, open-source Python tool for automating laboratory pump control, freely downloadable and customizable from its GitHub repository. It offers a robust GUI for creating and executing pump action sequences, with real-time status and timing feedback, published under a Creative Commons Attribution License on GitHub and Zenodo with a DOI for academic referencing.",
   isFeatured: true,
-  // --- ADDING DOI ---
   doi: "10.5281/zenodo.12799898", // Replace with a real DOI if available
 };
 
