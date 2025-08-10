@@ -384,15 +384,15 @@ const Curriculum = () => {
             "--y": "0px",
           } as React.CSSProperties}
         >
-          <div className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 backdrop-blur-sm bg-background/40 p-8 md:p-12">
+          <div className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 backdrop-blur-sm bg-background/40 p-6 md:p-12">
             <p className="text-sm uppercase tracking-widest text-muted-foreground">Curriculum Vitae</p>
-            <h1 className="mt-2 text-4xl md:text-6xl font-bold leading-tight bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent pb-2">
+            <h1 className="mt-2 text-3xl md:text-6xl font-bold leading-tight bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent pb-2">
               Lorenci Gjurgjaj
             </h1>
-            <p className="mt-1 text-lg md:text-xl text-muted-foreground max-w-2xl">
+            <p className="mt-1 text-base md:text-xl text-muted-foreground max-w-2xl">
               From Atoms to Automation.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <Button asChild>
                 <a href="mailto:lorencigjurgjaj@gmail.com" aria-label="Contact via email">
                   <Mail className="mr-2 h-4 w-4" /> Contact
@@ -413,7 +413,7 @@ const Curriculum = () => {
         </div>
       </header>
 
-             <main className="container mx-auto px-6 py-12 space-y-12">
+             <main className="container mx-auto px-4 md:px-6 py-8 md:py-12 space-y-8 md:space-y-12">
          <CVSection id="employments" title="Experience" items={employments} />
          <CVSection id="education" title="Education" items={education} />
          <CVSection id="certifications" title="Certifications" items={certifications} />

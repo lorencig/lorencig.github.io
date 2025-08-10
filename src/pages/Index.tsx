@@ -91,7 +91,7 @@ const Index: React.FC = () => {
               </li>
             </ul>
           </div>
-            <div className="flex space-x-4 pt-4 animate-fade-in opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
+            <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-4 animate-fade-in opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
               <Button asChild size="lg" className="rounded-full bg-gradient-to-r from-[#A10100] to-[#F33C04] hover:opacity-90 transition-all">
                 <Link to="/projects" onClick={scrollToTop}>View Projects</Link>
               </Button>
@@ -100,30 +100,30 @@ const Index: React.FC = () => {
               </Button>
             </div>
           </div>
-          <div className="relative h-96 rounded-2xl bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 flex items-center justify-center p-8 animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
-            <div className="bg-background/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4">Core Focus</h2>
-              <div className="flex flex-col space-y-4">
+          <div className="relative h-auto min-h-[24rem] rounded-2xl bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 flex items-center justify-center p-4 md:p-8 animate-fade-in opacity-0 mt-8" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
+            <div className="bg-background/80 backdrop-blur-lg rounded-xl p-4 md:p-6 shadow-lg border border-white/10 w-full max-w-md">
+              <h2 className="text-xl md:text-2xl font-semibold mb-4">Core Focus</h2>
+              <div className="flex flex-col space-y-3 md:space-y-4">
                 <div className="flex items-start space-x-3">
-                  <Atom className="h-6 w-6 text-[#F33C04] mt-1" />
-                  <p className="text-muted-foreground">
+                  <Atom className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
+                  <p className="text-sm md:text-base text-muted-foreground">
                   Developing advanced nanomaterials and scalable production methods for a targeted cancer therapy known as Magnetic Hyperthermia.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Pi className="h-6 w-6 text-[#F33C04] mt-1" />
-                  <p className="text-muted-foreground">
+                  <Pi className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
+                  <p className="text-sm md:text-base text-muted-foreground">
                   Designing and building continuous flow systems that make complex chemical processes more efficient and reproducible.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Code className="h-6 w-6 text-[#F33C04] mt-1" />
-                  <p className="text-muted-foreground">
+                  <Code className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
+                  <p className="text-sm md:text-base text-muted-foreground">
                   Creating custom software that integrates and automates the entire scientific workflow, from data management to analysis.                  </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <DraftingCompass className="h-6 w-6 text-[#F33C04] mt-1" />
-                  <p className="text-muted-foreground">
+                  <DraftingCompass className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
+                  <p className="text-sm md:text-base text-muted-foreground">
                   Leading complex technical and organizational projects from the initial idea through to successful, real-world completion.                  </p>
                 </div>
               </div>
@@ -141,7 +141,7 @@ const Index: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold italic mb-12 text-center bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Qui Sum</h2>
           <div className="max-w-3xl mx-auto bg-background/80 backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/10">
           <p className="text-lg mb-6 leading-relaxed text-center md:text-justify">
-            Hello! 👋 I'm Lorenci Gjurgjaj. As a PhD researcher at the Istituto Italiano di Tecnologia (IIT) and The Open University, my work centers on a core challenge in nanotechnology:  how to produce advanced materials for a targeted cancer therapy known as Magnetic Hyperthermia, while solving the key issues of consistency, scale, and sustainability.
+            Hello! 👋 I'm Lorenci Gjurgjaj. As a PhD researcher at the Istituto Italiano di Tecnologia and The Open University, my work centers on a core challenge in nanotechnology:  how to produce advanced materials for a targeted cancer therapy known as Magnetic Hyperthermia, while solving the key issues of consistency, scale, and sustainability.
             </p>
             <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
             My approach combines a foundation in chemistry with a practical passion for building my own tools. To solve these challenges of scale and reproducibility, I develop automated continuous-flow systems, write custom software for data management, and build digitally-controlled workflows from the ground up.
