@@ -43,6 +43,13 @@ const Navigation: React.FC = () => {
           >
             thoughts
           </Link>
+
+          <Link 
+            to="/curriculum" 
+            className={cn("hover-link", isActive("/curriculum") && "text-primary font-medium")}
+          >
+            CV
+          </Link>
           <ThemeToggle />
         </nav>
         
@@ -77,6 +84,8 @@ const MobileNav: React.FC = () => {
             <Link to="/projects" className="p-2" onClick={() => setIsOpen(false)}>Projects</Link>
             <Link to="/publications" className="p-2" onClick={() => setIsOpen(false)}>Publications</Link>
             <Link to="/blog" className="p-2" onClick={() => setIsOpen(false)}>Blog</Link>
+
+            <Link to="/curriculum" className="p-2" onClick={() => setIsOpen(false)}>CV</Link>
           </div>
         </div>
       )}

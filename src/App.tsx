@@ -10,6 +10,8 @@ import Projects from "./pages/Projects";
 import ProjectDetail from "./pages/ProjectDetail";
 import Publications from "./pages/Publications";
 import Blog from "./pages/Blog";
+import DeSci from "./pages/DeSci";
+import Curriculum from "./pages/Curriculum";
 import { ThemeProvider } from "./components/ThemeProvider";
 
 const queryClient = new QueryClient();
@@ -27,6 +29,8 @@ const App = () => (
             <Route path="/projects/:id" element={<ProjectDetail />} />
             <Route path="/publications" element={<Publications />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/desci" element={<DeSci />} />
+            <Route path="/curriculum" element={<Curriculum />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

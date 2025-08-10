@@ -102,31 +102,29 @@ const Index: React.FC = () => {
           </div>
           <div className="relative h-96 rounded-2xl bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 flex items-center justify-center p-8 animate-fade-in opacity-0" style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}>
             <div className="bg-background/80 backdrop-blur-lg rounded-xl p-6 shadow-lg border border-white/10">
-              <h2 className="text-2xl font-semibold mb-4">Research Focus</h2>
+              <h2 className="text-2xl font-semibold mb-4">Core Focus</h2>
               <div className="flex flex-col space-y-4">
                 <div className="flex items-start space-x-3">
                   <Atom className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                  Scalable Synthesis of Magnetic and Inorganic Nanoparticles
+                  Developing advanced nanomaterials and scalable production methods for a targeted cancer therapy known as Magnetic Hyperthermia.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Pi className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                  Design, Modeling, and Assembly of Fluidic Systems for Chemical Processes
+                  Designing and building continuous flow systems that make complex chemical processes more efficient and reproducible.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Code className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                  Automation and Software Solutions for Chemical Research Workflows
-                  </p>
+                  Creating custom software that integrates and automates the entire scientific workflow, from data management to analysis.                  </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <DraftingCompass className="h-6 w-6 text-[#F33C04] mt-1" />
                   <p className="text-muted-foreground">
-                  Machine Learning for Optimization and Predictive Modeling
-                  </p>
+                  Leading complex technical and organizational projects from the initial idea through to successful, real-world completion.                  </p>
                 </div>
               </div>
             </div>
@@ -142,42 +140,17 @@ const Index: React.FC = () => {
         <div className="container px-4 md:px-6 mx-auto">
           <h2 className="text-3xl md:text-4xl font-bold italic mb-12 text-center bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Qui Sum</h2>
           <div className="max-w-3xl mx-auto bg-background/80 backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/10">
-          <p className="text-lg mb-6 leading-relaxed  text-justify">
-            Greetings! 👋 I’m Lorenci Gjurgjaj. Currently, I’m pursuing my PhD at The Open University
-  <img
-    src="/flags/gb.svg"
-    alt="Great Britain Flag"
-    className="inline-block h-5 w-auto mx-1 align-middle"
-  /> within the IIT Open University Affiliated Research Centre. My primary focus is on advancing research at the intersection of nanomaterials and biomedical applications. Specifically, I’m based at the <a href="https://nanobio.iit.it/" className="underline" target="_blank" rel="noopener noreferrer">Istituto Italiano di Tecnologia</a>
-  <img
-    src="/flags/it.svg"
-    alt="Italian Flag"
-    className="inline-block h-5 w-auto mx-1 align-middle"
-  /> where I’m involved in the Nanomaterials for Biomedical Applications department. Here, my work centers around the development of scalable methods for producing magnetic-inorganic nanomaterials tailored for applications in cancer theragnostics and other biomedical areas.            </p>
-            <p className="text-lg mb-8 leading-relaxed text-justify">
-            My academic journey began with a Master of Science degree in Chemistry, which I obtained from the Uni of Tirana
-  <img
-    src="/flags/al.svg"
-    alt="Albanian Flag"
-    className="inline-block h-5 w-auto mx-1 align-middle"
-  /> and the Uni of Maribor
-  <img
-    src="/flags/si.svg"
-    alt="Slovenian Flag"
-    className="inline-block h-5 w-auto mx-1 align-middle"
-  />. Additionally, I had the opportunity to visit through a Short-Term-Scientific Mobility, The Institute of Bioorganic Chemistry at the Uni of Saarland
-  <img
-    src="/flags/de.svg"
-    alt="German Flag"
-    className="inline-block h-5 w-auto mx-1 align-middle"
-  />, where I focused on the bioactivity of different medicinal plant extractions.
+          <p className="text-lg mb-6 leading-relaxed text-center md:text-justify">
+            Hello! 👋 I'm Lorenci Gjurgjaj. As a PhD researcher at the Istituto Italiano di Tecnologia (IIT) and The Open University, my work centers on a core challenge in nanotechnology:  how to produce advanced materials for a targeted cancer therapy known as Magnetic Hyperthermia, while solving the key issues of consistency, scale, and sustainability.
             </p>
-            <p className="text-lg mb-8 leading-relaxed text-justify">
-            Prior to embarking on my doctoral studies, I accumulated experience working in various research and industry settings. For five years, I was part of the Research Department at Ivodent Academy <img
-    src="/flags/al.svg"
-    alt="Albanian Flag"
-    className="inline-block h-5 w-auto mx-1 align-middle"
-  />. where I engaged in diverse projects spanning high-pressure applications, medical and aromatic plant extraction studies, and thermal characterization of inorganic materials. Furthermore, I gained practical experience as a product technologist for the distributor of leading scientific equipment brands such as Netzch, Sartorius, Bruker, Memmert, and Thermo Fischer in Albania.
+            <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
+            My approach combines a foundation in chemistry with a practical passion for building my own tools. To solve these challenges of scale and reproducibility, I develop automated continuous-flow systems, write custom software for data management, and build digitally-controlled workflows from the ground up.
+            </p>
+            <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
+            This drive to build and manage complex systems has shaped my entire career. Prior to my doctoral studies, I had the opportunity to lead several large-scale initiatives. I steered the complete digital transformation of an academic institution and managed the successful launch of a new Master's program, handling its full scope from initial planning and logistics to securing collaborations with key industry partners.
+            </p>
+            <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
+            Ultimately, I'm motivated by the process of finding a solution, whether it's rooted in a chemical reaction, a piece of code, or a collaborative team project.
             </p>
             <div className="mt-12 flex flex-col items-center">
               <h3 className="text-xl font-medium mb-4">Connect</h3>
