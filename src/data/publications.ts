@@ -74,4 +74,15 @@ export const allPublicationsData: PublicationData[] = [
     isFeatured: true,
     abstract: "The presence as second phase (in our case 10%) of β-TCP is known from the literature in SS syntheses, resulting possibly from the different precursors of synthesis. Aiming to produce HAp as pure as possible, precursors Calcium DiHydrogenPhosphate and Calcium carbonate and the temperature of 900⁰C seems optimal. Altering reaction times could further optimize the phases. SS synthesis at 900⁰C could be the proper route for the production of other cation substituted (Sr, Zn, Ag) HAp for dental applications."
   },
+  {
+    id: 8,
+    title: "Retrieval-Augmented Generation (RAG) AI for Enhanced Learning in Specialized Higher Education",
+    authors: "Lorenci Gjurgjaj, Jeta Lica, Fatjon Hallkaj, Antonina Mema, Prof. Altin Mele",
+    journal: "Research Expertise from the Academic Diaspora Conference 2025",
+    year: 2025,
+    doi: undefined,
+    isFeatured: true,
+    showFullPaperButton: true,
+    fullPaperRoute: "/read2025"
+  },
 ];

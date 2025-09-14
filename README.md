@@ -58,7 +58,13 @@ This command will:
 # Build the project
 npm run build
 
-# Deploy manually
+# Deploy to GitHub Pages
+npx gh-pages -d dist
+```
+
+**Quick Deploy Commands:**
+```bash
+npm run build
 npx gh-pages -d dist
 ```
 

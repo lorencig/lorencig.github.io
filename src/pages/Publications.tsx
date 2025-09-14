@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { PublicationData } from '@/common/types'; // Ensure this type includes 'doi' and 'link'
 import { allPublicationsData } from '@/data/publications';
-import { BookText, Link as LinkIcon } from 'lucide-react';
+import { BookText, Link as LinkIcon, FileText } from 'lucide-react';
 
 const Publications: React.FC = () => {
   const publicationsByYear = allPublicationsData.reduce((acc, pub) => {
@@ -151,8 +152,19 @@ const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
           </a>
         ) : null} {/* If neither DOI nor general link exists, render nothing in this spot */}
 
-        {/* Abstract Button (remains unchanged) */}
-        {publication.abstract && (
+        {/* Abstract Button or Full Paper Button */}
+        {publication.showFullPaperButton ? (
+          <Link to={publication.fullPaperRoute || '/read2025'}>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
+              <FileText size={16} />
+              Show Full Paper
+            </Button>
+          </Link>
+        ) : publication.abstract ? (
           <Button
             variant="outline"
             size="sm"
@@ -164,7 +176,7 @@ const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
             <BookText size={16} />
             {isAbstractVisible ? 'Hide Abstract' : 'Show Abstract'}
           </Button>
-        )}
+        ) : null}
 
       </CardFooter>
       {/* Added hidden abstract for accessibility */}

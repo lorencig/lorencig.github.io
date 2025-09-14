@@ -165,7 +165,7 @@ const ProjectDetail: React.FC = () => {
                 )}
                 <div className="p-6 md:p-8">
                   {project.fullDescription && (
-                    <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed prose dark:prose-invert max-w-none">
+                    <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed prose dark:prose-invert max-w-none whitespace-pre-line">
                         {project.fullDescription}
                     </p>
                   )}

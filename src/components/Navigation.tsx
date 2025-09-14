@@ -26,6 +26,12 @@ const Navigation: React.FC = () => {
             dashboard
           </Link>
           <Link 
+            to="/phd-project" 
+            className={cn("hover-link", isActive("/phd-project") && "text-primary font-medium")}
+          >
+            phd project
+          </Link>
+          <Link 
             to="/projects" 
             className={cn("hover-link", isActive("/projects") && "text-primary font-medium")}
           >
@@ -81,6 +87,7 @@ const MobileNav: React.FC = () => {
         <div className="absolute top-16 right-0 left-0 bg-background border-b border-border">
           <div className="py-4 px-4 flex flex-col space-y-4">
             <Link to="/" className="p-2" onClick={() => setIsOpen(false)}>Home</Link>
+            <Link to="/phd-project" className="p-2" onClick={() => setIsOpen(false)}>PhD Project</Link>
             <Link to="/projects" className="p-2" onClick={() => setIsOpen(false)}>Projects</Link>
             <Link to="/publications" className="p-2" onClick={() => setIsOpen(false)}>Publications</Link>
             <Link to="/blog" className="p-2" onClick={() => setIsOpen(false)}>Blog</Link>

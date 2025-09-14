@@ -22,6 +22,8 @@ import {
 import { ProjectData, PublicationData } from '@/common/types'; // Import common types
 import { allProjectsData } from '@/data/projects';
 import { allPublicationsData } from '@/data/publications'; // Import all publications data
+import { Badge } from '@/components/ui/badge';
+import { Calendar, GraduationCap, MapPin, Target } from 'lucide-react';
 
 const Index: React.FC = () => {
   const featuredProjects = React.useMemo(() =>
@@ -36,6 +38,25 @@ const Index: React.FC = () => {
       .slice(0, 2), // Take the top 2 featured publications
     [] // allPublicationsData is static
   );
+
+  // Calculate PhD research progress automatically
+  const calculateResearchProgress = () => {
+    const startDate = new Date('2024-04-01');
+    const endDate = new Date('2028-03-31');
+    const currentDate = new Date();
+    
+    // Ensure current date is within the project timeline
+    if (currentDate < startDate) return 0;
+    if (currentDate > endDate) return 100;
+    
+    const totalDuration = endDate.getTime() - startDate.getTime();
+    const elapsedDuration = currentDate.getTime() - startDate.getTime();
+    
+    const progressPercentage = Math.round((elapsedDuration / totalDuration) * 100);
+    return Math.min(Math.max(progressPercentage, 0), 100); // Ensure between 0-100
+  };
+
+  const researchProgress = calculateResearchProgress();
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -156,6 +177,85 @@ const Index: React.FC = () => {
               <h3 className="text-xl font-medium mb-4">Connect</h3>
               <SocialIcons iconSize={28} />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PhD Project Preview */}
+      <section className="py-24">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Doctoral Project</h2>
+            <Button variant="outline" asChild className="rounded-full">
+              <Link to="/phd-project" onClick={scrollToTop}>View Full Project</Link>
+            </Button>
+          </div>
+          <div className="max-w-6xl mx-auto">
+            <Card className="border-2 border-border/50 shadow-lg overflow-hidden">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
+                {/* Left side - Project info */}
+                <div className="p-8 lg:p-12 flex flex-col justify-center">
+                  <div className="mb-6">
+                    <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+                      In Progress
+                    </Badge>
+                    <h3 className="text-2xl lg:text-3xl font-bold mb-4 leading-tight">
+                    Scalable Synthesis Of Magnetic-inorganic Nanomaterials For Biomedical Applications
+                    </h3>
+                    <p className="text-muted-foreground text-lg leading-relaxed">
+                    Smart Nanoparticles for Sustainable & Personalized Cancer Theranostics
+
+
+                    </p>
+                  </div>
+                  
+                  {/* Key details */}
+                  <div className="space-y-3 mb-8">
+                    <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+                      <Calendar className="h-4 w-4" />
+                      <span>2024 - 2028</span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+                      <GraduationCap className="h-4 w-4" />
+                      <span>The Open University, UK</span>
+                    </div>
+                    <div className="flex items-center space-x-3 text-sm text-muted-foreground">
+                      <MapPin className="h-4 w-4" />
+                      <span>Italian Institute of Technology, Italy</span>
+                    </div>
+                  </div>
+
+                  {/* Progress indicators */}
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-muted-foreground">Research Progress</span>
+                      <span className="font-medium">{researchProgress}% Complete</span>
+                    </div>
+                    <div className="w-full bg-muted rounded-full h-2">
+                      <div className="bg-gradient-to-r from-[#A10100] to-[#F33C04] h-2 rounded-full" style={{ width: `${researchProgress}%` }}></div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right side - Visual representation */}
+                <div className="bg-gradient-to-br from-blue-500/10 to-[#F33C04]/20 p-8 lg:p-12 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-[#A10100] to-[#F33C04] rounded-full flex items-center justify-center">
+                      <Target className="h-12 w-12 text-white" />
+                    </div>
+                    <h4 className="text-lg font-semibold mb-4">Research Focus</h4>
+                    <p className="text-muted-foreground text-base mb-6 leading-relaxed">
+                    Cancer remains one of the most complex health challenges, demanding solutions that go beyond conventional treatments. This research explores nano magnetic materials with the unique ability to both detect and treat cancer within a single platform, opening possibilities for approaches that are at once more precise and more adaptable. The focus is on designing ways to produce these materials reliably and sustainably, while investigating how their properties can be harnessed in combination with cutting-edge imaging and therapeutic strategies. By pushing the boundaries of what these materials can do, the project aims to bring medicine closer to treatments tailored not only to the disease, but to the individual.
+                    </p>
+                    <Button asChild size="sm" className="bg-gradient-to-r from-[#A10100] to-[#F33C04] hover:opacity-90">
+                      <Link to="/phd-project" onClick={scrollToTop}>
+                        Read More
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </Card>
           </div>
         </div>
       </section>

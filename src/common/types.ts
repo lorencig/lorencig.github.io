@@ -42,5 +42,7 @@ export interface PublicationData {
     doi: string;
     isFeatured?: boolean; // Added for homepage feature
     link?: string; // Optional direct link to the publication PDF or page
-    abstract?: string; 
+    abstract?: string;
+    showFullPaperButton?: boolean; // If true, shows "Show Full Paper" button instead of abstract
+    fullPaperRoute?: string; // Route to navigate to when "Show Full Paper" is clicked
   }
