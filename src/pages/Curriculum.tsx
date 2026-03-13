@@ -23,6 +23,43 @@ const Curriculum = () => {
 
   const employments: CVItem[] = [
     {
+      id: "emp-bioxi",
+      title: "Co-Founder & Chief Technology Officer",
+      org: "BiOXI",
+      period: "September 2025 — Current",
+      location: "Genoa, Italy",
+      tags: ["Cancer Theranostics", "Nanomedicine", "Entrepreneurship"],
+      details: (
+        <div className="space-y-3">
+          <p>Spin-off of the Italian Institute of Technology.</p>
+          <ul className="list-disc list-inside space-y-2">
+            <li>Co-founded a deep-tech biotech startup developing a nanoparticle-based platform for precise cancer detection and surgical guidance.</li>
+            <li>Lead the technology development roadmap, covering nanoparticle engineering, device development, and automation.</li>
+            <li>Design and scale manufacturing processes for magnetic nanoparticles for biomedical applications.</li>
+            <li>Develop and optimize the Cytotizer device, enabling automated loading of nanoparticles into immune cells.</li>
+            <li>Oversee digitalization, automation, and production workflows supporting preclinical validation and clinical translation.</li>
+          </ul>
+        </div>
+      ),
+    },
+    {
+      id: "emp-pi9",
+      title: "Founder & Chairman",
+      org: "π⁹",
+      period: "2024 — Current",
+      location: "Tirana, Albania & Stockholm, Sweden",
+      tags: ["Science & Technology", "Innovation", "Leadership"],
+      details: (
+        <ul className="list-disc list-inside space-y-2">
+          <li>Founded and lead governance, long-term strategy, and international development of a science-driven startup translating advanced research into scalable solutions.</li>
+          <li>Coordinate an international team across Albania, Sweden, and Italy working on projects spanning science, health, education, and industrial applications.</li>
+          <li>Direct research and development activities including AI, data science, IoT systems, digital platforms, and hardware solutions.</li>
+          <li>Provide scientific and engineering consulting services including technology audits, process analysis, prototype development, and proof-of-concept systems.</li>
+          <li>Develop partnerships with research institutions, industry, and public organizations to translate scientific innovation into market-ready applications.</li>
+        </ul>
+      ),
+    },
+    {
       id: "emp-1",
       title: "Research Fellow",
       org: "Istituto Italiano di Tecnologia (IIT)",

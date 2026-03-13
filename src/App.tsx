@@ -14,6 +14,7 @@ import DeSci from "./pages/DeSci";
 import Curriculum from "./pages/Curriculum";
 import PhDProject from "./pages/phdproject";
 import READ2025 from "./pages/READ2025";
+import Essay from "./pages/Essay";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { useAnalytics } from "./hooks/use-analytics";
 
@@ -30,6 +31,7 @@ const AppContent = () => {
       <Route path="/projects/:id" element={<ProjectDetail />} />
       <Route path="/publications" element={<Publications />} />
       <Route path="/blog" element={<Blog />} />
+      <Route path="/essays/:slug" element={<Essay />} />
       <Route path="/desci" element={<DeSci />} />
       <Route path="/curriculum" element={<Curriculum />} />
       <Route path="/phd-project" element={<PhDProject />} />

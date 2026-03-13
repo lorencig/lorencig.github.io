@@ -110,6 +110,39 @@ const Index: React.FC = () => {
                   className="ml-2 h-5 w-auto"
                 />
               </li>
+              <li
+                className="animate-fade-in opacity-0"
+                style={{ animationDelay: "0.8s", animationFillMode: "forwards" }}
+              >
+                <div className="h-px bg-border/60 my-2"></div>
+              </li>
+              <li
+                className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
+                style={{ animationDelay: "0.9s", animationFillMode: "forwards" }}
+              >
+                <span>
+                  Founder & Chairman -{" "}
+                  <span className="text-2xl font-normal leading-none">
+                    π⁹
+                  </span>
+                </span>
+                <img
+                  src="/flags/eu.png"
+                  alt="European Flag"
+                  className="ml-2 h-5 w-auto"
+                />
+              </li>
+              <li
+                className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
+                style={{ animationDelay: "1.1s", animationFillMode: "forwards" }}
+              >
+                <span>co-Founder & CTO - BiOXI</span>
+                <img
+                  src="/flags/it.svg"
+                  alt="Italian Flag"
+                  className="ml-2 h-5 w-auto"
+                />
+              </li>
             </ul>
           </div>
             <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 pt-4 animate-fade-in opacity-0" style={{ animationDelay: "0.6s", animationFillMode: "forwards" }}>
@@ -128,24 +161,32 @@ const Index: React.FC = () => {
                 <div className="flex items-start space-x-3">
                   <Atom className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
                   <p className="text-sm md:text-base text-muted-foreground">
-                  Developing advanced nanomaterials and scalable production methods for a targeted cancer therapy known as Magnetic Hyperthermia.
+                  Developing advanced nanomaterials for Magnetic Hyperthermia cancer therapy.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Pi className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
+                  <Target className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
                   <p className="text-sm md:text-base text-muted-foreground">
-                  Designing and building continuous flow systems that make complex chemical processes more efficient and reproducible.
+                  Designing continuous flow systems for reproducible nanomaterial synthesis at scale.
                   </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Code className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
                   <p className="text-sm md:text-base text-muted-foreground">
-                  Creating custom software that integrates and automates the entire scientific workflow, from data management to analysis.                  </p>
+                  Building automatation and digital processes that integrates full scientific workflows.
+                  </p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <DraftingCompass className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
                   <p className="text-sm md:text-base text-muted-foreground">
-                  Leading complex technical and organizational projects from the initial idea through to successful, real-world completion.                  </p>
+                  Leading complex R&D projects from initial idea to real-world completion.
+                  </p>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <Pi className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
+                  <p className="text-sm md:text-base text-muted-foreground">
+                  Translating deep-tech research into scalable deep tech ventures.
+                  </p>
                 </div>
               </div>
             </div>
@@ -162,21 +203,94 @@ const Index: React.FC = () => {
           <h2 className="text-3xl md:text-4xl font-bold italic mb-12 text-center bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">Qui Sum</h2>
           <div className="max-w-3xl mx-auto bg-background/80 backdrop-blur-lg rounded-xl p-8 shadow-lg border border-white/10">
           <p className="text-lg mb-6 leading-relaxed text-center md:text-justify">
-            Hello! 👋 I'm Lorenci Gjurgjaj. As a PhD researcher at the Istituto Italiano di Tecnologia and The Open University, my work centers on a core challenge in nanotechnology:  how to produce advanced materials for a targeted cancer therapy known as Magnetic Hyperthermia, while solving the key issues of consistency, scale, and sustainability.
+            Hello! 👋 I'm Lorenci Gjurgjaj. As a researcher at the Istituto Italiano di Tecnologia and PhD candidate at The Open University, my work centres on a core challenge in nanotechnology: how to produce advanced materials for a targeted cancer therapy known as Magnetic Hyperthermia, while solving the key issues of consistency, scale, and sustainability.
             </p>
             <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
-            My approach combines a foundation in chemistry with a practical passion for building my own tools. To solve these challenges of scale and reproducibility, I develop automated continuous-flow systems, write custom software for data management, and build digitally-controlled workflows from the ground up.
+            My approach combines a foundation in chemistry with a practical passion for building my own tools. To solve these challenges of scale and reproducibility, I develop automated continuous flow systems, write custom software for data management, and build digitally-controlled workflows from the ground up.
             </p>
             <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
-            This drive to build and manage complex systems has shaped my entire career. Prior to my doctoral studies, I had the opportunity to lead several large-scale initiatives. I steered the complete digital transformation of an academic institution and managed the successful launch of a new Master's program, handling its full scope from initial planning and logistics to securing collaborations with key industry partners.
+            This research has grown beyond the laboratory. I co-founded BiOXI, a deep-tech biotech spin-off of IIT, where as CTO I lead the technology roadmap, from nanoparticle engineering and device development to automated manufacturing and clinical translation. In parallel, I founded π⁹, a science-driven startup coordinating international projects across research, health, education, and industrial applications.
             </p>
             <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
-            Ultimately, I'm motivated by the process of finding a solution, whether it's rooted in a chemical reaction, a piece of code, or a collaborative team project.
+            This drive to build and manage complex systems has shaped my entire career. Prior to my doctoral studies, I had the opportunity to lead several large-scale initiatives: I steered the complete digital transformation of an academic institution and managed the successful launch of a new Master's programme, handling its full scope from initial planning and logistics to securing collaborations with key industry partners.
+            </p>
+            <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
+            Ultimately, I'm motivated by the process of finding a solution, whether it's rooted in a chemical reaction, a piece of code, a new company, or a collaborative team project.
             </p>
             <div className="mt-12 flex flex-col items-center">
               <h3 className="text-xl font-medium mb-4">Connect</h3>
               <SocialIcons iconSize={28} />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Ventures */}
+      <section className="py-24">
+        <div className="container px-4 md:px-6 mx-auto">
+          <div className="flex justify-between items-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#A10100] to-[#F33C04] bg-clip-text text-transparent">
+              Ventures
+            </h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Card className="relative overflow-hidden bg-card/60 backdrop-blur-sm border border-border/50 hover:shadow-lg transition-all h-full rounded-2xl">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#A10100] to-[#F33C04]" />
+              <CardHeader className="pb-2">
+                <div className="flex items-start justify-between">
+                  <div className="h-28 w-28 rounded-xl bg-background/80 border border-white/10 p-2 flex items-center justify-center">
+                    <img src="/flags/BiOXI 4K.svg" alt="BiOXI logo" className="h-full w-full object-contain" />
+                  </div>
+                  <Badge className="bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-200 border-0 text-xs">
+                    co-Founder & CTO
+                  </Badge>
+                </div>
+                <CardTitle className="text-3xl mt-4">BiOXI</CardTitle>
+                <CardDescription className="text-base">
+                  Genoa, Italy · Spin-off
+                </CardDescription>
+                <p className="text-sm text-muted-foreground">Sep 2025 — Present</p>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <p className="text-lg text-foreground/85 leading-relaxed">
+                  Deep-tech biotech developing a nanoparticle-based platform for precise cancer detection and surgical guidance. Leading full technology roadmap from nanoparticle engineering, device automation, and quality control.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline">Cancer Theranostics</Badge>
+                  <Badge variant="outline">Nanomedicine</Badge>
+                  <Badge variant="outline">Medical Devices</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="relative overflow-hidden bg-card/60 backdrop-blur-sm border border-border/50 hover:shadow-lg transition-all h-full rounded-2xl">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#6C63FF] to-[#8F88FF]" />
+              <CardHeader className="pb-2">
+                <div className="flex items-start justify-between">
+                  <div className="h-28 w-28 rounded-xl bg-background/80 border border-white/10 p-1 flex items-center justify-center overflow-hidden">
+                    <img src="/flags/π9 color.png" alt="π⁹ logo" className="h-full w-full object-contain" />
+                  </div>
+                  <Badge className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200 border-0 text-xs">
+                    Founder & Chairman
+                  </Badge>
+                </div>
+                <CardTitle className="text-3xl mt-4">π⁹</CardTitle>
+                <CardDescription className="text-base">
+                  Tirana & Stockholm · Science & Technology
+                </CardDescription>
+                <p className="text-sm text-muted-foreground">2024 — Present</p>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <p className="text-lg text-foreground/85 leading-relaxed">
+                  Science-driven startup translating advanced research into scalable solutions across research, health, education, and industry. Coordinating an international team across Albania, Sweden, and Italy.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline">AI Integration</Badge>
+                  <Badge variant="outline">Automation</Badge>
+                  <Badge variant="outline">Data Science</Badge>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>

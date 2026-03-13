@@ -1,9 +1,26 @@
 import React from 'react';
 import PageLayout from '@/components/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 // Define multi-line content using backticks (template literals)
 const quotes = [
+  {
+    id: 8,
+    title: "Did science create the university, or did the university create science?",
+    content: `The fall of Archaic Science. Autonomous labs. Decentralised science. Blockchain Book of Thoth. The rise of the Thought Artist.`,
+    date: "14 III 2026",
+    essaySlug: "shower-thought-university-and-research"
+  },
+  {
+    id: 7,
+    content: `While thinking about the theoretical atom, the basic unsplittable unit of matter, one must at some point think about energy.
+
+But energy itself, as a deposit, does it make any sense!? Or is it the dynamics of energy change that truly makes sense? A big stock of energy would amount to nothing if it stayed stationary.
+
+Now, I cannot decide if the flow of energy makes any sense at all without time.`,
+    date: "5 III 2026"
+  },
   {
     id: 6,
     content: `Just as you cannot start building and inventing new physical laws without harmonizing with the scientific work done through millennials.
@@ -89,8 +106,10 @@ const Blog: React.FC = () => {
 
 interface Quote {
   id: number;
+  title?: string;
   content: string;
   date: string; // date is correctly typed as string
+  essaySlug?: string;
 }
 
 interface QuoteCardProps {
@@ -108,10 +127,34 @@ const QuoteCard: React.FC<QuoteCardProps> = ({ quote }) => {
             {/* Icon or Avatar placeholder */}
           </div>
           <div className="flex-1">
+            {quote.title && (
+              <h3 className="text-xl md:text-2xl font-semibold mb-3 leading-snug">
+                {quote.essaySlug ? (
+                  <Link
+                    to={`/essays/${quote.essaySlug}`}
+                    className="hover:text-[#F33C04] transition-colors"
+                  >
+                    {quote.title}
+                  </Link>
+                ) : (
+                  quote.title
+                )}
+              </h3>
+            )}
             {/* whitespace-pre-wrap kept for multi-line content */}
             <blockquote className="text-lg md:text-xl font-medium text-foreground/90 mb-3 italic leading-relaxed whitespace-pre-wrap">
               “{quote.content}”
             </blockquote>
+            {quote.essaySlug && (
+              <div className="mb-3">
+                <Link
+                  to={`/essays/${quote.essaySlug}`}
+                  className="text-sm text-[#F33C04] hover:underline"
+                >
+                  Read full essay
+                </Link>
+              </div>
+            )}
             {/* Displaying quote.date string directly */}
             <p className="text-xs text-muted-foreground uppercase tracking-wider">
               {quote.date}
