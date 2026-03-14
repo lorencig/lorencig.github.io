@@ -81,7 +81,7 @@ const Index: React.FC = () => {
                 className="text-xl text-muted-foreground flex items-center animate-fade-in opacity-0"
                 style={{ animationDelay: "0.3s", animationFillMode: "forwards" }}
               >
-                <span>Fellow Researcher - Italian Institute of Technology</span>
+                <span>Researcher - Italian Institute of Technology</span>
                 <img
                   src="/flags/it.svg"
                   alt="Italian Flag"
@@ -185,7 +185,7 @@ const Index: React.FC = () => {
                 <div className="flex items-start space-x-3">
                   <Pi className="h-5 w-5 md:h-6 md:w-6 text-[#F33C04] mt-1 flex-shrink-0" />
                   <p className="text-sm md:text-base text-muted-foreground">
-                  Translating deep-tech research into scalable deep tech ventures.
+                  Translating scientific research into scalable deep-tech ventures.
                   </p>
                 </div>
               </div>
@@ -206,7 +206,7 @@ const Index: React.FC = () => {
             Hello! 👋 I'm Lorenci Gjurgjaj. As a researcher at the Istituto Italiano di Tecnologia and PhD candidate at The Open University, my work centres on a core challenge in nanotechnology: how to produce advanced materials for a targeted cancer therapy known as Magnetic Hyperthermia, while solving the key issues of consistency, scale, and sustainability.
             </p>
             <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
-            My approach combines a foundation in chemistry with a practical passion for building my own tools. To solve these challenges of scale and reproducibility, I develop automated continuous flow systems, write custom software for data management, and build digitally-controlled workflows from the ground up.
+            My approach combines a foundation in physics and chemistry with a practical passion for building my own tools. To solve these challenges of scale and reproducibility, I develop automated continuous flow systems, write custom softwares, and build digitally-controlled workflows from the ground up.
             </p>
             <p className="text-lg mb-8 leading-relaxed text-center md:text-justify">
             This research has grown beyond the laboratory. I co-founded BiOXI, a deep-tech biotech spin-off of IIT, where as CTO I lead the technology roadmap, from nanoparticle engineering and device development to automated manufacturing and clinical translation. In parallel, I founded π⁹, a science-driven startup coordinating international projects across research, health, education, and industrial applications.
@@ -282,7 +282,7 @@ const Index: React.FC = () => {
               </CardHeader>
               <CardContent className="space-y-5">
                 <p className="text-lg text-foreground/85 leading-relaxed">
-                  Science-driven startup translating advanced research into scalable solutions across research, health, education, and industry. Coordinating an international team across Albania, Sweden, and Italy.
+                  Science-driven venture builder turning frontier research into startups and scalable technologies. Our growing portfolio supports research institutions, healthcare startups, universities, and industry, with operations across Albania, Sweden, and Italy.
                 </p>
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="outline">AI Integration</Badge>
