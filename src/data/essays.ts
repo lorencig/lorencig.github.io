@@ -8,7 +8,7 @@ export interface Essay {
 
 export const essays: Essay[] = [
   {
-    slug: "shower-thought-university-and-research",
+    slug: "desci",
     title: "Did science create the university, or did the university create science?",
     subtitle:
       "The fall of Archaic Science. Autonomous labs. Decentralised science. Blockchain Book of Thoth. The rise of the Thought Artist.",

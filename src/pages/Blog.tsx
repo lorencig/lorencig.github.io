@@ -10,7 +10,7 @@ const quotes = [
     title: "Did science create the university, or did the university create science?",
     content: `The fall of Archaic Science. Autonomous labs. Decentralised science. Blockchain Book of Thoth. The rise of the Thought Artist.`,
     date: "14 III 2026",
-    essaySlug: "shower-thought-university-and-research"
+    essaySlug: "desci"
   },
   {
     id: 7,
