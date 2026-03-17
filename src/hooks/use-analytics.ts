@@ -3,22 +3,26 @@ import { useLocation } from 'react-router-dom';
 
 declare global {
   interface Window {
-    gtag: (
-      command: 'config' | 'event' | 'js',
-      targetId: string,
-      config?: Record<string, any>
-    ) => void;
+    gtag: (command: string, ...args: any[]) => void;
   }
 }
 
 export const useAnalytics = () => {
   const location = useLocation();
+  const measurementId = "G-GFQLY49M28";
 
   // Track page views
   useEffect(() => {
     if (window.gtag) {
-      window.gtag('config', 'G-GFQLY49M28', {
-        page_path: location.pathname + location.search,
+      // HashRouter URLs are stored after '#', so parse hash first.
+      const hashPath = window.location.hash.replace(/^#/, "");
+      const fallbackPath = location.pathname + location.search;
+      const pagePath = hashPath || fallbackPath || "/";
+
+      window.gtag('event', 'page_view', {
+        send_to: measurementId,
+        page_path: pagePath,
+        page_location: window.location.href,
         page_title: document.title,
       });
     }
