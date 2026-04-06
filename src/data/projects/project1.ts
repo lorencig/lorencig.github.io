@@ -2,6 +2,7 @@ import { ProjectData } from '@/common/types';
 
 const project1Data: ProjectData = {
   id: 1,
+  slug: "nanodb",
   title: "NanoDB - Research Activity Data Management System",
   description: "An intuitive Python application that simplifies the collection, organization, and export of experimental data, making research workflows more efficient, collaborative, and reproducible.",
   fullDescription: "In modern research, managing the vast amount of data from countless experiments is a major challenge that slows down discovery. I created NanoDB to solve this problem directly. It’s a desktop application that provides a single, centralized hub for all experimental details, guiding researchers through data entry to ensure every dataset is complete, structured, and compliant with FAIR principles. This not only streamlines daily lab work and improves collaboration but also creates high-quality, AI-ready datasets, paving the way for future machine learning and predictive modeling.",

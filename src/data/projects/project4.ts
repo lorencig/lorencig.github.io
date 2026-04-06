@@ -2,6 +2,7 @@ import { ProjectData } from '@/common/types';
 
 const project4Data: ProjectData = {
   id: 4,
+  slug: "medikons",
   title: "Medikons: Your Personal AI Health Assistant",
   description: "An AI-powered health assistant that translates complex medical lab results into simple, understandable Albanian, empowering users to take control of their health.",
   fullDescription: "Medical lab reports are often filled with confusing jargon, leaving people anxious and uncertain about their own health. Medikons was created to solve this problem for Albanian-speaking communities. It’s an AI-powered assistant that acts as a translator between the doctor's report and the patient. Users can securely upload their test results in any format, and the AI provides a clear, simple explanation of what each value means, highlighting anything that needs attention and suggesting the appropriate type of medical specialist to consult.",

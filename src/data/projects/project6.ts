@@ -2,6 +2,7 @@ import { ProjectData } from '@/common/types';
 
 const project6Data: ProjectData = {
   id: 6,
+  slug: "literature-mining-tool",
   title: "Literature Mining Tool",
   description: "Tool for extracting synthesis parameters and characterization data from scientific publications on nanomaterials.",
   fullDescription: "This project develops an automated tool for mining scientific literature to extract structured information about nanomaterial synthesis methods and characterization results. By converting unstructured text data from publications into structured, searchable databases, the tool accelerates research by enabling rapid access to published methodologies and results.",

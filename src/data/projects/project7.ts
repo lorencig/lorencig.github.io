@@ -2,6 +2,7 @@ import { ProjectData } from '@/common/types';
 
 const project7Data: ProjectData = {
   id: 7,
+  slug: "nanomaterial-synthesis-optimizer",
   title: "Nanomaterial Synthesis Optimizer",
   description: "Machine learning algorithm for predicting optimal synthesis parameters for targeted nanomaterials with specific properties.",
   fullDescription: "This project explores the use of advanced machine learning techniques to optimize the synthesis parameters for creating nanomaterials with specific desired properties. By analyzing large datasets of synthesis conditions and resulting material characteristics, the algorithm can predict the optimal conditions for producing nanomaterials with tailored properties, significantly reducing the time and resources required for experimental optimization.",

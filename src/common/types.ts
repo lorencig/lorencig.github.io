@@ -1,6 +1,8 @@
 // src/common/types.ts
 export interface ProjectData {
     id: number;
+    /** URL segment for HashRouter links, e.g. /#/projects/MPI */
+    slug: string;
     title: string;
     description: string; // Short description for cards
     fullDescription: string; // Detailed description for detail page
@@ -10,6 +12,9 @@ export interface ProjectData {
     date: string; // e.g., "YYYY-MM-DD"
     status: string; // e.g., "Ongoing", "Completed", "Active", "In Development"
   
+    /** Shown in the Details tab before collaborators (e.g. technical overview + team together). */
+    detailsTabBody?: string;
+
     // Scientific-specific (optional)
     collaborators?: string[];
     methodology?: string;

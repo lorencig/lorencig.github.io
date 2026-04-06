@@ -2,6 +2,7 @@ import { ProjectData } from '@/common/types';
 
 const project5Data: ProjectData = {
   id: 5,
+  slug: "booktheque",
   title: "BookTheque - Modern Cross-Platform Digital OfflineLibrary",
   description: "A professional-grade desktop application that unifies all digital book formats (EPUB, PDF, DOCX) into a single, customizable reading environment with advanced accessibility features.",
   fullDescription: `BookTheque addresses the fragmented digital reading experience by consolidating support for multiple book formats into one professional desktop application.

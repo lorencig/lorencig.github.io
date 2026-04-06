@@ -110,7 +110,7 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
   };
 
   return (
-    <Link to={`/projects/${project.id}`} className="group" onClick={scrollToTop}>
+    <Link to={`/projects/${project.slug}`} className="group" onClick={scrollToTop}>
       <div className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 backdrop-blur-sm bg-background/40 h-full transform group-hover:translate-y-[-5px] flex flex-col">
         <div className="relative">
           <AspectRatio ratio={16/9}>

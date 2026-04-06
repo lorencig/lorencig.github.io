@@ -6,10 +6,13 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Rocket, Award, Star, ExternalLink, Link2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectData } from '@/common/types';
-import { allProjectsData as globalAllProjectsData, getProjectById } from '@/data/projects';
+import {
+  allProjectsData as globalAllProjectsData,
+  getProjectBySlugOrLegacyId,
+} from '@/data/projects';
 
 const ProjectDetail: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [project, setProject] = useState<ProjectData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -17,30 +20,29 @@ const ProjectDetail: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    if (id) {
-      const projectId = parseInt(id);
+    if (slug) {
       setLoading(true);
       setError(null);
-      const foundProject = getProjectById(projectId);
+      const foundProject = getProjectBySlugOrLegacyId(slug);
 
       if (foundProject) {
         setProject(foundProject);
         const related = globalAllProjectsData
-          .filter(p => p.id !== projectId)
+          .filter((p) => p.id !== foundProject.id)
           .sort(() => 0.5 - Math.random())
           .slice(0, 4);
         setOtherProjects(related);
         setLoading(false);
       } else {
-        setError(`Project with ID "${id}" not found.`);
+        setError(`Project "${slug}" not found.`);
         setLoading(false);
         setProject(null);
       }
     } else {
-      setError("No project ID provided.");
+      setError("No project path provided.");
       setLoading(false);
     }
-  }, [id]);
+  }, [slug]);
 
 
   if (loading) {
@@ -181,6 +183,12 @@ const ProjectDetail: React.FC = () => {
 
                     <TabsContent value="details" className="pt-2">
                       <div className="space-y-6">
+                        {project.detailsTabBody && (
+                          <p className="text-foreground/90 leading-relaxed whitespace-pre-line">
+                            {project.detailsTabBody}
+                          </p>
+                        )}
+
                         {project.collaborators && project.collaborators.length > 0 && (
                           <div>
                             <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-2">Collaborators</h3>
@@ -337,7 +345,7 @@ const ProjectDetail: React.FC = () => {
                 {otherProjects.map(relatedProject => (
                     <Link
                       key={relatedProject.id}
-                      to={`/projects/${relatedProject.id}`}
+                      to={`/projects/${relatedProject.slug}`}
                       className="group block bg-card/50 dark:bg-card/70 backdrop-blur-lg border border-border/30 dark:border-border/20 rounded-lg overflow-hidden hover:shadow-xl hover:border-primary/50 transition-all duration-300 transform hover:-translate-y-1"
                       onClick={() => window.scrollTo(0,0)}
                     >

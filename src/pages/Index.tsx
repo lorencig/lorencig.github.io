@@ -25,11 +25,23 @@ import { allPublicationsData } from '@/data/publications'; // Import all publica
 import { Badge } from '@/components/ui/badge';
 import { Calendar, GraduationCap, MapPin, Target } from 'lucide-react';
 
+/** Homepage carousel order: MPI → NanoDB → Medikons */
+const featuredProjectOrder = new Map<string, number>([
+  ["MPI", 0],
+  ["nanodb", 1],
+  ["medikons", 2],
+]);
+
 const Index: React.FC = () => {
-  const featuredProjects = React.useMemo(() =>
-    allProjectsData.filter(p => p.isFeatured).sort((a,b) => a.id - b.id),
-    [] // allProjectsData is static
-  );
+  const featuredProjects = React.useMemo(() => {
+    const featured = allProjectsData.filter((p) => p.isFeatured);
+    return featured.sort((a, b) => {
+      const ia = featuredProjectOrder.get(a.slug) ?? 100;
+      const ib = featuredProjectOrder.get(b.slug) ?? 100;
+      if (ia !== ib) return ia - ib;
+      return a.id - b.id;
+    });
+  }, []);
 
   const featuredPublications = React.useMemo(() =>
     allPublicationsData
@@ -437,7 +449,7 @@ const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) =>
   return (
     <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px] border border-border/50 bg-card/50 backdrop-blur-sm flex flex-col">
       <div className="h-48 overflow-hidden">
-        <Link to={`/projects/${project.id}`} onClick={() => window.scrollTo(0,0)}>
+        <Link to={`/projects/${project.slug}`} onClick={() => window.scrollTo(0,0)}>
           <img
             src={project.image}
             alt={project.title}
@@ -452,7 +464,7 @@ const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) =>
           {project.category}
         </span>
         <CardTitle className="text-xl">
-          <Link to={`/projects/${project.id}`} className="hover:text-blue-500 transition-colors" onClick={() => window.scrollTo(0,0)}>
+          <Link to={`/projects/${project.slug}`} className="hover:text-blue-500 transition-colors" onClick={() => window.scrollTo(0,0)}>
             {project.title}
           </Link>
         </CardTitle>
