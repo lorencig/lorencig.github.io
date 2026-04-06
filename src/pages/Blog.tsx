@@ -2,9 +2,16 @@ import React from 'react';
 import PageLayout from '@/components/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
+import { Pin, ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 // Define multi-line content using backticks (template literals)
 const quotes = [
+  {
+    id: 9,
+    content: `On the pavlovian scale, researchers rank on top of it. Never seen more copy behavior in any other group of people.`,
+    date: "27 III 2026"
+  },
   {
     id: 8,
     title: "Did science create the university, or did the university create science?",
@@ -117,16 +124,49 @@ interface QuoteCardProps {
 }
 
 const QuoteCard: React.FC<QuoteCardProps> = ({ quote }) => {
-  // Removed the formatDate function
+  const isEssay = Boolean(quote.essaySlug);
 
   return (
-    <Card  className="border border-white/10 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 backdrop-blur-sm bg-background/40 h-full transform group-hover:translate-y-[-5px] flex flex-col">
-      <CardContent className="p-6 md:p-8">
-        <div className="flex items-start space-x-4">
-          <div className="flex-shrink-0 mt-1">
-            {/* Icon or Avatar placeholder */}
+    <Card
+      className={cn(
+        'rounded-lg overflow-hidden transition-all duration-300 backdrop-blur-sm h-full transform hover:-translate-y-[5px] flex flex-col relative',
+        isEssay
+          ? 'border border-[#F33C04]/35 shadow-md shadow-[#F33C04]/[0.12] hover:shadow-lg hover:shadow-[#F33C04]/20 hover:border-[#F33C04]/50 ring-1 ring-[#F33C04]/15 bg-gradient-to-br from-[#F33C04]/[0.09] via-background/75 to-[#A10100]/[0.08]'
+          : 'border border-white/10 hover:shadow-lg hover:shadow-[#F33C04]/10 hover:border-[#F33C04]/30 bg-background/40'
+      )}
+    >
+      {isEssay && (
+        <>
+          <div
+            className="pointer-events-none absolute inset-0 z-0 opacity-60 dark:opacity-45"
+            aria-hidden
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 1px 1px, rgb(243 60 4 / 0.14) 1px, transparent 0)',
+              backgroundSize: '22px 22px',
+            }}
+          />
+          <div
+            className="pointer-events-none absolute inset-0 z-0 opacity-[0.35] dark:opacity-25 mix-blend-overlay"
+            aria-hidden
+            style={{
+              backgroundImage:
+                'linear-gradient(135deg, transparent 40%, rgb(161 1 0 / 0.06) 40%, rgb(161 1 0 / 0.06) 42%, transparent 42%, transparent 58%, rgb(243 60 4 / 0.05) 58%, rgb(243 60 4 / 0.05) 60%, transparent 60%)',
+              backgroundSize: '18px 18px',
+            }}
+          />
+          <div
+            className="absolute top-4 right-4 md:top-5 md:right-5 z-20 flex h-9 w-9 items-center justify-center rounded-full border border-[#F33C04]/25 bg-background/80 text-[#F33C04] shadow-sm backdrop-blur-sm"
+            aria-hidden
+          >
+            <Pin className="h-4 w-4" strokeWidth={2.25} />
           </div>
-          <div className="flex-1">
+        </>
+      )}
+
+      <CardContent className={cn('p-6 md:p-8 relative z-10', isEssay && 'pt-10 md:pt-11')}>
+        <div className="flex items-start">
+          <div className="flex-1 min-w-0 pr-10 md:pr-12">
             {quote.title && (
               <h3 className="text-xl md:text-2xl font-semibold mb-3 leading-snug">
                 {quote.essaySlug ? (
@@ -141,7 +181,6 @@ const QuoteCard: React.FC<QuoteCardProps> = ({ quote }) => {
                 )}
               </h3>
             )}
-            {/* whitespace-pre-wrap kept for multi-line content */}
             <blockquote className="text-lg md:text-xl font-medium text-foreground/90 mb-3 italic leading-relaxed whitespace-pre-wrap">
               “{quote.content}”
             </blockquote>
@@ -149,13 +188,13 @@ const QuoteCard: React.FC<QuoteCardProps> = ({ quote }) => {
               <div className="mb-3">
                 <Link
                   to={`/essays/${quote.essaySlug}`}
-                  className="text-sm text-[#F33C04] hover:underline"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-[#F33C04] hover:underline group/link"
                 >
                   Read full essay
+                  <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover/link:translate-x-0.5" />
                 </Link>
               </div>
             )}
-            {/* Displaying quote.date string directly */}
             <p className="text-xs text-muted-foreground uppercase tracking-wider">
               {quote.date}
             </p>
