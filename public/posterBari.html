@@ -1282,6 +1282,228 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* §2 Pipeline: size to each section card — narrow columns stack; mid widths stay fluid horizontal */
+        .poster-section-pipeline .card-content {
+            container-type: inline-size;
+            container-name: pipeline-card;
+        }
+
+        @container pipeline-card (min-width: 561px) and (max-width: 720px) {
+            .pipeline-flow {
+                gap: clamp(12px, 3.5cqw, 20px);
+                padding: clamp(10px, 2.5cqw, 16px);
+            }
+
+            .pipeline-step {
+                min-height: clamp(120px, 42cqw, 172px);
+                padding: clamp(10px, 2cqw, 18px) clamp(4px, 1.2cqw, 8px);
+            }
+
+            .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal) {
+                flex: 0 0 clamp(28px, 8cqw, 44px);
+                min-height: clamp(72px, 36cqw, 172px);
+            }
+
+            .pipeline-step > svg {
+                width: clamp(56px, 16cqw, 96px);
+                height: clamp(56px, 16cqw, 96px);
+                margin-bottom: clamp(6px, 1.5cqw, 14px);
+            }
+        }
+
+        /* Stacked pipeline: flex-basis 1 1 0 on .pipeline-step fights column layout — reset + use order instead of column-reverse */
+        @container pipeline-card (max-width: 560px) {
+            .pipeline-flow {
+                gap: 12px;
+                padding: 12px;
+                overflow: visible;
+            }
+
+            .pipeline-flow-arrow.pipeline-flow-arrow-diagonal {
+                position: static;
+                left: auto;
+                top: auto;
+                order: 10;
+                align-self: center;
+                margin: 8px auto 4px;
+                transform: rotate(-135deg);
+                width: 34px;
+                height: 34px;
+                flex-shrink: 0;
+            }
+
+            .pipeline-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            /* Bottom row DOM: Mass, →, Linear, →, ROI — visual order ROI → Linear → Mass */
+            .pipeline-flow > .pipeline-row:last-child {
+                flex-direction: column;
+            }
+
+            .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(1) {
+                order: 5;
+            }
+
+            .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(2) {
+                order: 4;
+            }
+
+            .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(3) {
+                order: 3;
+            }
+
+            .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(4) {
+                order: 2;
+            }
+
+            .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(5) {
+                order: 1;
+            }
+
+            .pipeline-flow > .pipeline-row-connector {
+                flex-direction: column;
+                min-height: auto;
+                gap: 0;
+            }
+
+            .pipeline-flow > .pipeline-row-connector .pipeline-connector-cell:empty {
+                display: none;
+            }
+
+            .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal) {
+                flex: 0 0 auto;
+                min-height: auto;
+                align-self: center;
+                padding: 4px 0;
+            }
+
+            .pipeline-flow .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal):not(.pipeline-flow-arrow-down) svg {
+                transform: rotate(90deg);
+            }
+
+            .pipeline-flow .pipeline-flow-arrow.pipeline-flow-arrow-left:not(.pipeline-flow-arrow-diagonal) svg {
+                transform: rotate(90deg);
+            }
+
+            .pipeline-row .pipeline-step {
+                flex: 0 0 auto;
+                flex-grow: 0;
+                flex-shrink: 0;
+                min-height: 0;
+                padding: 14px 10px;
+            }
+
+            .pipeline-step > span {
+                line-height: 1.35;
+            }
+
+            .pipeline-step > svg {
+                width: min(88px, 22vw);
+                height: min(88px, 22vw);
+                margin-bottom: 10px;
+            }
+        }
+
+        /* Browsers without container queries: narrow viewports get the stacked pipeline */
+        @supports not (container-type: inline-size) {
+            @media screen and (max-width: 560px) {
+                .poster-section-pipeline .pipeline-flow {
+                    gap: 12px;
+                    padding: 12px;
+                    overflow: visible;
+                }
+
+                .poster-section-pipeline .pipeline-flow-arrow.pipeline-flow-arrow-diagonal {
+                    position: static;
+                    left: auto;
+                    top: auto;
+                    order: 10;
+                    align-self: center;
+                    margin: 8px auto 4px;
+                    transform: rotate(-135deg);
+                    width: 34px;
+                    height: 34px;
+                    flex-shrink: 0;
+                }
+
+                .poster-section-pipeline .pipeline-row {
+                    flex-direction: column;
+                    align-items: stretch;
+                    gap: 8px;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child {
+                    flex-direction: column;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(1) {
+                    order: 5;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(2) {
+                    order: 4;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(3) {
+                    order: 3;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(4) {
+                    order: 2;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(5) {
+                    order: 1;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row-connector {
+                    flex-direction: column;
+                    min-height: auto;
+                    gap: 0;
+                }
+
+                .poster-section-pipeline .pipeline-flow > .pipeline-row-connector .pipeline-connector-cell:empty {
+                    display: none;
+                }
+
+                .poster-section-pipeline .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal) {
+                    flex: 0 0 auto;
+                    min-height: auto;
+                    align-self: center;
+                    padding: 4px 0;
+                }
+
+                .poster-section-pipeline .pipeline-flow .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal):not(.pipeline-flow-arrow-down) svg {
+                    transform: rotate(90deg);
+                }
+
+                .poster-section-pipeline .pipeline-flow .pipeline-flow-arrow.pipeline-flow-arrow-left:not(.pipeline-flow-arrow-diagonal) svg {
+                    transform: rotate(90deg);
+                }
+
+                .poster-section-pipeline .pipeline-row .pipeline-step {
+                    flex: 0 0 auto;
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                    min-height: 0;
+                    padding: 14px 10px;
+                }
+
+                .poster-section-pipeline .pipeline-step > span {
+                    line-height: 1.35;
+                }
+
+                .poster-section-pipeline .pipeline-step > svg {
+                    width: min(88px, 22vw);
+                    height: min(88px, 22vw);
+                    margin-bottom: 10px;
+                }
+            }
+        }
     </style>
 </head>
 <body>
