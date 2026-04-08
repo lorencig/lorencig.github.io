@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, Rocket, Award, Star, ExternalLink, Link2 } from 'lucide-react';
+import { ArrowLeft, Rocket, Award, Star, ExternalLink, Link2, Presentation } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ProjectData } from '@/common/types';
 import {
@@ -76,6 +76,12 @@ const ProjectDetail: React.FC = () => {
     return url;
   };
 
+  const hrefForPosterOrExternal = (url: string): string => {
+    if (/^https?:\/\//i.test(url)) return url;
+    if (url.startsWith("/")) return url;
+    return ensureUrlScheme(url);
+  };
+
   return (
     <PageLayout>
       <div className="relative overflow-hidden bg-background text-foreground">
@@ -130,6 +136,25 @@ const ProjectDetail: React.FC = () => {
                       <ExternalLink className="mr-1.5 h-3.5 w-3.5 flex-shrink-0" />
                       DOI: {project.doi}
                     </a>
+                  </div>
+                )}
+
+                {isScientific && project.posterUrl && (
+                  <div className="mb-6">
+                    <Button
+                      asChild
+                      className="rounded-full bg-gradient-to-r from-[#A10100] to-[#F33C04] hover:opacity-90 text-white shadow-md"
+                    >
+                      <a
+                        href={hrefForPosterOrExternal(project.posterUrl)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2"
+                      >
+                        <Presentation className="h-4 w-4 shrink-0" />
+                        View conference poster
+                      </a>
+                    </Button>
                   </div>
                 )}
 

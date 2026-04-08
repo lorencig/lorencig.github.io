@@ -32,7 +32,10 @@ export interface ProjectData {
     fundingSource?: string;
     externalLink?: string;
 
-    doi?: string; 
+    doi?: string;
+
+    /** Optional path or URL to a static poster (e.g. HTML in /public). Shown as “View poster” on the project page. */
+    posterUrl?: string;
 }
 
 export interface PublicationData {

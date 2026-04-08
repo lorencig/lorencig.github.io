@@ -1,0 +1,1861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standardizing nanoparticle quantification in magnetic particle imaging through an adaptive open source analysis framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* ISO 216 A0 portrait (screen + print reference) */
+            --a0-w: 841mm;
+            --a0-h: 1189mm;
+            /* Must match @page margin — inner box for vertical centering in print/PDF (14mm helps PDF engines stay inside A0) */
+            --page-margin-print: 14mm;
+            --print-inner-height: calc(var(--a0-h) - 2 * var(--page-margin-print));
+            --print-inner-width: calc(var(--a0-w) - 2 * var(--page-margin-print));
+
+            /* Academic Color Palette */
+            --primary-dark: #0f172a; /* Slate 900 */
+            --primary-grad: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --accent-main: #0284c7; /* Sky 600 */
+            --accent-warm: #ea580c; /* Orange 600 - for highlights/warnings */
+            --accent-success: #059669; /* Emerald 600 - for adaptive results */
+            /* Unified frame + section titles (borders / headings) */
+            --poster-unify: var(--accent-main);
+            --title-color: var(--primary-dark);
+            
+            /* Backgrounds & Text */
+            --bg-canvas: #cbd5e1;
+            --bg-poster: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #475569;
+            --border-light: #e2e8f0;
+
+            --font-sans: 'Lexend', system-ui, -apple-system, sans-serif;
+        }
+
+        /* +39.76% on larger screens; cap on small viewports so the poster fits the screen */
+        html {
+            font-size: 100%;
+        }
+
+        @media screen and (min-width: 700px) {
+            html {
+                font-size: 139.76%;
+            }
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-canvas);
+            margin: 0;
+            padding: clamp(8px, 2vw, 20px);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        /* FLUID POSTER CONTAINER */
+        .poster-container {
+            width: 100%;
+            margin: 0 auto;
+            background-color: var(--bg-poster);
+            border-radius: 8px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Main grid body fills space between header and footer; §6 / §7 share row height on wide layouts */
+        .poster-container > .poster-body {
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+
+        /* On-screen: fit viewport width; height follows content (no forced A0 min-height) */
+        @media screen {
+            body {
+                overflow-x: hidden;
+            }
+
+            .poster-container {
+                width: 100%;
+                max-width: var(--a0-w);
+                margin-left: auto;
+                margin-right: auto;
+                min-height: auto;
+            }
+
+            .poster-container img,
+            .poster-container video {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .poster-container svg {
+                max-width: 100%;
+                height: auto;
+            }
+        }
+
+        /* --- HEADER --- */
+        header {
+            background: var(--primary-grad);
+            color: white;
+            padding: 3% 4%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 8px solid var(--accent-main);
+        }
+
+        .title-container {
+            text-align: center;
+            width: 100%;
+            padding: 0 2%;
+        }
+
+        header h1 {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            font-size: clamp(1.8rem, 3vw, 2.6rem); /* Responsive text sizing */
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+        }
+        
+        header h2 {
+            font-family: var(--font-sans);
+            font-weight: 600;
+            margin: 0 0 10px 0;
+            font-size: clamp(1.014rem, 1.659vw, 1.382rem); /* 5% smaller than prior author line */
+            color: #e0f2fe;
+        }
+
+        header h2 sup {
+            font-size: 0.65em;
+            line-height: 0;
+            vertical-align: super;
+            font-weight: 700;
+        }
+
+        header h2 .author-underline {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+
+        header h3 {
+            font-family: var(--font-sans);
+            font-weight: 400;
+            margin: clamp(1.1rem, 2.2vw, 1.75rem) 0 0;
+            font-size: clamp(1.35rem, 1.8vw, 1.65rem);
+            color: #bae6fd;
+        }
+
+        header .author-affiliations {
+            margin: 10px auto 0;
+            max-width: 920px;
+            font-size: clamp(0.7rem, 1vw, 0.88rem);
+            font-weight: 400;
+            line-height: 1.45;
+            color: #bae6fd;
+            text-align: center;
+        }
+
+        header .author-affiliations sup {
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        /* --- POSTER BODY --- */
+        .poster-body {
+            display: flex;
+            flex-direction: column;
+            padding: 2.5%;
+            gap: 25px;
+        }
+
+        .poster-area-intro {
+            flex-shrink: 0;
+            min-width: 0;
+        }
+
+        /* Two columns, row-wise order; §6 / §7 flex-grow within the bottom row */
+        .poster-main-columns {
+            flex: 1 1 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            align-items: stretch;
+            min-width: 0;
+            min-height: 0;
+        }
+
+        /* Row-wise reading order on desktop: §2|§3, §4|§5, §6|§7 */
+        .poster-main-columns > .poster-section-pipeline {
+            grid-column: 1;
+            grid-row: 1;
+        }
+
+        .poster-main-columns > .poster-section-bottleneck {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .poster-main-columns > .poster-section-benchmark {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .poster-main-columns > .poster-section-adaptive {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .poster-main-columns > .poster-section-conclusion {
+            grid-column: 1;
+            grid-row: 3;
+        }
+
+        .poster-main-columns > .poster-section-future {
+            grid-column: 2;
+            grid-row: 3;
+        }
+
+        .poster-body > .poster-section-references {
+            flex-shrink: 0;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .poster-section-references .card-content.references-minimal,
+        .poster-section-references .card-content > .references-minimal {
+            margin-top: 0;
+            padding-top: 0;
+            border-top: none;
+        }
+
+        /* --- PRINT: each sheet is ISO A0 portrait; overflow continues on the next sheet --- */
+        @page {
+            /* ISO A0 portrait; explicit mm for engines that ignore the A0 keyword */
+            size: 841mm 1189mm;
+            margin: var(--page-margin-print);
+        }
+
+        @media print {
+            /* ~5% smaller than screen (139.76%) so the layout fits A0 PDF without spilling */
+            html {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                /* Let height follow content; a fixed min-height + flex center breaks pagination / clips the footer */
+                min-height: 0;
+                font-size: 132%;
+            }
+
+            body {
+                width: 100%;
+                margin: 0;
+                padding: 0;
+                min-height: 0;
+                background: white;
+                /* Block flow avoids flex + print fragmentation pushing the footer past the A0 area */
+                display: block;
+                box-sizing: border-box;
+            }
+
+            * {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .poster-container {
+                width: 100% !important;
+                max-width: var(--print-inner-width);
+                margin-left: auto;
+                margin-right: auto;
+                min-height: 0 !important;
+                border-radius: 0;
+                box-shadow: none;
+                overflow: visible;
+            }
+
+            /*
+             * vh/vw in print often resolve to the preview window, not the A0 page — caps based on vh
+             * can inflate figures and push the footer outside the first sheet.
+             */
+            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box {
+                min-height: 0;
+            }
+
+            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-adaptive-flowchart {
+                gap: 6px;
+                padding: 14px 16px 16px;
+            }
+
+            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn {
+                padding: 10px 12px;
+            }
+
+            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn-compact {
+                min-height: 3.2rem;
+            }
+
+            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn-dec {
+                padding: 10px 16px;
+            }
+
+            .fig1-panel-a-svg-wrap svg {
+                max-height: 400px;
+            }
+
+            /*
+             * Print/PDF: same row-wise grid as screen (§2|§3, §4|§5, §6|§7).
+             */
+            /* Slightly looser than 10px; keep small to stay on one A0 sheet */
+            .poster-body {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+                padding: 0;
+                align-items: stretch;
+            }
+
+            .poster-main-columns {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 16px;
+                align-items: stretch;
+                min-width: 0;
+            }
+
+            .poster-main-columns > .poster-section-pipeline {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            .poster-main-columns > .poster-section-bottleneck {
+                grid-column: 2;
+                grid-row: 1;
+            }
+
+            .poster-main-columns > .poster-section-benchmark {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            .poster-main-columns > .poster-section-adaptive {
+                grid-column: 2;
+                grid-row: 2;
+            }
+
+            .poster-main-columns > .poster-section-conclusion {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            .poster-main-columns > .poster-section-future {
+                grid-column: 2;
+                grid-row: 3;
+            }
+
+            .poster-area-intro {
+                width: 100%;
+                flex-shrink: 0;
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .poster-section-pipeline {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .poster-section-bottleneck {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+
+            .poster-section-benchmark {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .poster-section-adaptive {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .poster-section-conclusion {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .poster-section-future {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            .poster-section-references {
+                break-inside: auto;
+                page-break-inside: auto;
+            }
+
+            header {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                page-break-after: avoid;
+                margin-bottom: 8mm;
+            }
+
+            footer {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                margin-top: 6mm;
+                padding: 14px 24px;
+                gap: 18px;
+                font-size: 1rem;
+            }
+
+            .footer-logo img {
+                height: 48px;
+            }
+
+            .section-card {
+                height: auto;
+            }
+
+            .figure-box,
+            .references-minimal,
+            .poster-section-conclusion .conclusion-fig5-composite {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        /* --- SECTION CARDS --- */
+        .section-card {
+            background: white;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.04);
+            border: 1px solid var(--poster-unify);
+            border-top: 6px solid var(--poster-unify);
+            height: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-content {
+            flex-grow: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+        }
+
+        /* §5: internal column layout only — no flex-fill vs paired column */
+        .poster-section-adaptive .card-content {
+            flex: 0 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box {
+            flex: 0 1 auto;
+            min-height: clamp(280px, 36vh, 520px);
+            margin-top: 12px;
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-adaptive-flowchart {
+            flex: 1 1 auto;
+            min-height: 0;
+            width: 100%;
+            justify-content: space-evenly;
+            align-items: stretch;
+            gap: clamp(4px, 1vh, 10px);
+            padding: clamp(14px, 2vh, 28px) clamp(16px, 3%, 32px) clamp(16px, 2.2vh, 30px);
+            box-sizing: border-box;
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn,
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-split {
+            max-width: none;
+            width: 100%;
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn {
+            font-size: clamp(0.88rem, 1.25vw, 1.2rem);
+            padding: clamp(10px, 1.4vh, 16px) clamp(12px, 2%, 20px);
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn-compact {
+            font-size: clamp(0.78rem, 1.05vw, 1.02rem);
+            min-height: clamp(3.2rem, 8vh, 5rem);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn-dec {
+            padding: clamp(10px, 1.5vh, 18px) clamp(16px, 3%, 28px);
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-arrow {
+            font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-sub {
+            font-size: 0.88em;
+        }
+
+        .poster-section-adaptive .card-content > p:first-of-type {
+            flex-shrink: 0;
+        }
+
+        .adaptive-feature-highlights {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 16px 0 20px;
+            flex-shrink: 0;
+            align-items: start;
+        }
+
+        .adaptive-feature-card {
+            border: 1px solid var(--poster-unify);
+            border-radius: 8px;
+            background: #f8fafc;
+            padding: 18px 14px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .adaptive-feature-icon {
+            width: 92px;
+            height: 92px;
+            margin-bottom: 14px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .adaptive-feature-icon svg {
+            width: 86px;
+            height: 86px;
+            display: block;
+        }
+
+        .adaptive-feature-title {
+            margin: 0 0 10px 0;
+            font-family: var(--font-sans);
+            font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+            font-weight: 800;
+            color: var(--title-color);
+            line-height: 1.25;
+            text-transform: none;
+            letter-spacing: 0;
+        }
+
+        .adaptive-feature-text {
+            margin: 0;
+            font-size: clamp(1.06rem, 1.2vw, 1.18rem);
+            line-height: 1.5;
+            font-weight: 500;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        .poster-section-adaptive .limitation-box {
+            flex-shrink: 0;
+        }
+
+        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .figure-caption {
+            flex-shrink: 0;
+        }
+
+        /* §4 Benchmark: tighter card + smaller Fig. 3 scatter */
+        .poster-section-benchmark.section-card {
+            padding: 18px 22px;
+        }
+
+        .poster-section-benchmark .card-content > p {
+            margin-bottom: 10px;
+        }
+
+        .poster-section-benchmark .figure-box {
+            margin-top: 10px;
+        }
+
+        .poster-section-benchmark .figure-box svg#mpi-fig3-scatter {
+            width: 90%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .poster-section-benchmark .figure-box .figure-caption {
+            padding: 8px 14px;
+            font-size: 0.86rem;
+        }
+
+        /* §7 Future: generous padding; list vertically centred in flex area below title */
+        .poster-section-future.section-card {
+            padding: 22px 26px 24px;
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .poster-section-future .card-content {
+            flex: 1 1 auto;
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 10px 6px 14px;
+        }
+
+        .poster-section-future h3.section-title {
+            padding-bottom: 8px;
+            margin-bottom: 0;
+            flex-shrink: 0;
+        }
+
+        .poster-section-future .card-content ul {
+            margin: 0;
+            padding-left: 1.2em;
+        }
+
+        .poster-section-future .card-content li {
+            margin-bottom: 14px;
+            line-height: 1.55;
+        }
+
+        .poster-section-future .card-content li:last-child {
+            margin-bottom: 0;
+        }
+
+        h3.section-title {
+            font-family: var(--font-sans);
+            font-weight: 800;
+            font-size: 1.35rem;
+            margin-top: 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #cbd5e1;
+            color: var(--title-color);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 0;
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        /* --- FIGURES & PLACEHOLDERS --- */
+        .figure-box {
+            background: #f1f5f9;
+            border: 1px solid var(--poster-unify);
+            border-radius: 6px;
+            padding: 0;
+            text-align: center;
+            margin-top: 15px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .figure-caption {
+            background: white;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            text-align: left;
+            border-top: 1px solid var(--poster-unify);
+            font-style: italic;
+            color: var(--text-main);
+        }
+
+        .fig1-panel-title {
+            margin: 0;
+            padding: 10px 14px 8px;
+            font-family: Lexend, sans-serif;
+            font-weight: 800;
+            font-size: 1rem;
+            line-height: 1.25;
+            color: var(--title-color);
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        /* Fig. 1: text | panel A | panel B+caption — equal row height (stretch) */
+        .intro-flex-fig1 {
+            display: flex;
+            flex-direction: row;
+            gap: 40px;
+            align-items: stretch;
+        }
+
+        .intro-text-col {
+            flex: 0.72 1 16rem;
+            max-width: 26rem;
+            min-width: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            min-height: 0;
+        }
+
+        .intro-figures-col {
+            flex: 3 1 0;
+            /* keep min-width:auto so the figures column cannot shrink to 0 in the flex row */
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Size from SVG content — avoid flex:1 + min-height:0 here or nested column flex can compute 0 height */
+        .fig1-composite {
+            flex: 0 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: auto;
+        }
+
+        .fig1-panels-row {
+            flex: 0 1 auto;
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 0;
+            min-height: auto;
+        }
+
+        .fig1-panel-cell {
+            min-width: min(100%, 8rem);
+            min-height: auto;
+            display: flex;
+            flex-direction: column;
+            background: #fff;
+        }
+
+        .fig1-panel-a-svg-wrap,
+        .fig1-panel-b-svg-wrap {
+            flex: 0 1 auto;
+            min-height: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fig1-panel-a-svg-wrap svg {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+            aspect-ratio: 700 / 400;
+            max-height: clamp(400px, 48vh, 576px);
+            display: block;
+            background: white;
+            border-radius: 6px;
+            object-fit: contain;
+        }
+
+        .fig1-panel-b-svg-wrap svg {
+            width: 100%;
+            height: auto;
+            aspect-ratio: 703 / 288;
+            max-height: clamp(160px, 42vh, 360px);
+            display: block;
+            object-fit: contain;
+        }
+
+        /* Fig. 1 panels: 60% A / 40% B (flex 3 : 2) */
+        .fig1-panel-cell.fig1-panel-a {
+            flex: 3 1 0;
+            border-right: 1px solid var(--poster-unify);
+        }
+
+        .fig1-panel-cell.fig1-panel-b {
+            flex: 2 1 0;
+            min-width: min(100%, 8rem);
+        }
+
+        .fig1-panel-b .figure-caption {
+            margin-top: 0;
+            flex-shrink: 0;
+        }
+
+        .fig1-panel-cell .fig1-panel-title {
+            background: #f8fafc;
+        }
+
+        .references-minimal {
+            margin-top: 22px;
+            padding-top: 14px;
+            border-top: 1px solid var(--poster-unify);
+            font-size: 0.68rem;
+            line-height: 1.45;
+            color: var(--text-muted);
+        }
+
+        .references-minimal h4 {
+            margin: 0 0 8px 0;
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--title-color);
+            font-family: var(--font-sans);
+        }
+
+        .references-minimal .references-paragraph {
+            margin: 0;
+            text-align: justify;
+            font-size: inherit;
+        }
+
+        /* --- PIPELINE WORKFLOW (Horizontal) --- */
+        .pipeline-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--poster-unify);
+            margin: 15px 0;
+            flex-wrap: wrap; /* Allows wrapping on smaller screens */
+            gap: 10px;
+        }
+
+        .pipeline-flow {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+            background: white;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid var(--poster-unify);
+            margin: 15px 0;
+        }
+
+        /* Same chevron; step 5 → step 1 (up-left); slightly above the row-2 arrow between 6 and 5 */
+        .pipeline-flow-arrow.pipeline-flow-arrow-diagonal {
+            position: absolute;
+            left: 32%;
+            top: 46%;
+            transform: rotate(-135deg);
+            min-height: 0;
+            flex: 0 0 auto;
+            width: 34px;
+            height: 34px;
+            pointer-events: none;
+        }
+
+        .pipeline-row {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            justify-content: center;
+            gap: 2px;
+        }
+
+        .pipeline-flow-arrow {
+            flex: 0 0 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #46095C; /* match Raw 2D Projection box */
+            align-self: center;
+            min-height: 172px;
+        }
+
+        .pipeline-flow-arrow svg {
+            width: 34px;
+            height: 34px;
+            flex-shrink: 0;
+        }
+
+        .pipeline-flow-arrow.pipeline-flow-arrow-left svg {
+            transform: scaleX(-1);
+        }
+
+        .pipeline-row-connector {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
+            min-height: 36px;
+        }
+
+        .pipeline-row-connector .pipeline-connector-cell {
+            flex: 1 1 0;
+            min-width: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .pipeline-flow-arrow.pipeline-flow-arrow-down {
+            flex: 0 0 44px;
+            min-height: 36px;
+            align-self: center;
+        }
+
+        .pipeline-flow-arrow.pipeline-flow-arrow-down svg {
+            transform: rotate(90deg);
+        }
+
+        .pipeline-step {
+            background: #f8fafc;
+            border: 2px solid var(--poster-unify);
+            border-radius: 6px;
+            padding: 18px 8px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 0.85rem;
+            flex: 1 1 0;
+            min-width: 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            color: var(--primary-dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 172px;
+        }
+
+        .pipeline-step > svg {
+            width: 96px;
+            height: 96px;
+            margin-bottom: 14px;
+            flex-shrink: 0;
+        }
+
+        /* Adaptive algorithm flowchart (from mpi_poster_v3 &ldquo;05 Adaptive Algorithm&rdquo;) */
+        .mpi-adaptive-flowchart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            padding: 8px 12px 12px;
+        }
+
+        .mpi-flow-fn {
+            font-size: clamp(0.72rem, 0.95vw, 0.9rem);
+            font-weight: 600;
+            text-align: center;
+            padding: 6px 10px;
+            border-radius: 3px;
+            width: 100%;
+            max-width: 420px;
+            line-height: 1.35;
+            font-family: var(--font-sans);
+        }
+
+        .mpi-flow-fn-in {
+            background: #e0f2fe;
+            border: 1.5px solid #7dd3fc;
+            color: #075985;
+        }
+
+        .mpi-flow-fn-proc {
+            background: #fff7ed;
+            border: 1.5px solid #fdba74;
+            color: #9a3412;
+        }
+
+        .mpi-flow-fn-dec {
+            background: #46095C;
+            color: #ffffff;
+            clip-path: polygon(12px 0, calc(100% - 12px) 0, 100% 50%, calc(100% - 12px) 100%, 12px 100%, 0 50%);
+            padding: 7px 18px;
+            border: none;
+        }
+
+        .mpi-flow-fn-out {
+            background: #ecfdf5;
+            border: 1.5px solid #6ee7b7;
+            color: #064e3b;
+        }
+
+        .mpi-flow-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px;
+            width: 100%;
+            max-width: 420px;
+        }
+
+        .mpi-flow-arrow {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            line-height: 1;
+        }
+
+        .mpi-flow-sub {
+            font-size: 0.85em;
+            opacity: 0.88;
+            font-weight: 500;
+        }
+
+        .conclusion-points {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 4px 0;
+        }
+
+        .conclusion-points li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            margin-bottom: 8px;
+            line-height: 1.5;
+            text-align: left;
+        }
+
+        .conclusion-points li::before {
+            content: '\25B6';
+            color: var(--accent-warm);
+            font-size: 0.55rem;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .conclusion-points li:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Fig. 5: top row grows with §6 card so panels use available height within A0 */
+        .poster-section-conclusion.section-card {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .poster-section-conclusion .card-content {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .poster-section-conclusion .conclusion-points {
+            flex-shrink: 0;
+            margin-top: 18px;
+            font-weight: 700;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-composite {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr auto;
+            align-items: stretch;
+            gap: 0;
+            margin-top: 14px;
+            border: 1px solid var(--poster-unify);
+            border-radius: 6px;
+            overflow: hidden;
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-panel {
+            min-height: 0;
+            min-width: 0;
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-panel--a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1a0d2e;
+            border-right: 1px solid var(--poster-unify);
+            height: 100%;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-panel--b {
+            position: relative;
+            background: #ffffff;
+            overflow: hidden;
+            height: 100%;
+            min-height: 0;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-panel .conclusion-cal-img {
+            width: 100%;
+            height: auto;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+            margin: 0;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-panel--b svg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: block;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-caption-merged {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            font-style: italic;
+            text-align: left;
+            color: var(--text-main);
+            border-top: 1px solid var(--poster-unify);
+        }
+
+        /* Match .figure-caption: global `p` is 1rem — override so merged caption matches other figures */
+        .poster-section-conclusion .conclusion-fig5-caption-merged p {
+            margin: 0 0 8px 0;
+            line-height: 1.45;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+
+        .poster-section-conclusion .conclusion-fig5-caption-merged p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* --- CUSTOM CALLOUTS --- */
+        .limitation-box {
+            background: #fff7ed;
+            border-left: 5px solid var(--accent-warm);
+            padding: 18px;
+            margin: 20px 0;
+            border-radius: 0 6px 6px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .limitation-box h4 {
+            margin: 0 0 8px 0;
+            color: #9a3412;
+            font-family: var(--font-sans);
+            font-size: 1.05rem;
+            font-weight: 400;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+        }
+
+        .limitation-box p {
+            margin: 0;
+            color: #7c2d12;
+            font-size: 0.95rem;
+            font-weight: 400;
+            text-align: left;
+        }
+
+        /* --- FOOTER (+20% vs prior sizes) --- */
+        footer {
+            background: white;
+            padding: 30px 60px;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 29px;
+            font-size: 1.08rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--poster-unify);
+        }
+
+        .footer-contact {
+            line-height: 1.8;
+            justify-self: start;
+        }
+
+        .footer-logo {
+            justify-self: end;
+            grid-column: 2;
+            line-height: 0;
+        }
+
+        .footer-logo img {
+            height: clamp(48px, 6vw, 67px);
+            width: auto;
+            display: block;
+        }
+
+        @media screen and (max-width: 900px) {
+            footer {
+                grid-template-columns: 1fr;
+                justify-items: center;
+                text-align: center;
+                padding: 20px clamp(16px, 4vw, 32px);
+            }
+
+            .footer-contact {
+                justify-self: center;
+                text-align: center;
+                grid-row: 1;
+            }
+
+            .footer-logo {
+                grid-column: 1;
+                grid-row: 2;
+                justify-self: center;
+            }
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media screen and (max-width: 1000px) {
+            .poster-section-conclusion.section-card,
+            .poster-section-future.section-card {
+                flex: 0 1 auto;
+            }
+
+            /* Fig. 5: stack (A) over (B), then caption — matches single-column poster layout */
+            .poster-section-conclusion .conclusion-fig5-composite {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+
+            .poster-section-conclusion .conclusion-fig5-panel--a {
+                border-right: none;
+                border-bottom: 1px solid var(--poster-unify);
+                height: auto;
+            }
+
+            .poster-section-conclusion .conclusion-fig5-panel--b {
+                min-height: 220px;
+                height: auto;
+            }
+
+            .poster-main-columns {
+                grid-template-columns: 1fr;
+            }
+
+            .poster-main-columns > .poster-section-pipeline,
+            .poster-main-columns > .poster-section-bottleneck,
+            .poster-main-columns > .poster-section-benchmark,
+            .poster-main-columns > .poster-section-adaptive,
+            .poster-main-columns > .poster-section-conclusion,
+            .poster-main-columns > .poster-section-future {
+                grid-column: 1;
+                grid-row: auto;
+            }
+            .intro-flex-fig1 {
+                flex-direction: column;
+            }
+            .fig1-panels-row {
+                flex-direction: column;
+            }
+            .fig1-panel-cell.fig1-panel-a {
+                border-right: none;
+                border-bottom: 1px solid var(--poster-unify);
+            }
+            .intro-text-col {
+                flex: 1 1 auto;
+                max-width: none;
+                justify-content: flex-start;
+            }
+
+            .adaptive-feature-highlights {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="poster-container">
+        <!-- HEADER -->
+        <header>
+            <div class="title-container">
+                <h1>Standardizing nanoparticle quantification in magnetic particle imaging through an adaptive open source analysis framework</h1>
+                <h2><span class="author-underline">Lorenci Gjurgjaj</span><sup>1,2</sup>, Niccol&ograve; Silvestri<sup>1</sup>, Giulia Eugenia Paola Nucci<sup>1</sup>, Nabila Jarmouni<sup>1</sup>, Alessandro Di Girolamo<sup>1</sup>, Ehsan Sadeghi<sup>1</sup>, Abubakar Rawayau Mannir<sup>1,2</sup>, Teresa Pellegrino<sup>1</sup></h2>
+                <p class="author-affiliations"><sup>1</sup> Italian Institute of Technology, via Morego 30, Genoa 16163, Italy<br><sup>2</sup> The Open University Affiliated Research Center, Italian Institute of Technology, via Morego 30, Genoa 16163, Italy</p>
+                <h3>School of Nanomedicine 2026, 7th edition</h3>
+            </div>
+        </header>
+
+        <!-- POSTER BODY -->
+        <div class="poster-body">
+
+            <div class="section-card poster-area-intro">
+                <h3 class="section-title">1. What is Magnetic Particle Imaging (MPI)?</h3>
+                <div class="card-content">
+                <div class="intro-flex intro-flex-fig1">
+                    <div class="intro-text-col">
+                        <p>Magnetic Particle Imaging (MPI) is an emerging tomographic technique free of radiation that directly maps superparamagnetic iron oxide nanoparticles with exceptional sensitivity and zero background signal for diverse biomedical applications [1, 2, 3]. However, its broader translation is currently hindered by a lack of standardized data analysis protocols. This deficiency introduces significant variations dependent on the user and the scanner in image reconstruction and tracer quantification across different laboratories [4, 5].</p>
+                        <p style="margin-bottom: 0;">While MPI is inherently a volumetric modality, 2D images, which capture the spatial concentration of tracers as either planar projections or individual slices of a cross section, remain a crucial and rapid tool for the evaluation of image reconstruction methods and preclinical quantification [1, 6].</p>
+                    </div>
+                    <div class="intro-figures-col">
+                        <div class="figure-box fig1-composite" style="background: white; margin: 0;">
+                            <div class="fig1-panels-row">
+                                <div class="fig1-panel-cell fig1-panel-a">
+                            <p class="fig1-panel-title">A. MPI Spatial Encoding Principles</p>
+                            <div class="fig1-panel-a-svg-wrap">
+                            <svg viewBox="0 0 700 400">
+                                <defs>
+                                    <radialGradient id="ffrGlow" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#ef4444" stop-opacity="0.9"/>
+                                        <stop offset="60%" stop-color="#ef4444" stop-opacity="0.4"/>
+                                        <stop offset="100%" stop-color="transparent"/>
+                                    </radialGradient>
+                                    <marker id="arrowBlue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                                        <path d="M 0 1 L 8 5 L 0 9 z" fill="#0284c7" />
+                                    </marker>
+                                    <marker id="pointerDot" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5">
+                                        <circle cx="5" cy="5" r="4" fill="#475569" />
+                                    </marker>
+                                </defs>
+                                <g transform="translate(10, 20)">
+                                    <path d="M 20 40 Q 35 15 50 40 T 80 40 T 110 40 T 140 40" fill="none" stroke="#f97316" stroke-width="2.5" stroke-linejoin="round"/>
+                                    <text x="160" y="35" font-family="Lexend, sans-serif" fill="#1e293b">
+                                        <tspan font-size="16" font-weight="900">Drive Field</tspan>
+                                        <tspan x="160" dy="16" font-size="12" fill="#475569">Alternating Magnetic Field (AMF)</tspan>
+                                        <tspan x="160" dy="14" font-size="12" fill="#475569">driving particle magnetization.</tspan>
+                                    </text>
+                                </g>
+                                <g>
+                                    <path d="M 70 100 L 330 360" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,6"/>
+                                    <path d="M 70 360 L 330 100" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="6,6"/>
+                                    <g fill="none" stroke="#0284c7" stroke-width="2" marker-end="url(#arrowBlue)">
+                                        <path d="M 170 120 Q 170 200 70 200"/><path d="M 140 120 Q 140 170 70 170"/><path d="M 110 120 Q 110 140 70 140"/>
+                                        <path d="M 230 120 Q 230 200 330 200"/><path d="M 260 120 Q 260 170 330 170"/><path d="M 290 120 Q 290 140 330 140"/>
+                                        <path d="M 170 340 Q 170 260 70 260"/><path d="M 140 340 Q 140 290 70 290"/><path d="M 110 340 Q 110 320 70 320"/>
+                                        <path d="M 230 340 Q 230 260 330 260"/><path d="M 260 340 Q 260 290 330 290"/><path d="M 290 340 Q 290 320 330 320"/>
+                                    </g>
+                                </g>
+                                <circle cx="200" cy="230" r="50" fill="url(#ffrGlow)"/>
+                                <circle cx="200" cy="230" r="14" fill="#94a3b8" stroke="#1e293b" stroke-width="2"/>
+                                <path d="M 206 236 L 194 224 M 194 224 L 200 223 M 194 224 L 195 230" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+                                <circle cx="340" cy="230" r="14" fill="#94a3b8" stroke="#1e293b" stroke-width="2"/>
+                                <circle cx="340" cy="230" r="20" fill="none" stroke="#ef4444" stroke-width="2" stroke-dasharray="3,3"/>
+                                <path d="M 333 230 L 347 230 M 347 230 L 342 225 M 347 230 L 342 235" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
+                                <text x="440" y="65" font-family="Lexend, sans-serif" fill="#1e293b">
+                                    <tspan font-size="16" font-weight="900">Bias Field</tspan>
+                                    <tspan x="440" dy="16" font-size="12" fill="#475569">StaticSelection Field gradient</tspan>
+                                </text>
+                                <path d="M 430 60 Q 380 60 290 135" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#pointerDot)"/>
+                                <text x="440" y="135" font-family="Lexend, sans-serif" fill="#1e293b">
+                                    <tspan font-size="16" font-weight="900">Saturated Region</tspan>
+                                    <tspan x="440" dy="16" font-size="12" fill="#475569">Minimal signal response</tspan>
+                                </text>
+                                <path d="M 430 130 Q 380 130 345 205" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#pointerDot)"/>
+                                <g transform="translate(440, 180)">
+                                    <path d="M 0 -5 L 0 45 L 180 45" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                                    <path d="M 0 15 Q 11 0 22.5 15 T 45 15 T 67.5 15 T 90 15 T 112.5 15 T 135 15 T 157.5 15 T 180 15" fill="none" stroke="#ef4444" stroke-width="2"/>
+                                </g>
+                                <text x="440" y="275" font-family="Lexend, sans-serif" fill="#1e293b">
+                                    <tspan font-size="16" font-weight="900">Field Free Region (FFR)</tspan>
+                                    <tspan x="440" dy="16" font-size="12" fill="#475569">Strong nonlinear signals</tspan>
+                                </text>
+                                <path d="M 430 270 Q 300 270 215 235" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#pointerDot)"/>
+                                <g transform="translate(440, 320)">
+                                    <path d="M 0 -15 L 0 55 L 180 55" fill="none" stroke="#94a3b8" stroke-width="2"/>
+                                    <path d="M 0 25 Q 11 -10 22.5 25 T 45 25 T 67.5 25 T 90 25 T 112.5 25 T 135 25 T 157.5 25 T 180 25" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+                                </g>
+                            </svg>
+                            </div>
+                                </div>
+                                <div class="fig1-panel-cell fig1-panel-b">
+                            <p class="fig1-panel-title">B. Zero Tissue Background In Vivo</p>
+                            <div class="fig1-panel-b-svg-wrap">
+                            <svg class="fig1-panel-b-mouse-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 703 288" role="img" aria-label="Mouse schematic: SPION tracer localizes to signal hotspot; biological tissue is invisible to MPI.">
+                                <defs>
+                                    <marker id="fig1b-tissue-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+                                        <path d="M 0 0 L 10 5 L 0 10 z" fill="#059669"/>
+                                    </marker>
+                                </defs>
+                                <g transform="translate(351.5,144) scale(0.82) translate(-351.5,-144)">
+                                    <image href="/mouse.png" xlink:href="/mouse.png" x="0" y="0" width="703" height="288" preserveAspectRatio="xMidYMid meet"/>
+                                    <text x="419" y="20" font-family="Lexend, sans-serif" font-size="15" font-weight="800" fill="#0369a1" text-anchor="middle" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">SPION Tracer</text>
+                                    <path d="M 72 52 Q 118 112 192 184" fill="none" stroke="#059669" stroke-width="2.5" marker-end="url(#fig1b-tissue-arrow)"/>
+                                    <text x="74" y="34" font-family="Lexend, sans-serif" font-size="14" font-weight="800" fill="#065f46" text-anchor="start" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">Biological Tissue</text>
+                                    <text x="74" y="50" font-family="Lexend, sans-serif" font-size="11" font-weight="700" fill="#047857" text-anchor="start" stroke="#ffffff" stroke-width="3" paint-order="stroke fill">(Invisible to MPI)</text>
+                                </g>
+                            </svg>
+                            </div>
+                            <div class="figure-caption">
+                                <b>Fig. 1:</b> <b>(A)</b> MPI encodes tracer location using a static selection-field gradient and an alternating drive field: signal arises preferentially in the field-free region (FFR), while surrounding voxels remain saturated. <b>(B)</b> In vivo, endogenous biological tissue is effectively invisible to MPI, whereas administered SPION tracer concentrates into a localized, high-contrast signal—illustrating negligible tissue background for specific nanoparticle mapping.
+                            </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="poster-main-columns">
+                <div class="section-card poster-section-pipeline">
+                    <h3 class="section-title">2. Analytical Methodology: The 2D Calibration Pipeline</h3>
+                    <div class="card-content">
+                        <p>While inherently volumetric, 2D images remain crucial for rapid preclinical quantification. The standard route for 2D analysis involves a sequential data extraction workflow.</p>
+                        
+                        <div class="pipeline-flow">
+                            <span class="pipeline-flow-arrow pipeline-flow-arrow-diagonal" aria-hidden="true" title="Linear calibration to Raw 2D projection">
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </span>
+                            <div class="pipeline-row">
+                                <div class="pipeline-step" style="background: #46095C; color: white;">
+                                    <svg viewBox="0 0 64 64">
+                                        <defs>
+                                            <radialGradient id="rawGrad2" cx="50%" cy="50%" r="50%">
+                                                <stop offset="0%" stop-color="#ea580c"/>
+                                                <stop offset="60%" stop-color="#38bdf8" stop-opacity="0.6"/>
+                                                <stop offset="100%" stop-color="transparent"/>
+                                            </radialGradient>
+                                        </defs>
+                                        <rect x="8" y="8" width="48" height="48" rx="4" fill="#46095C"/>
+                                        <circle cx="32" cy="32" r="18" fill="url(#rawGrad2)"/>
+                                        <circle cx="20" cy="40" r="10" fill="url(#rawGrad2)"/>
+                                        <circle cx="45" cy="20" r="12" fill="url(#rawGrad2)"/>
+                                    </svg>
+                                    <span>Raw 2D<br>Projection</span>
+                                </div>
+                                <span class="pipeline-flow-arrow" aria-hidden="true" title="Next step">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                                <div class="pipeline-step">
+                                    <svg viewBox="0 0 64 64">
+                                        <rect x="8" y="8" width="48" height="48" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                                        <path d="M 10 40 L 15 35 L 20 45 L 25 20 L 32 15 L 38 25 L 45 42 L 50 38 L 54 40" fill="none" stroke="#94a3b8" stroke-width="2" opacity="0.4"/>
+                                        <path d="M 10 40 Q 20 40 25 25 T 40 40 T 54 40" fill="none" stroke="#0284c7" stroke-width="3"/>
+                                    </svg>
+                                    <span>Image<br>Filtering</span>
+                                </div>
+                                <span class="pipeline-flow-arrow" aria-hidden="true" title="Next step">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                                <div class="pipeline-step">
+                                    <svg viewBox="0 0 64 64">
+                                        <rect x="8" y="8" width="48" height="48" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                                        <circle cx="32" cy="32" r="14" fill="#bae6fd"/>
+                                        <path d="M 32 10 L 32 54 M 10 32 L 54 32" stroke="#0284c7" stroke-width="2" stroke-dasharray="4,4"/>
+                                        <circle cx="32" cy="32" r="4" fill="#ea580c"/>
+                                    </svg>
+                                    <span>Peak<br>Detection</span>
+                                </div>
+                            </div>
+
+                            <div class="pipeline-row pipeline-row-connector">
+                                <div class="pipeline-connector-cell" aria-hidden="true"></div>
+                                <div class="pipeline-connector-cell" aria-hidden="true"></div>
+                                <div class="pipeline-connector-cell">
+                                    <span class="pipeline-flow-arrow pipeline-flow-arrow-down" title="Peak detection to ROI masking" aria-label="From step 3 to step 4">
+                                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="pipeline-row">
+                                <div class="pipeline-step" style="background: var(--accent-success); color: white;">
+                                    <svg viewBox="0 0 64 64">
+                                        <rect x="8" y="8" width="48" height="48" rx="4" fill="none" stroke="white" stroke-width="3"/>
+                                        <text x="32" y="44" fill="white" font-family="Lexend, sans-serif" font-weight="900" text-anchor="middle"><tspan font-size="28">F</tspan><tspan font-size="28">e</tspan></text>
+                                    </svg>
+                                    <span>Mass<br>Calculation</span>
+                                </div>
+                                <span class="pipeline-flow-arrow pipeline-flow-arrow-left" aria-hidden="true" title="Next step">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                                <div class="pipeline-step">
+                                    <svg viewBox="0 0 64 64">
+                                        <rect x="8" y="8" width="48" height="48" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                                        <line x1="15" y1="50" x2="50" y2="50" stroke="#94a3b8" stroke-width="2"/>
+                                        <line x1="15" y1="15" x2="15" y2="50" stroke="#94a3b8" stroke-width="2"/>
+                                        <circle cx="20" cy="45" r="2.5" fill="#0284c7"/>
+                                        <circle cx="30" cy="35" r="2.5" fill="#0284c7"/>
+                                        <circle cx="40" cy="25" r="2.5" fill="#0284c7"/>
+                                        <circle cx="50" cy="15" r="2.5" fill="#0284c7"/>
+                                        <line x1="15" y1="50" x2="55" y2="10" stroke="#ea580c" stroke-width="2" stroke-dasharray="3,1"/>
+                                    </svg>
+                                    <span>Linear<br>Calibration</span>
+                                </div>
+                                <span class="pipeline-flow-arrow pipeline-flow-arrow-left" aria-hidden="true" title="Next step">
+                                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                </span>
+                                <div class="pipeline-step">
+                                    <svg viewBox="0 0 64 64">
+                                        <rect x="8" y="8" width="48" height="48" rx="4" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="2"/>
+                                        <circle cx="32" cy="32" r="16" fill="#e0f2fe"/>
+                                        <polygon points="32,10 50,26 44,48 20,48 14,26" fill="rgba(16,185,129,0.1)" stroke="#10b981" stroke-width="2" stroke-dasharray="3,3"/>
+                                    </svg>
+                                    <span>ROI<br>Masking</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card poster-section-bottleneck">
+                    <h3 class="section-title">3. The Quantification Bottleneck</h3>
+                    <div class="card-content">
+                        <p>Despite its inherent sensitivity, translation is bottlenecked by the lack of standard data analysis. A fixed pipeline rarely performs optimally across varied datasets. Specifically, <b>user-defined Regions of Interest (ROIs)</b> introduce severe variance.</p>
+                        
+                        <div class="figure-box" style="background: #46095C; margin-bottom: 0;">
+                            <!-- SVG 1: Inconsistent ROIs -->
+                            <svg viewBox="0 0 600 175" style="width: 100%; height: auto; display: block;">
+                                <defs>
+                                    <radialGradient id="peakGrad" cx="50%" cy="50%" r="50%">
+                                        <stop offset="0%" stop-color="#ffffff"/>
+                                        <stop offset="10%" stop-color="#fde047"/>
+                                        <stop offset="35%" stop-color="#ea580c"/>
+                                        <stop offset="70%" stop-color="#1e3a8a"/>
+                                        <stop offset="100%" stop-color="#0f172a"/>
+                                    </radialGradient>
+                                </defs>
+                                
+                                <rect x="10" y="10" width="180" height="155" rx="8" fill="#46095C"/>
+                                <rect x="210" y="10" width="180" height="155" rx="8" fill="#46095C"/>
+                                <rect x="410" y="10" width="180" height="155" rx="8" fill="#46095C"/>
+
+                                <circle cx="100" cy="85" r="60" fill="url(#peakGrad)"/>
+                                <circle cx="300" cy="85" r="60" fill="url(#peakGrad)"/>
+                                <circle cx="500" cy="85" r="60" fill="url(#peakGrad)"/>
+
+                                <circle cx="100" cy="85" r="30" stroke="white" stroke-dasharray="5,5" fill="none" stroke-width="2"/>
+                                <rect x="245" y="25" width="110" height="120" stroke="#0ea5e9" fill="none" stroke-width="2"/>
+                                <polygon points="460,35 540,45 560,95 520,135 450,115 430,75" stroke="#10b981" fill="none" stroke-width="2"/>
+
+                                <rect x="65" y="125" width="70" height="25" rx="4" fill="rgba(0,0,0,0.7)"/>
+                                <text x="100" y="142" fill="white" font-size="14" font-family="Lexend, sans-serif" font-weight="bold" text-anchor="middle">0.8 mg</text>
+                                
+                                <rect x="265" y="125" width="70" height="25" rx="4" fill="rgba(0,0,0,0.7)"/>
+                                <text x="300" y="142" fill="#0ea5e9" font-size="14" font-family="Lexend, sans-serif" font-weight="bold" text-anchor="middle">1.2 mg</text>
+
+                                <rect x="465" y="125" width="70" height="25" rx="4" fill="rgba(0,0,0,0.7)"/>
+                                <text x="500" y="142" fill="#10b981" font-size="14" font-family="Lexend, sans-serif" font-weight="bold" text-anchor="middle">1.0 mg</text>
+                            </svg>
+                            <div class="figure-caption">
+                                <b>Fig. 2:</b> The exact same spatial concentration yields highly divergent iron masses based solely on the boundary of the drawn ROI.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card poster-section-benchmark">
+                    <h3 class="section-title">4. Adaptive Logic &amp; Synergistic Benchmarking</h3>
+                    <div class="card-content">
+                        <p>To overcome the quantification bottleneck, we developed a multi-stage Adaptive Pipeline designed to navigate the complex analytical space of Magnetic Particle Imaging (MPI). Rather than testing methods in isolation, we integrated them into a synergistic workflow consisting of three core pillars: <b>Detection, Filtering, and ROI Masking</b>.</p>
+
+                        <p><b>Adaptive Intelligence:</b> The framework uses a &quot;Smart Selector&quot; that analyzes global image statistics (e.g., Entropy, SNR) and local parameters (e.g., Eccentricity, FWHM) to dynamically choose the optimal algorithm configuration for each specific dataset.</p>
+
+                        <p><b>Integrated Algorithm Library:</b> We benchmarked the combinatorial synergy of 40 Classical methods (e.g., Local Maxima, Radial Profiling) and 10 Machine Learning models (e.g., GMM, DBSCAN clustering).</p>
+
+                        <p><b>Massive Scale:</b> By evaluating these hybrid configurations across diverse SPION formulations in terms of shape, size, composition, concentration, in varying mediums, volumes, and sample holders, the framework executed over 1.1 million iterative tests to define the optimal performance frontier.</p>
+
+                        <div class="figure-box" style="background: white;">
+                            <svg viewBox="0 0 480 188" style="height: auto; display: block;" id="mpi-fig3-scatter" aria-label="R² landscape scatter plot">
+                                <rect x="0" y="0" width="480" height="188" fill="#ffffff"/>
+
+                                <rect x="50" y="10" width="420" height="135" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" rx="2"/>
+
+                                <line x1="50" y1="10" x2="50" y2="145" stroke="#1e293b" stroke-width="1.5"/>
+                                <line x1="50" y1="145" x2="470" y2="145" stroke="#1e293b" stroke-width="1.5"/>
+
+                                <text x="18" y="80" font-family="Lexend, sans-serif" font-size="9" fill="#475569" text-anchor="middle" transform="rotate(-90,18,80)">R² score</text>
+
+                                <text x="45" y="148" font-family="Lexend, sans-serif" font-size="8" fill="#334155" text-anchor="end">0.0</text>
+                                <text x="45" y="90" font-family="Lexend, sans-serif" font-size="8" fill="#334155" text-anchor="end">0.5</text>
+                                <text x="45" y="17" font-family="Lexend, sans-serif" font-size="8" fill="#334155" text-anchor="end">1.0</text>
+                                <line x1="48" y1="88" x2="52" y2="88" stroke="#64748b" stroke-width="1"/>
+                                <line x1="48" y1="14" x2="52" y2="14" stroke="#64748b" stroke-width="1"/>
+
+                                <!-- X axis: ticks align to plot span 50–470 (ranked index) -->
+                                <line x1="50" y1="145" x2="50" y2="150" stroke="#1e293b" stroke-width="1"/>
+                                <line x1="260" y1="145" x2="260" y2="150" stroke="#1e293b" stroke-width="1"/>
+                                <line x1="470" y1="145" x2="470" y2="150" stroke="#1e293b" stroke-width="1"/>
+                                <text x="50" y="160" font-family="Lexend, sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">1</text>
+                                <text x="260" y="160" font-family="Lexend, sans-serif" font-size="7.5" fill="#334155" text-anchor="middle">~5k</text>
+                                <text x="468" y="160" font-family="Lexend, sans-serif" font-size="7.5" fill="#334155" text-anchor="end">&gt;10k</text>
+                                <text x="260" y="171" font-family="Lexend, sans-serif" font-size="9" fill="#475569" text-anchor="middle">Pipeline combination (ranked by index)</text>
+
+                                <g id="mpi-fig3-poor" opacity="0.55"></g>
+                                <g id="mpi-fig3-med" opacity="0.6"></g>
+                                <g id="mpi-fig3-good"></g>
+
+                                <polygon points="390,14 393,22 402,22 395,27 398,36 390,31 382,36 385,27 378,22 387,22" fill="#fbbf24" stroke="#b45309" stroke-width="1"/>
+                                <line x1="390" y1="12" x2="390" y2="4" stroke="#b45309" stroke-width="1.5"/>
+                                <text x="395" y="10" font-family="Lexend, sans-serif" font-size="8.5" fill="#92400e" font-weight="800">Adaptive optimal</text>
+
+                                <circle cx="60" cy="182" r="3" fill="#ef4444" opacity="0.6"/>
+                                <text x="66" y="185" font-family="Lexend, sans-serif" font-size="8" fill="#334155">Poor pipelines</text>
+                                <circle cx="150" cy="182" r="3" fill="#64748b"/>
+                                <text x="156" y="185" font-family="Lexend, sans-serif" font-size="8" fill="#334155">Mid-range</text>
+                                <circle cx="225" cy="182" r="3" fill="#059669"/>
+                                <text x="231" y="185" font-family="Lexend, sans-serif" font-size="8" fill="#334155">High performance</text>
+                            </svg>
+                            <div class="figure-caption">
+                                <b>Fig. 3:</b> R² landscape across &gt;10,000 unique pipeline configurations. No single method dominates across all conditions.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card poster-section-adaptive">
+                    <h3 class="section-title">5. Proposed Adaptive Engine</h3>
+                    <div class="card-content">
+                        <p>Because no universal pipeline exists, the framework evaluates <b>image-intrinsic parameters prior to analysis</b> &mdash; then routes to the optimal configuration automatically.</p>
+
+                        <div class="adaptive-feature-highlights" role="list">
+                            <div class="adaptive-feature-card" role="listitem">
+                                <div class="adaptive-feature-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                        <path d="M30 14C17 14 9 26 11 38c2 11 10 18 19 16V14zm4 0h0C47 14 55 26 53 38c-2 11-10 18-19 16V14z" fill="#e0f2fe" stroke="#0284c7" stroke-width="2" stroke-linejoin="round"/>
+                                        <path d="M32 17v30" stroke="#0284c7" stroke-width="2" stroke-linecap="round"/>
+                                        <path d="M18 32c3 2 6 1 8-2M46 32c-3 2-6 1-8-2M20 42c4 3 8 2 12 3m0 0c4-1 8 0 12-3" stroke="#0284c7" stroke-width="1.6" stroke-linecap="round" fill="none"/>
+                                        <path d="M24 24c2 3 5 4 8 2M40 24c-2 3-5 4-8 2" stroke="#0284c7" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+                                    </svg>
+                                </div>
+                                <h4 class="adaptive-feature-title">1. Adaptive Analysis</h4>
+                                <p class="adaptive-feature-text">Automatically selects the optimal pipeline for each dataset.</p>
+                            </div>
+                            <div class="adaptive-feature-card" role="listitem">
+                                <div class="adaptive-feature-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                        <circle cx="32" cy="32" r="22" stroke="#0284c7" stroke-width="2.2"/>
+                                        <circle cx="32" cy="32" r="13" stroke="#0284c7" stroke-width="2" opacity="0.85"/>
+                                        <circle cx="32" cy="32" r="5" fill="#0284c7"/>
+                                        <path d="M32 10v6M32 48v6M10 32h6M48 32h6" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+                                    </svg>
+                                </div>
+                                <h4 class="adaptive-feature-title">2. Accurate Quantification</h4>
+                                <p class="adaptive-feature-text">Reduces variability and improves reliability in iron mass estimation.</p>
+                            </div>
+                            <div class="adaptive-feature-card" role="listitem">
+                                <div class="adaptive-feature-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                        <!-- Open & evolving: symmetric bloom (openness, growth, community) -->
+                                        <circle cx="32" cy="32" r="28" fill="#f0f9ff" stroke="#bae6fd" stroke-width="1.25"/>
+                                        <g transform="translate(32 32)" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.85" stroke-linejoin="round">
+                                            <ellipse cx="0" cy="-11" rx="6.2" ry="13.5" transform="rotate(0)"/>
+                                            <ellipse cx="0" cy="-11" rx="6.2" ry="13.5" transform="rotate(60)"/>
+                                            <ellipse cx="0" cy="-11" rx="6.2" ry="13.5" transform="rotate(120)"/>
+                                            <ellipse cx="0" cy="-11" rx="6.2" ry="13.5" transform="rotate(180)"/>
+                                            <ellipse cx="0" cy="-11" rx="6.2" ry="13.5" transform="rotate(240)"/>
+                                            <ellipse cx="0" cy="-11" rx="6.2" ry="13.5" transform="rotate(300)"/>
+                                        </g>
+                                        <circle cx="32" cy="32" r="7" fill="#0284c7" stroke="#0369a1" stroke-width="1.2"/>
+                                        <circle cx="32" cy="32" r="2.8" fill="#e0f2fe"/>
+                                    </svg>
+                                </div>
+                                <h4 class="adaptive-feature-title">3. Open &amp; Evolving</h4>
+                                <p class="adaptive-feature-text">Free, open-source framework under continuous development.</p>
+                            </div>
+                        </div>
+
+                        <div class="figure-box mpi-adaptive-figure-box" style="background: #f8fafc; margin-bottom: 0;">
+                            <div class="mpi-adaptive-flowchart" role="img" aria-label="Adaptive algorithm: from 2D MPI input to calibrated iron mass">
+                                <div class="mpi-flow-fn mpi-flow-fn-in">2D MPI Image input</div>
+                                <div class="mpi-flow-arrow" aria-hidden="true">&darr;</div>
+                                <div class="mpi-flow-fn mpi-flow-fn-proc">Extract global statistics<br><span class="mpi-flow-sub">(Entropy &middot; SNR &middot; dynamic range)</span></div>
+                                <div class="mpi-flow-arrow" aria-hidden="true">&darr;</div>
+                                <div class="mpi-flow-fn mpi-flow-fn-proc">Extract local morphology<br><span class="mpi-flow-sub">(FWHM &middot; eccentricity &middot; peak count)</span></div>
+                                <div class="mpi-flow-arrow" aria-hidden="true">&darr;</div>
+                                <div class="mpi-flow-fn mpi-flow-fn-dec">Classify image profile</div>
+                                <div class="mpi-flow-arrow" aria-hidden="true">&darr;</div>
+                                <div class="mpi-flow-split">
+                                    <div class="mpi-flow-fn mpi-flow-fn-out mpi-flow-fn-compact">Auto<br>optimal pipeline</div>
+                                    <div class="mpi-flow-fn mpi-flow-fn-in mpi-flow-fn-compact">Manual<br>config override</div>
+                                </div>
+                                <div class="mpi-flow-arrow" aria-hidden="true">&darr;</div>
+                                <div class="mpi-flow-fn mpi-flow-fn-out"><strong>Calibrated iron mass [&micro;g Fe]</strong></div>
+                            </div>
+                            <div class="figure-caption">
+                                <b>Fig. 4:</b> Adaptive workflow from 2D MPI input to &micro;g Fe output: global statistics and local morphology drive profile classification, then either automatic optimal pipeline selection or manual configuration for strict cross-laboratory reproducibility.
+                            </div>
+                        </div>
+
+                        <div class="limitation-box">
+                            <h4>Current Scope &amp; Limitations</h4>
+                            <p>This computational approach is validated exclusively on <i>in vitro</i> 2D datasets. Direct translation to complex biological environments requires further investigation.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-card poster-section-conclusion">
+                    <h3 class="section-title">6. Results and Conclusions</h3>
+                    <div class="card-content">
+                        <div class="conclusion-fig5-composite">
+                            <div class="conclusion-fig5-panel conclusion-fig5-panel--a">
+                                <img class="conclusion-cal-img" src="/Picture2.png" alt="MPI 2D image: eight IONP samples at equal volume with different iron mass."/>
+                            </div>
+                            <div class="conclusion-fig5-panel conclusion-fig5-panel--b">
+                                <svg viewBox="0 42 480 228" preserveAspectRatio="xMidYMid meet" id="mpi-fig5-calibration" aria-label="MPI versus ICP-OES linear calibration; adaptive pipeline R squared 0.997">
+                                    <defs>
+                                        <clipPath id="mpi-fig5-clip">
+                                            <rect x="50" y="48" width="405" height="180"/>
+                                        </clipPath>
+                                    </defs>
+                                    <rect x="0" y="0" width="480" height="280" fill="#ffffff"/>
+                                    <rect x="50" y="48" width="405" height="180" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" rx="2"/>
+                                    <g clip-path="url(#mpi-fig5-clip)">
+                                        <line x1="50" y1="227.80" x2="455" y2="50.71" stroke="#46095C" stroke-width="2" stroke-linecap="round"/>
+                                    </g>
+                                    <line x1="50" y1="48" x2="50" y2="228" stroke="#46095C" stroke-width="1.5"/>
+                                    <line x1="50" y1="228" x2="455" y2="228" stroke="#46095C" stroke-width="1.5"/>
+                                    <g font-family="Lexend, sans-serif" fill="#334155">
+                                        <line x1="50" y1="228" x2="50" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="142.05" y1="228" x2="142.05" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="234.09" y1="228" x2="234.09" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="326.14" y1="228" x2="326.14" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="418.18" y1="228" x2="418.18" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <text x="50" y="248" font-size="9" text-anchor="middle">0</text>
+                                        <text x="142.05" y="248" font-size="9" text-anchor="middle">5</text>
+                                        <text x="234.09" y="248" font-size="9" text-anchor="middle">10</text>
+                                        <text x="326.14" y="248" font-size="9" text-anchor="middle">15</text>
+                                        <text x="418.18" y="248" font-size="9" text-anchor="middle">20</text>
+                                        <text x="252" y="266" font-size="9.5" fill="#46095C" text-anchor="middle">ICP-OES values</text>
+                                        <line x1="45" y1="228" x2="50" y2="228" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="45" y1="187.09" x2="50" y2="187.09" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <line x1="45" y1="146.18" x2="50" y2="146.18" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <line x1="45" y1="105.27" x2="50" y2="105.27" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <line x1="45" y1="64.36" x2="50" y2="64.36" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <text x="42" y="231.5" font-size="9" text-anchor="end">0</text>
+                                        <text x="42" y="190.6" font-size="9" text-anchor="end">5</text>
+                                        <text x="42" y="149.7" font-size="9" text-anchor="end">10</text>
+                                        <text x="42" y="108.8" font-size="9" text-anchor="end">15</text>
+                                        <text x="42" y="67.9" font-size="9" text-anchor="end">20</text>
+                                    </g>
+                                    <text x="18" y="138" font-family="Lexend, sans-serif" font-size="9.5" fill="#46095C" text-anchor="middle" transform="rotate(-90,18,138)">MPI (arbitrary unit)</text>
+                                    <circle cx="55.52" cy="225.21" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="68.41" cy="219.74" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="75.77" cy="219.58" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="105.23" cy="204.92" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="158.61" cy="176.91" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="232.25" cy="143.39" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="346.39" cy="103.60" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="421.86" cy="63.81" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <rect x="56" y="52" width="128" height="24" fill="rgba(255,255,255,0.94)" stroke="#46095C" stroke-width="1" rx="3"/>
+                                    <text x="64" y="68" font-family="Lexend, sans-serif" font-size="10.5" fill="#46095C" text-anchor="start" font-weight="700">R² = 0.997</text>
+                                </svg>
+                            </div>
+                            <div class="conclusion-fig5-caption-merged">
+                                <p><b>Fig. 5 (A):</b> MPI 2D image of eight iron-oxide nanoparticle (IONP) samples prepared at the same volume with different total iron mass.</p>
+                                <p><b>Fig. 5 (B):</b> MPI signal versus ICP-OES iron quantification under the pipeline configuration chosen by the adaptive software; least-squares fit yields R² = 0.997, corresponding to &gt;99.7% linear agreement with the ICP-OES reference on average.</p>
+                            </div>
+                        </div>
+                        <ul class="conclusion-points">
+                            <li>First open-source standardised framework for 2D MPI absolute iron quantification</li>
+                            <li>Exhaustive benchmarking of &gt;1.1 M pipeline iterations across diverse SPION conditions</li>
+                            <li>Adaptive algorithm outperforms any fixed-pipeline approach, no universal method exists</li>
+                            <li>Manual configuration mode ensures strict cross-laboratory reproducibility</li>
+                            <li>In-house developed peak detection outperforms the other mathematical and ML methods tested.</li>
+                            <li>Iron quantification linearity versus ICP-OES is above 99%.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section-card poster-section-future">
+                    <h3 class="section-title">7. Future Directions</h3>
+                    <div class="card-content">
+                        <ul>
+                            <li><b>Translational Validation:</b> Extending to <i>ex vivo</i> and <i>in vivo</i> scenarios characterizing highly irregular spatial iron distributions.</li>
+                            <li><b>Signal Deconvolution:</b> Applying mathematical deconvolution models to separate overlapping Point Spread Functions (PSFs) characteristic of dense <i>in vivo</i> accumulation.</li>
+                            <li><b>3D Expansion:</b> Adapting the algorithms natively for volumetric datasets.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card poster-section-references">
+                <h3 class="section-title">8. References</h3>
+                <div class="card-content references-minimal">
+                    <p class="references-paragraph">[1] A. D. The hardware, tracer, and signal processing methods of magnetic particle imaging: A review. <i>J. Appl. Phys.</i>, 2024. [2] P.C. A perspective on a rapid and radiation-free tracer imaging modality, magnetic particle imaging, with promise for clinical translation, <i>British Journal of Radiology</i>, Volume 91, Issue 1091, 2018. [3] Y. X. Applications of Magnetic Particle Imaging in Biomedicine: Advancements and Prospects. <i>Front. Physiol.</i>, 2022. [4] G. H. J. Inter-user Comparison for Quantification of Superparamagnetic Iron Oxides with Magnetic Particle Imaging Across Two Institutions Highlights a Need for Standardized Approaches. <i>Mol Imaging Biol</i> 25, 954&ndash;967, 2023. [5] J. T. Progress in magnetic particle imaging signal and iron quantification methods in vivo &ndash; application to long circulating SPIONs, <i>Nanoscale Adv.</i>, 5, 4873-4880, 2023. [6] Y. S. A systematic 3-D magnetic particle imaging simulation model for quantitative analysis of reconstruction image quality, <i>Computer Methods and Programs in Biomedicine</i>, Volume 252, 2024.</p>
+                </div>
+            </div>
+
+        </div>
+        
+        <footer>
+            <div class="footer-contact">
+                Department of Nanomaterials for Biomedical Applications
+            </div>
+
+            <div class="footer-logo">
+                <img src="/IIT-v4-logo-t2_2.png" alt="Istituto Italiano di Tecnologia">
+            </div>
+        </footer>
+
+    </div>
+
+<script>
+(function () {
+    var xlink = 'http://www.w3.org/1999/xlink';
+    /** Resolve site-root (/foo) and relative paths so <img> and SVG <image> work on file://, localhost, and production. */
+    function resolveAssetUrl(attr) {
+        if (!attr || /^https?:\/\//i.test(attr)) return attr;
+        try {
+            if (location.protocol === 'file:') {
+                var p = attr.replace(/^\//, '');
+                return new URL(p, location.href).href;
+            }
+            return new URL(attr, location.href).href;
+        } catch (e) {
+            return attr;
+        }
+    }
+    document.querySelectorAll('img[src]').forEach(function (img) {
+        var s = img.getAttribute('src');
+        if (s && !/^https?:\/\//i.test(s)) {
+            img.src = resolveAssetUrl(s);
+        }
+    });
+    document.querySelectorAll('image[href]').forEach(function (el) {
+        var h = el.getAttribute('href');
+        if (h && !/^https?:\/\//i.test(h)) {
+            var abs = resolveAssetUrl(h);
+            el.setAttribute('href', abs);
+            el.setAttributeNS(xlink, 'href', abs);
+        }
+    });
+})();
+</script>
+<script>
+(function () {
+    var seed = 20260406;
+    function rnd() {
+        seed = (seed * 1664525 + 1013904223) >>> 0;
+        return seed / 4294967296;
+    }
+    var ns = 'http://www.w3.org/2000/svg';
+    function addDots(parent, n, x0, x1, y0, y1, fill) {
+        if (!parent) return;
+        var i, c, x, y;
+        for (i = 0; i < n; i++) {
+            c = document.createElementNS(ns, 'circle');
+            x = x0 + rnd() * (x1 - x0);
+            y = y0 + rnd() * (y1 - y0);
+            c.setAttribute('cx', x);
+            c.setAttribute('cy', y);
+            c.setAttribute('r', 2.5);
+            c.setAttribute('fill', fill);
+            parent.appendChild(c);
+        }
+    }
+    addDots(document.getElementById('mpi-fig3-poor'), 60, 55, 215, 100, 142, '#ef4444');
+    addDots(document.getElementById('mpi-fig3-med'), 80, 80, 360, 45, 120, '#64748b');
+    addDots(document.getElementById('mpi-fig3-good'), 40, 280, 430, 18, 63, '#059669');
+})();
+</script>
+</body>
+</html>

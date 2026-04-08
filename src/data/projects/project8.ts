@@ -31,6 +31,7 @@ const project8Data: ProjectData = {
   results: `Preliminary findings confirm that while static filters often fail to improve peak detection, an adaptive methodology consistently targets the optimal performance space, bridging the gap between classical and ML accuracy. The framework has successfully identified 21 "gold-standard" configurations that achieve peak F1-scores across varying signal-to-noise ratios.`,
   nextSteps: `Moving forward, the focus shifts to MPI 4.0, which integrates deconvolution and image upsampling to resolve overlapping sources in complex in-vivo environments. This expansion will enable accurate quantification of irregular iron distributions where standard peak separation typically fails.`,
   isFeatured: true,
+  posterUrl: "/posterBari.html",
   keyTechnologies: [
     "Adaptive pipelines",
     "SPION quantification",

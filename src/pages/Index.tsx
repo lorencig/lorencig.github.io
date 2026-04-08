@@ -23,7 +23,7 @@ import { ProjectData, PublicationData } from '@/common/types'; // Import common 
 import { allProjectsData } from '@/data/projects';
 import { allPublicationsData } from '@/data/publications'; // Import all publications data
 import { Badge } from '@/components/ui/badge';
-import { Calendar, GraduationCap, MapPin, Target } from 'lucide-react';
+import { Calendar, GraduationCap, MapPin, Target, Presentation } from 'lucide-react';
 
 /** Homepage carousel order: MPI → NanoDB → Medikons */
 const featuredProjectOrder = new Map<string, number>([
@@ -469,8 +469,33 @@ const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) =>
           </Link>
         </CardTitle>
       </CardHeader>
-      <CardContent className="flex-grow">
+      <CardContent className="flex-grow flex flex-col gap-3">
         <p className="text-muted-foreground text-sm">{project.description}</p>
+        {project.posterUrl && (
+          <Button
+            asChild
+            variant="outline"
+            size="sm"
+            className="w-full shrink-0 rounded-full border-[#F33C04]/40 text-[#F33C04] hover:bg-[#F33C04]/10"
+          >
+            <a
+              href={
+                /^https?:\/\//i.test(project.posterUrl)
+                  ? project.posterUrl
+                  : project.posterUrl.startsWith("/")
+                    ? project.posterUrl
+                    : `https://${project.posterUrl}`
+              }
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <Presentation className="h-3.5 w-3.5" />
+              View poster
+            </a>
+          </Button>
+        )}
       </CardContent>
     </Card>
   );
