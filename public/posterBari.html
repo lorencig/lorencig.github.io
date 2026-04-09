@@ -59,6 +59,44 @@
             min-height: 100vh;
         }
 
+        .floating-back-button {
+            position: fixed;
+            top: clamp(10px, 2vw, 18px);
+            left: clamp(10px, 2vw, 18px);
+            width: clamp(38px, 3.6vw, 46px);
+            height: clamp(38px, 3.6vw, 46px);
+            border: 1px solid rgba(15, 23, 42, 0.14);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.86);
+            color: #0f172a;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1100;
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12);
+            transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+        }
+
+        .floating-back-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 14px rgba(15, 23, 42, 0.18);
+            background: rgba(255, 255, 255, 0.94);
+        }
+
+        .floating-back-button:focus-visible {
+            outline: 2px solid var(--accent-main);
+            outline-offset: 2px;
+        }
+
+        .floating-back-button svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+        }
+
         /* FLUID POSTER CONTAINER */
         .poster-container {
             width: 100%;
@@ -185,18 +223,21 @@
             min-width: 0;
         }
 
-        /* Two columns, row-wise order; §6 / §7 flex-grow within the bottom row */
+        /* Two columns, read left-to-right: 2|3, 4|5, 6|7 */
         .poster-main-columns {
             flex: 1 1 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
-            align-items: stretch;
+            align-items: start;
             min-width: 0;
             min-height: 0;
         }
 
-        /* Row-wise reading order on desktop: §2|§3, §4|§5, §6|§7 */
+        .poster-main-columns > .section-card {
+            align-self: start;
+        }
+
         .poster-main-columns > .poster-section-pipeline {
             grid-column: 1;
             grid-row: 1;
@@ -225,6 +266,21 @@
         .poster-main-columns > .poster-section-future {
             grid-column: 2;
             grid-row: 3;
+        }
+
+        /* Desktop screen: masonry by fixed columns, preserving left-to-right section pairing order */
+        @media screen and (min-width: 1001px) {
+            .poster-main-columns {
+                position: relative;
+                display: block;
+                min-height: 0;
+            }
+
+            .poster-main-columns > .section-card {
+                position: absolute;
+                width: calc((100% - 25px) / 2);
+                margin: 0;
+            }
         }
 
         .poster-body > .poster-section-references {
@@ -330,7 +386,7 @@
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 16px;
-                align-items: stretch;
+                align-items: start;
                 min-width: 0;
             }
 
@@ -435,6 +491,10 @@
             .poster-section-conclusion .conclusion-fig5-composite {
                 break-inside: avoid;
                 page-break-inside: avoid;
+            }
+
+            .floating-back-button {
+                display: none !important;
             }
         }
 
@@ -1250,7 +1310,17 @@
             }
 
             .poster-main-columns {
+                position: static;
+                display: grid;
                 grid-template-columns: 1fr;
+                gap: 25px;
+            }
+
+            .poster-main-columns > .section-card {
+                display: block;
+                position: static;
+                width: auto;
+                margin: 0;
             }
 
             .poster-main-columns > .poster-section-pipeline,
@@ -1507,6 +1577,11 @@
     </style>
 </head>
 <body>
+    <button type="button" class="floating-back-button" id="floatingBackButton" aria-label="Go back" title="Go back">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+            <path d="M14.5 5.5L8 12l6.5 6.5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
 
     <div class="poster-container">
         <!-- HEADER -->
@@ -2048,6 +2123,92 @@
             el.setAttributeNS(xlink, 'href', abs);
         }
     });
+})();
+</script>
+<script>
+(function () {
+    var btn = document.getElementById('floatingBackButton');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+        if (window.history.length > 1) {
+            window.history.back();
+            return;
+        }
+        window.location.href = '/';
+    });
+})();
+</script>
+<script>
+(function () {
+    var DESKTOP_MIN_WIDTH = 1001;
+    var GAP = 25;
+    var LEFT_ORDER = ['poster-section-pipeline', 'poster-section-benchmark', 'poster-section-conclusion'];
+    var RIGHT_ORDER = ['poster-section-bottleneck', 'poster-section-adaptive', 'poster-section-future'];
+
+    function getSection(root, className) {
+        return root.querySelector('.' + className);
+    }
+
+    function resetLayout(root) {
+        if (!root) return;
+        root.style.height = '';
+        Array.prototype.forEach.call(root.children, function (el) {
+            if (!el.classList || !el.classList.contains('section-card')) return;
+            el.style.left = '';
+            el.style.top = '';
+            el.style.width = '';
+        });
+    }
+
+    function layoutColumns() {
+        var root = document.querySelector('.poster-main-columns');
+        if (!root) return;
+
+        if (window.matchMedia('(max-width: 1000px)').matches) {
+            resetLayout(root);
+            return;
+        }
+
+        var containerWidth = root.clientWidth;
+        if (!containerWidth) return;
+        var colWidth = (containerWidth - GAP) / 2;
+
+        var leftY = 0;
+        LEFT_ORDER.forEach(function (cls) {
+            var el = getSection(root, cls);
+            if (!el) return;
+            el.style.width = colWidth + 'px';
+            el.style.left = '0px';
+            el.style.top = leftY + 'px';
+            leftY += el.offsetHeight + GAP;
+        });
+
+        var rightY = 0;
+        RIGHT_ORDER.forEach(function (cls) {
+            var el = getSection(root, cls);
+            if (!el) return;
+            el.style.width = colWidth + 'px';
+            el.style.left = (colWidth + GAP) + 'px';
+            el.style.top = rightY + 'px';
+            rightY += el.offsetHeight + GAP;
+        });
+
+        root.style.height = Math.max(leftY, rightY) + 'px';
+    }
+
+    var rafId = 0;
+    function scheduleLayout() {
+        if (rafId) cancelAnimationFrame(rafId);
+        rafId = requestAnimationFrame(layoutColumns);
+    }
+
+    window.addEventListener('resize', scheduleLayout);
+    window.addEventListener('load', scheduleLayout);
+    if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(scheduleLayout);
+    }
+    document.addEventListener('DOMContentLoaded', scheduleLayout);
+    setTimeout(scheduleLayout, 150);
 })();
 </script>
 <script>
