@@ -955,6 +955,11 @@
             transform: scaleX(-1);
         }
 
+        /* Step 5 (Mass) → step 6 (Linear calibration) */
+        .pipeline-flow-arrow.pipeline-flow-arrow-mass-to-linear {
+            color: var(--accent-success);
+        }
+
         .pipeline-row-connector {
             display: flex;
             flex-direction: row;
@@ -1588,7 +1593,7 @@
         <header>
             <div class="title-container">
                 <h1>Standardizing nanoparticle quantification in magnetic particle imaging through an adaptive open source analysis framework</h1>
-                <h2><span class="author-underline">Lorenci Gjurgjaj</span><sup>1,2</sup>, Niccol&ograve; Silvestri<sup>1</sup>, Giulia Eugenia Paola Nucci<sup>1</sup>, Nabila Jarmouni<sup>1</sup>, Alessandro Di Girolamo<sup>1</sup>, Ehsan Sadeghi<sup>1</sup>, Abubakar Rawayau Mannir<sup>1,2</sup>, Teresa Pellegrino<sup>1</sup></h2>
+                <h2><span class="author-underline">Lorenci Gjurgjaj</span><sup>1,2</sup>, Niccol&ograve; Silvestri<sup>1</sup>, Giulia Eugenia Paola Nucci<sup>1</sup>, Nabila Jarmouni<sup>1</sup>, Alessandro Di Girolamo<sup>1</sup>, Ehsan Sadeghi<sup>1</sup>, Abubakar Rawayau Mannir<sup>1,2</sup>, Edoardo Sinibaldi<sup>1</sup> and Teresa Pellegrino<sup>1</sup></h2>
                 <p class="author-affiliations"><sup>1</sup> Italian Institute of Technology, via Morego 30, Genoa 16163, Italy<br><sup>2</sup> The Open University Affiliated Research Center, Italian Institute of Technology, via Morego 30, Genoa 16163, Italy</p>
                 <h3>School of Nanomedicine 2026, 7th edition</h3>
             </div>
@@ -1651,7 +1656,7 @@
                                 <path d="M 333 230 L 347 230 M 347 230 L 342 225 M 347 230 L 342 235" fill="none" stroke="#1e293b" stroke-width="2.5" stroke-linejoin="round"/>
                                 <text x="440" y="65" font-family="Lexend, sans-serif" fill="#1e293b">
                                     <tspan font-size="16" font-weight="900">Bias Field</tspan>
-                                    <tspan x="440" dy="16" font-size="12" fill="#475569">StaticSelection Field gradient</tspan>
+                                    <tspan x="440" dy="16" font-size="12" fill="#475569">Static Selection Field gradient</tspan>
                                 </text>
                                 <path d="M 430 60 Q 380 60 290 135" fill="none" stroke="#475569" stroke-width="1.5" marker-end="url(#pointerDot)"/>
                                 <text x="440" y="135" font-family="Lexend, sans-serif" fill="#1e293b">
@@ -1708,7 +1713,7 @@
                 <div class="section-card poster-section-pipeline">
                     <h3 class="section-title">2. Analytical Methodology: The 2D Calibration Pipeline</h3>
                     <div class="card-content">
-                        <p>While inherently volumetric, 2D images remain crucial for rapid preclinical quantification. The standard route for 2D analysis involves a sequential data extraction workflow.</p>
+                        <p>While inherently volumetric, 2D images remain crucial for rapid iron tracking and quantification. The standard route for 2D analysis involves a sequential multi-step data extraction workflow.</p>
                         
                         <div class="pipeline-flow">
                             <span class="pipeline-flow-arrow pipeline-flow-arrow-diagonal" aria-hidden="true" title="Linear calibration to Raw 2D projection">
@@ -1774,7 +1779,7 @@
                                     </svg>
                                     <span>Mass<br>Calculation</span>
                                 </div>
-                                <span class="pipeline-flow-arrow pipeline-flow-arrow-left" aria-hidden="true" title="Next step">
+                                <span class="pipeline-flow-arrow pipeline-flow-arrow-left pipeline-flow-arrow-mass-to-linear" aria-hidden="true" title="Mass calculation to linear calibration">
                                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                                 </span>
                                 <div class="pipeline-step">
@@ -1808,7 +1813,7 @@
                 <div class="section-card poster-section-bottleneck">
                     <h3 class="section-title">3. The Quantification Bottleneck</h3>
                     <div class="card-content">
-                        <p>Despite its inherent sensitivity, translation is bottlenecked by the lack of standard data analysis. A fixed pipeline rarely performs optimally across varied datasets. Specifically, <b>user-defined Regions of Interest (ROIs)</b> introduce severe variance.</p>
+                        <p>Despite its high sensitivity, translation is hindered by the absence of standardized data analysis protocols. In particular, manual <b>user-defined Regions of Interest (ROIs)</b> introduce substantial variability. In <i>in vivo</i> settings, user-dependent errors may result in the underestimation or neglect of low-intensity iron concentrations.</p>
                         
                         <div class="figure-box" style="background: #46095C; margin-bottom: 0;">
                             <!-- SVG 1: Inconsistent ROIs -->
@@ -1853,7 +1858,7 @@
                 <div class="section-card poster-section-benchmark">
                     <h3 class="section-title">4. Adaptive Logic &amp; Synergistic Benchmarking</h3>
                     <div class="card-content">
-                        <p>To overcome the quantification bottleneck, we developed a multi-stage Adaptive Pipeline designed to navigate the complex analytical space of Magnetic Particle Imaging (MPI). Rather than testing methods in isolation, we integrated them into a synergistic workflow consisting of three core pillars: <b>Detection, Filtering, and ROI Masking</b>.</p>
+                        <p>To overcome the quantification bottleneck, we developed a multi-stage Adaptive Pipeline designed to navigate the complex analytical space of Magnetic Particle Imaging (MPI). Rather than testing methods in isolation, we integrated them into a synergistic workflow consisting of three core pillars: <b>Filtering, Detection, and ROI Masking</b>.</p>
 
                         <p><b>Adaptive Intelligence:</b> The framework uses a &quot;Smart Selector&quot; that analyzes global image statistics (e.g., Entropy, SNR) and local parameters (e.g., Eccentricity, FWHM) to dynamically choose the optimal algorithm configuration for each specific dataset.</p>
 
