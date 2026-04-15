@@ -3,14 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Google tag (gtag.js) — GA4 property G-GFQLY49M28 (same as main site); page_view fires on load for this static page -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-GFQLY49M28"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'G-GFQLY49M28');
-    </script>
     <title>Standardizing nanoparticle quantification in magnetic particle imaging through an adaptive open source analysis framework</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap" rel="stylesheet">
     <style>
@@ -25,7 +17,7 @@
 
             /* Academic Color Palette */
             --primary-dark: #0f172a; /* Slate 900 */
-            --primary-grad: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+            --primary-grad: linear-gradient(135deg, #1b2840 0%, #2b4da8 100%);
             --accent-main: #0284c7; /* Sky 600 */
             --accent-warm: #ea580c; /* Orange 600 - for highlights/warnings */
             --accent-success: #059669; /* Emerald 600 - for adaptive results */
@@ -43,15 +35,9 @@
             --font-sans: 'Lexend', system-ui, -apple-system, sans-serif;
         }
 
-        /* +39.76% on larger screens; cap on small viewports so the poster fits the screen */
+        /* +39.76% vs browser default (1.331 × 1.05); all rem/em sizes scale together */
         html {
-            font-size: 100%;
-        }
-
-        @media screen and (min-width: 700px) {
-            html {
-                font-size: 139.76%;
-            }
+            font-size: 139.76%;
         }
 
         * {
@@ -62,47 +48,9 @@
             font-family: var(--font-sans);
             background-color: var(--bg-canvas);
             margin: 0;
-            padding: clamp(8px, 2vw, 20px);
+            padding: 2vw;
             color: var(--text-main);
             min-height: 100vh;
-        }
-
-        .floating-back-button {
-            position: fixed;
-            top: clamp(10px, 2vw, 18px);
-            left: clamp(10px, 2vw, 18px);
-            width: clamp(38px, 3.6vw, 46px);
-            height: clamp(38px, 3.6vw, 46px);
-            border: 1px solid rgba(15, 23, 42, 0.14);
-            border-radius: 999px;
-            background: rgba(255, 255, 255, 0.86);
-            color: #0f172a;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 1100;
-            backdrop-filter: blur(3px);
-            -webkit-backdrop-filter: blur(3px);
-            box-shadow: 0 3px 10px rgba(15, 23, 42, 0.12);
-            transition: transform 0.15s ease, box-shadow 0.2s ease, background-color 0.2s ease;
-        }
-
-        .floating-back-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 5px 14px rgba(15, 23, 42, 0.18);
-            background: rgba(255, 255, 255, 0.94);
-        }
-
-        .floating-back-button:focus-visible {
-            outline: 2px solid var(--accent-main);
-            outline-offset: 2px;
-        }
-
-        .floating-back-button svg {
-            width: 18px;
-            height: 18px;
-            stroke: currentColor;
         }
 
         /* FLUID POSTER CONTAINER */
@@ -117,35 +65,21 @@
             flex-direction: column;
         }
 
-        /* Main grid body fills space between header and footer; §6 / §7 share row height on wide layouts */
+        /* Middle column fills space between header and footer so §6 / §7 can grow to A0 height */
         .poster-container > .poster-body {
             flex: 1 1 auto;
             min-height: 0;
         }
 
-        /* On-screen: fit viewport width; height follows content (no forced A0 min-height) */
+        /* On-screen: exact ISO A0 portrait (841×1189 mm); scroll if the monitor is narrower */
         @media screen {
             body {
-                overflow-x: hidden;
+                overflow-x: auto;
             }
 
             .poster-container {
-                width: 100%;
-                max-width: var(--a0-w);
-                margin-left: auto;
-                margin-right: auto;
-                min-height: auto;
-            }
-
-            .poster-container img,
-            .poster-container video {
-                max-width: 100%;
-                height: auto;
-            }
-
-            .poster-container svg {
-                max-width: 100%;
-                height: auto;
+                width: var(--a0-w);
+                min-height: var(--a0-h);
             }
         }
 
@@ -161,53 +95,45 @@
             border-bottom: 8px solid var(--accent-main);
         }
 
-        .title-container {
-            text-align: center;
-            width: 100%;
-            min-width: 0;
-            padding: 0 0.5%;
-        }
-
-        /* Logos + event line (IIT | School | OU) */
-        .header-event-row {
-            display: flex;
-            flex-wrap: wrap;
+        .header-title-band {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
             align-items: center;
-            justify-content: center;
-            gap: clamp(8px, 1.8vw, 18px) clamp(12px, 2.2vw, 28px);
+            gap: clamp(12px, 2vw, 28px);
             width: 100%;
-            margin-top: clamp(14px, 2.2vw, 22px);
-            padding-top: clamp(12px, 1.8vw, 18px);
-            border-top: 1px solid rgba(255, 255, 255, 0.22);
         }
 
         .header-logo {
             flex-shrink: 0;
             display: flex;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
             line-height: 0;
+            align-self: end;
+            padding-top: clamp(10px, 1.4vw, 22px);
         }
 
-        .header-logo--iit,
+        .header-logo--iit {
+            justify-content: flex-end;
+        }
+
         .header-logo--ou {
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         .header-logo img {
             display: block;
-            height: clamp(28px, 3.2vw, 44px);
+            height: clamp(48px, 6vw, 96px);
             width: auto;
-            max-width: min(120px, 16vw);
-            max-height: 44px;
+            max-width: min(230px, 28vw);
             object-fit: contain;
         }
 
-        .header-event-row h3 {
-            flex: 1 1 auto;
-            min-width: min(240px, 100%);
-            margin: 0;
+        .title-container {
             text-align: center;
+            width: 100%;
+            min-width: 0;
+            padding: 0 0.5%;
         }
 
         header h1 {
@@ -242,9 +168,9 @@
         header h3 {
             font-family: var(--font-sans);
             font-weight: 400;
-            font-size: clamp(1.05rem, 1.5vw, 1.45rem);
+            margin: clamp(1.1rem, 2.2vw, 1.75rem) 0 0;
+            font-size: clamp(1.35rem, 1.8vw, 1.65rem);
             color: #bae6fd;
-            line-height: 1.3;
         }
 
         header .author-affiliations {
@@ -280,67 +206,38 @@
             text-align: left;
         }
 
-        /* Two columns, read left-to-right: 2|3, 4|5, 6|7 */
+        /* Two columns: equal height; §6 / §7 flex-grow to fill remaining column height */
         .poster-main-columns {
             flex: 1 1 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 25px;
-            align-items: start;
+            align-items: stretch;
             min-width: 0;
             min-height: 0;
         }
 
-        .poster-main-columns > .section-card {
-            align-self: start;
+        .poster-column-left,
+        .poster-column-right {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            min-width: 0;
+            min-height: 0;
+            height: 100%;
         }
 
-        .poster-main-columns > .poster-section-pipeline {
-            grid-column: 1;
-            grid-row: 1;
+        /* §7 + §8 stack: grows with left column (§6) so bottoms align */
+        .poster-column-right-footer {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            min-width: 0;
+            min-height: 0;
         }
 
-        .poster-main-columns > .poster-section-bottleneck {
-            grid-column: 2;
-            grid-row: 1;
-        }
-
-        .poster-main-columns > .poster-section-benchmark {
-            grid-column: 1;
-            grid-row: 2;
-        }
-
-        .poster-main-columns > .poster-section-adaptive {
-            grid-column: 2;
-            grid-row: 2;
-        }
-
-        .poster-main-columns > .poster-section-conclusion {
-            grid-column: 1;
-            grid-row: 3;
-        }
-
-        .poster-main-columns > .poster-section-future {
-            grid-column: 2;
-            grid-row: 3;
-        }
-
-        /* Desktop screen: masonry by fixed columns, preserving left-to-right section pairing order */
-        @media screen and (min-width: 1001px) {
-            .poster-main-columns {
-                position: relative;
-                display: block;
-                min-height: 0;
-            }
-
-            .poster-main-columns > .section-card {
-                position: absolute;
-                width: calc((100% - 25px) / 2);
-                margin: 0;
-            }
-        }
-
-        .poster-body > .poster-section-references {
+        .poster-section-references {
             flex-shrink: 0;
             width: 100%;
             box-sizing: border-box;
@@ -438,7 +335,6 @@
                 max-height: 200px;
             }
 
-            /* Print engines often omit @media screen rules — ensure SVGs/img keep dimensions */
             .poster-container img,
             .poster-container svg {
                 max-width: 100%;
@@ -456,7 +352,6 @@
                 opacity: 1 !important;
             }
 
-            /* Flatten flex chain so panels don’t collapse to 0px height when printing */
             .poster-area-intro .intro-figures-col {
                 display: block !important;
             }
@@ -492,8 +387,9 @@
             }
 
             /*
-             * Print/PDF: same row-wise grid as screen (§2|§3, §4|§5, §6|§7).
-             * Block flow (not flex) lets the engine paginate without clipping tall figures.
+             * Print/PDF: two flex columns inside .poster-main-columns grid; each stack is
+             * independent (§6 follows §4 on the left, not §5’s bottom).
+             * Block flow (not flex) paginates more reliably with tall Fig. 1.
              */
             .poster-body {
                 display: block;
@@ -501,45 +397,27 @@
             }
 
             .poster-body > * + * {
-                margin-top: 16px;
+                margin-top: 20px;
             }
 
             .poster-main-columns {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
                 gap: 16px;
-                align-items: start;
+                align-items: stretch;
                 min-width: 0;
             }
 
-            .poster-main-columns > .poster-section-pipeline {
-                grid-column: 1;
-                grid-row: 1;
+            .poster-column-left,
+            .poster-column-right {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                min-width: 0;
             }
 
-            .poster-main-columns > .poster-section-bottleneck {
-                grid-column: 2;
-                grid-row: 1;
-            }
-
-            .poster-main-columns > .poster-section-benchmark {
-                grid-column: 1;
-                grid-row: 2;
-            }
-
-            .poster-main-columns > .poster-section-adaptive {
-                grid-column: 2;
-                grid-row: 2;
-            }
-
-            .poster-main-columns > .poster-section-conclusion {
-                grid-column: 1;
-                grid-row: 3;
-            }
-
-            .poster-main-columns > .poster-section-future {
-                grid-column: 2;
-                grid-row: 3;
+            .poster-column-right-footer {
+                gap: 20px;
             }
 
             .poster-area-intro {
@@ -549,7 +427,6 @@
                 page-break-inside: auto;
             }
 
-            /* Stack text above Fig. 1 in print; avoids flex fragmentation hiding SVGs */
             .poster-area-intro .intro-flex-fig1 {
                 display: block;
             }
@@ -564,7 +441,6 @@
                 min-width: 0;
             }
 
-            /* Override global .figure-box: overflow + break-inside avoid clip or drop Fig. 1 across pages */
             .poster-area-intro .figure-box.fig1-composite {
                 overflow: visible !important;
                 break-inside: auto;
@@ -614,7 +490,7 @@
                 break-inside: avoid;
                 page-break-inside: avoid;
                 page-break-after: avoid;
-                margin-bottom: 8mm;
+                margin-bottom: 3mm;
             }
 
             footer {
@@ -639,10 +515,6 @@
             .poster-section-conclusion .conclusion-fig5-composite {
                 break-inside: avoid;
                 page-break-inside: avoid;
-            }
-
-            .floating-back-button {
-                display: none !important;
             }
         }
 
@@ -683,9 +555,7 @@
         .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-adaptive-flowchart {
             flex: 1 1 auto;
             min-height: 0;
-            min-width: 0;
             width: 100%;
-            max-width: 100%;
             justify-content: space-evenly;
             align-items: stretch;
             gap: clamp(4px, 1vh, 10px);
@@ -697,25 +567,11 @@
         .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-split {
             max-width: none;
             width: 100%;
-            box-sizing: border-box;
         }
 
         .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn {
             font-size: clamp(0.88rem, 1.25vw, 1.2rem);
             padding: clamp(10px, 1.4vh, 16px) clamp(12px, 2%, 20px);
-            overflow-wrap: break-word;
-            word-wrap: break-word;
-            hyphens: auto;
-        }
-
-        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-split {
-            min-width: 0;
-            max-width: 100%;
-        }
-
-        .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-split .mpi-flow-fn {
-            min-width: 0;
-            max-width: 100%;
         }
 
         .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn-compact {
@@ -742,11 +598,6 @@
             flex-shrink: 0;
         }
 
-        .poster-section-adaptive .card-content > p {
-            overflow-wrap: anywhere;
-            max-width: 100%;
-        }
-
         .adaptive-feature-highlights {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -754,9 +605,6 @@
             margin: 16px 0 20px;
             flex-shrink: 0;
             align-items: start;
-            width: 100%;
-            min-width: 0;
-            box-sizing: border-box;
         }
 
         .adaptive-feature-card {
@@ -769,9 +617,6 @@
             flex-direction: column;
             align-items: center;
             min-width: 0;
-            max-width: 100%;
-            box-sizing: border-box;
-            overflow-wrap: anywhere;
         }
 
         .adaptive-feature-icon {
@@ -799,8 +644,6 @@
             line-height: 1.25;
             text-transform: none;
             letter-spacing: 0;
-            max-width: 100%;
-            overflow-wrap: anywhere;
         }
 
         .adaptive-feature-text {
@@ -810,21 +653,16 @@
             font-weight: 500;
             color: var(--text-main);
             text-align: center;
-            max-width: 100%;
-            overflow-wrap: anywhere;
         }
 
         .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .figure-caption {
             flex-shrink: 0;
-            overflow-wrap: anywhere;
-            max-width: 100%;
-            box-sizing: border-box;
         }
 
-        /* §3 bottleneck: single column — Fig. 2 full width, then body text below */
+        /* §3 bottleneck: Fig. 2 image left, body text right (saves vertical space) */
         .poster-section-bottleneck .bottleneck-fig-row {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             align-items: stretch;
             gap: 20px;
             margin: 0;
@@ -832,14 +670,13 @@
 
         .poster-section-bottleneck .bottleneck-fig-row .figure-box {
             margin-top: 0;
-            height: auto;
+            height: 100%;
             display: flex;
             flex-direction: column;
         }
 
         .poster-section-bottleneck .bottleneck-fig-col--img {
-            flex: none;
-            width: 100%;
+            flex: 1 1 40%;
             min-width: 0;
             display: flex;
         }
@@ -868,8 +705,7 @@
         }
 
         .poster-section-bottleneck .bottleneck-fig-col--text {
-            flex: none;
-            width: 100%;
+            flex: 1 1 56%;
             min-width: 0;
             display: flex;
             flex-direction: column;
@@ -1005,7 +841,7 @@
             line-height: 1.6;
             margin-top: 0;
             margin-bottom: 12px;
-            text-align: justify;
+            text-align: left;
         }
 
         /* --- FIGURES & PLACEHOLDERS --- */
@@ -1043,7 +879,7 @@
             flex-shrink: 0;
         }
 
-        /* Fig. 1: text | panels A : MPS : C — equal row height (stretch) */
+        /* Fig. 1: text | panel A | panel B — equal row height (stretch) */
         .intro-flex-fig1 {
             display: flex;
             flex-direction: row;
@@ -1082,7 +918,6 @@
             flex-direction: row;
             align-items: stretch;
             gap: 0;
-            /* Avoid flex+min-height:0 collapsing panel SVGs to zero in some engines */
             min-height: min-content;
         }
 
@@ -1104,6 +939,7 @@
             justify-content: center;
         }
 
+        /* Panel A: taller diagram — scoped + caps to save vertical space in §1 */
         .poster-area-intro .fig1-panel-a-svg-wrap svg,
         .poster-area-intro .fig1-panel-a-svg-wrap img {
             width: 100%;
@@ -1128,7 +964,6 @@
             object-fit: contain;
         }
 
-        /* Do not use max-height: 100% here — flex parents often have no definite height, so % resolves badly and the SVG can collapse to invisible on screen. */
         .fig1-panel-c-svg-wrap svg,
         .fig1-panel-c-svg-wrap img {
             width: 100%;
@@ -1298,11 +1133,6 @@
 
         /* Section 2: Mass calculation ↔ Linear calibration connector (bottom row, first chevron) */
         .pipeline-flow-arrow.pipeline-flow-arrow-green {
-            color: var(--accent-success);
-        }
-
-        /* Step 5 (Mass) → step 6 (Linear calibration) — legacy class name */
-        .pipeline-flow-arrow.pipeline-flow-arrow-mass-to-linear {
             color: var(--accent-success);
         }
 
@@ -1631,34 +1461,6 @@
             }
         }
 
-        /* --- CUSTOM CALLOUTS --- */
-        .limitation-box {
-            background: #fff7ed;
-            border-left: 5px solid var(--accent-warm);
-            padding: 18px;
-            margin: 20px 0;
-            border-radius: 0 6px 6px 0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-        }
-
-        .limitation-box h4 {
-            margin: 0 0 8px 0;
-            color: #9a3412;
-            font-family: var(--font-sans);
-            font-size: 1.05rem;
-            font-weight: 400;
-            letter-spacing: 0.04em;
-            text-transform: uppercase;
-        }
-
-        .limitation-box p {
-            margin: 0;
-            color: #7c2d12;
-            font-size: 0.95rem;
-            font-weight: 400;
-            text-align: left;
-        }
-
         /* --- FOOTER: ERC + GIULIa logos and acknowledgment --- */
         footer {
             background: white;
@@ -1715,73 +1517,28 @@
 
         /* RESPONSIVE BREAKPOINTS */
         @media screen and (max-width: 1000px) {
-            .header-logo img {
-                height: clamp(24px, 4.5vw, 36px);
-                max-width: min(88px, 14vw);
-                max-height: 36px;
+            .header-title-band {
+                gap: 10px;
             }
 
-            .header-event-row {
-                gap: 8px 14px;
-                margin-top: 12px;
-                padding-top: 12px;
+            .header-logo img {
+                height: clamp(40px, 8.5vw, 80px);
+                max-width: min(155px, 34vw);
+            }
+
+            .poster-column-left,
+            .poster-column-right {
+                height: auto;
             }
 
             .poster-section-conclusion.section-card,
-            .poster-section-future.section-card {
+            .poster-section-future.section-card,
+            .poster-column-right-footer {
                 flex: 0 1 auto;
             }
 
-            /* Fig. 5: stack (A) over (B), then caption — matches single-column poster layout */
-            .poster-section-conclusion .conclusion-fig5-composite {
-                grid-template-columns: 1fr;
-                grid-template-rows: auto auto auto;
-            }
-
-            .poster-section-conclusion .conclusion-fig5-panel--a {
-                grid-column: 1;
-                grid-row: 1;
-                border-right: none;
-                border-bottom: 1px solid var(--poster-unify);
-            }
-
-            .poster-section-conclusion .conclusion-fig5-panel--b {
-                grid-column: 1;
-                grid-row: 2;
-                align-self: stretch;
-            }
-
-            .poster-section-conclusion .conclusion-fig5-caption-merged {
-                grid-column: 1;
-                grid-row: 3;
-            }
-
-            .poster-section-conclusion .conclusion-fig5-panel--b svg {
-                max-height: min(70vh, 420px);
-            }
-
             .poster-main-columns {
-                position: static;
-                display: grid;
                 grid-template-columns: 1fr;
-                gap: 25px;
-            }
-
-            .poster-main-columns > .section-card {
-                display: block;
-                position: static;
-                width: auto;
-                margin: 0;
-            }
-
-            .poster-main-columns > .poster-section-pipeline,
-            .poster-main-columns > .poster-section-bottleneck,
-            .poster-main-columns > .poster-section-benchmark,
-            .poster-main-columns > .poster-section-adaptive,
-            .poster-main-columns > .poster-section-conclusion,
-            .poster-main-columns > .poster-section-future {
-                grid-column: 1;
-                grid-row: auto;
             }
             .intro-flex-fig1 {
                 flex-direction: column;
@@ -1794,6 +1551,11 @@
                 border-right: none;
                 border-bottom: 1px solid var(--poster-unify);
             }
+
+            .poster-section-bottleneck .bottleneck-fig-row {
+                flex-direction: column;
+            }
+
             .intro-text-col {
                 flex: 1 1 auto;
                 max-width: none;
@@ -1803,372 +1565,24 @@
             .adaptive-feature-highlights {
                 grid-template-columns: 1fr;
             }
-
-            /* §5: stack the two branch boxes so labels do not squeeze side-by-side */
-            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-split {
-                grid-template-columns: 1fr;
-                gap: 10px;
-            }
-        }
-
-        /* Mobile header: compact logos + event row; narrow screens stack logos above school line */
-        @media screen and (max-width: 640px) {
-            header {
-                padding: 16px 14px 14px;
-            }
-
-            .title-container {
-                padding: 0 2px;
-            }
-
-            .header-event-row {
-                display: grid;
-                grid-template-columns: 1fr 1fr;
-                grid-template-rows: auto auto;
-                justify-items: center;
-                align-items: center;
-                gap: 10px 16px;
-                margin-top: 12px;
-                padding-top: 12px;
-            }
-
-            .header-event-row .header-logo--iit {
-                grid-column: 1;
-                grid-row: 1;
-            }
-
-            .header-event-row .header-logo--ou {
-                grid-column: 2;
-                grid-row: 1;
-            }
-
-            .header-event-row h3 {
-                grid-column: 1 / -1;
-                grid-row: 2;
-                min-width: 0;
-                font-size: clamp(0.92rem, 3.8vw, 1.1rem);
-            }
-
-            .header-logo img {
-                height: clamp(22px, 7vw, 32px);
-                max-width: min(72px, 28vw);
-                max-height: 32px;
-            }
-
-            header h1 {
-                font-size: clamp(1.05rem, 5.2vw, 1.45rem);
-                margin-bottom: 8px;
-            }
-
-            header h2 {
-                font-size: clamp(0.78rem, 3.4vw, 0.98rem);
-            }
-
-            header .author-affiliations {
-                font-size: clamp(0.62rem, 2.8vw, 0.78rem);
-                padding: 0 4px;
-            }
-
-            .poster-area-intro .fig1-panel-a-svg-wrap svg,
-            .poster-area-intro .fig1-panel-a-svg-wrap img {
-                max-height: min(46vh, 360px);
-            }
-
-            .poster-area-intro .fig1-panel-mps-svg-wrap svg,
-            .poster-area-intro .fig1-panel-mps-svg-wrap img {
-                max-height: min(40vh, 300px);
-            }
-
-            .poster-area-intro .fig1-panel-c-svg-wrap svg,
-            .poster-area-intro .fig1-panel-c-svg-wrap img {
-                max-height: min(50vh, 320px);
-            }
-
-            .poster-area-intro .fig1-composite > .figure-caption.fig1-caption {
-                font-size: clamp(0.72rem, 2.5vw, 0.8rem);
-                padding: 8px 10px 9px;
-            }
-
-            /* §5: keep feature + flowchart text inside boxes on small screens */
-            .poster-section-adaptive .adaptive-feature-card {
-                padding: 14px 10px 16px;
-            }
-
-            .poster-section-adaptive .adaptive-feature-title {
-                font-size: clamp(1rem, 4.2vw, 1.2rem);
-            }
-
-            .poster-section-adaptive .adaptive-feature-text {
-                font-size: clamp(0.92rem, 3.6vw, 1.05rem);
-            }
-
-            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box {
-                min-height: min(240px, 48vh);
-            }
-
-            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-adaptive-flowchart {
-                padding: 10px 8px 12px;
-                gap: 6px;
-            }
-
-            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn {
-                padding: 8px 8px;
-                font-size: clamp(0.75rem, 3.2vw, 0.95rem);
-            }
-
-            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-fn-compact {
-                min-height: min(4.25rem, 21vw);
-            }
-
-            .poster-section-adaptive .figure-box.mpi-adaptive-figure-box .mpi-flow-split {
-                grid-template-columns: 1fr;
-                gap: 8px;
-            }
-        }
-
-        /* §2 Pipeline: size to each section card — narrow columns stack; mid widths stay fluid horizontal */
-        .poster-section-pipeline .card-content {
-            container-type: inline-size;
-            container-name: pipeline-card;
-        }
-
-        @container pipeline-card (min-width: 561px) and (max-width: 720px) {
-            .pipeline-flow {
-                gap: clamp(12px, 3.5cqw, 20px);
-                padding: clamp(10px, 2.5cqw, 16px);
-            }
-
-            .pipeline-step {
-                min-height: clamp(120px, 42cqw, 172px);
-                padding: clamp(10px, 2cqw, 18px) clamp(4px, 1.2cqw, 8px);
-            }
-
-            .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal) {
-                flex: 0 0 clamp(28px, 8cqw, 44px);
-                min-height: clamp(72px, 36cqw, 172px);
-            }
-
-            .pipeline-step > svg {
-                width: clamp(56px, 16cqw, 96px);
-                height: clamp(56px, 16cqw, 96px);
-                margin-bottom: clamp(6px, 1.5cqw, 14px);
-            }
-        }
-
-        /* Stacked pipeline: flex-basis 1 1 0 on .pipeline-step fights column layout — reset + use order instead of column-reverse */
-        @container pipeline-card (max-width: 560px) {
-            .pipeline-flow {
-                gap: 12px;
-                padding: 12px;
-                overflow: visible;
-            }
-
-            .pipeline-flow-arrow.pipeline-flow-arrow-diagonal {
-                position: static;
-                left: auto;
-                top: auto;
-                order: 10;
-                align-self: center;
-                margin: 8px auto 4px;
-                transform: rotate(-135deg);
-                width: 34px;
-                height: 34px;
-                flex-shrink: 0;
-            }
-
-            .pipeline-row {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-
-            /* Bottom row DOM: Mass, →, Linear, →, ROI — visual order ROI → Linear → Mass */
-            .pipeline-flow > .pipeline-row:last-child {
-                flex-direction: column;
-            }
-
-            .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(1) {
-                order: 5;
-            }
-
-            .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(2) {
-                order: 4;
-            }
-
-            .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(3) {
-                order: 3;
-            }
-
-            .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(4) {
-                order: 2;
-            }
-
-            .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(5) {
-                order: 1;
-            }
-
-            .pipeline-flow > .pipeline-row-connector {
-                flex-direction: column;
-                min-height: auto;
-                gap: 0;
-            }
-
-            .pipeline-flow > .pipeline-row-connector .pipeline-connector-cell:empty {
-                display: none;
-            }
-
-            .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal) {
-                flex: 0 0 auto;
-                min-height: auto;
-                align-self: center;
-                padding: 4px 0;
-            }
-
-            .pipeline-flow .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal):not(.pipeline-flow-arrow-down) svg {
-                transform: rotate(90deg);
-            }
-
-            .pipeline-flow .pipeline-flow-arrow.pipeline-flow-arrow-left:not(.pipeline-flow-arrow-diagonal) svg {
-                transform: rotate(90deg);
-            }
-
-            .pipeline-row .pipeline-step {
-                flex: 0 0 auto;
-                flex-grow: 0;
-                flex-shrink: 0;
-                min-height: 0;
-                padding: 14px 10px;
-            }
-
-            .pipeline-step > span {
-                line-height: 1.35;
-            }
-
-            .pipeline-step > svg {
-                width: min(88px, 22vw);
-                height: min(88px, 22vw);
-                margin-bottom: 10px;
-            }
-        }
-
-        /* Browsers without container queries: narrow viewports get the stacked pipeline */
-        @supports not (container-type: inline-size) {
-            @media screen and (max-width: 560px) {
-                .poster-section-pipeline .pipeline-flow {
-                    gap: 12px;
-                    padding: 12px;
-                    overflow: visible;
-                }
-
-                .poster-section-pipeline .pipeline-flow-arrow.pipeline-flow-arrow-diagonal {
-                    position: static;
-                    left: auto;
-                    top: auto;
-                    order: 10;
-                    align-self: center;
-                    margin: 8px auto 4px;
-                    transform: rotate(-135deg);
-                    width: 34px;
-                    height: 34px;
-                    flex-shrink: 0;
-                }
-
-                .poster-section-pipeline .pipeline-row {
-                    flex-direction: column;
-                    align-items: stretch;
-                    gap: 8px;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child {
-                    flex-direction: column;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(1) {
-                    order: 5;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(2) {
-                    order: 4;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(3) {
-                    order: 3;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-flow-arrow:nth-child(4) {
-                    order: 2;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row:last-child > .pipeline-step:nth-child(5) {
-                    order: 1;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row-connector {
-                    flex-direction: column;
-                    min-height: auto;
-                    gap: 0;
-                }
-
-                .poster-section-pipeline .pipeline-flow > .pipeline-row-connector .pipeline-connector-cell:empty {
-                    display: none;
-                }
-
-                .poster-section-pipeline .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal) {
-                    flex: 0 0 auto;
-                    min-height: auto;
-                    align-self: center;
-                    padding: 4px 0;
-                }
-
-                .poster-section-pipeline .pipeline-flow .pipeline-flow-arrow:not(.pipeline-flow-arrow-diagonal):not(.pipeline-flow-arrow-down) svg {
-                    transform: rotate(90deg);
-                }
-
-                .poster-section-pipeline .pipeline-flow .pipeline-flow-arrow.pipeline-flow-arrow-left:not(.pipeline-flow-arrow-diagonal) svg {
-                    transform: rotate(90deg);
-                }
-
-                .poster-section-pipeline .pipeline-row .pipeline-step {
-                    flex: 0 0 auto;
-                    flex-grow: 0;
-                    flex-shrink: 0;
-                    min-height: 0;
-                    padding: 14px 10px;
-                }
-
-                .poster-section-pipeline .pipeline-step > span {
-                    line-height: 1.35;
-                }
-
-                .poster-section-pipeline .pipeline-step > svg {
-                    width: min(88px, 22vw);
-                    height: min(88px, 22vw);
-                    margin-bottom: 10px;
-                }
-            }
         }
     </style>
 </head>
 <body>
-    <button type="button" class="floating-back-button" id="floatingBackButton" aria-label="Go back" title="Go back">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
-            <path d="M14.5 5.5L8 12l6.5 6.5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-    </button>
 
     <div class="poster-container">
         <!-- HEADER -->
         <header>
-            <div class="title-container">
-                <h1>Standardizing nanoparticle quantification in magnetic particle imaging through an adaptive open source analysis framework</h1>
-                <h2><span class="author-underline">Lorenci Gjurgjaj</span><sup>1,2</sup>, Niccol&ograve; Silvestri<sup>1</sup>, Giulia Eugenia Paola Nucci<sup>1</sup>, Nabila Jarmouni<sup>1</sup>,<br>Alessandro Di Girolamo<sup>1</sup>, Ehsan Sadeghi<sup>1</sup>, Abubakar Rawayau Mannir<sup>1,2</sup>, Edoardo Sinibaldi<sup>1</sup> and Teresa Pellegrino<sup>1</sup></h2>
-                <p class="author-affiliations"><sup>1</sup> Italian Institute of Technology, via Morego 30, Genoa 16163, Italy<br><sup>2</sup> The Open University Affiliated Research Center, Italian Institute of Technology, via Morego 30, Genoa 16163, Italy</p>
-            </div>
-            <div class="header-event-row" aria-label="Host institutions and event">
+            <div class="header-title-band">
                 <div class="header-logo header-logo--iit">
                     <img src="IIT-v4-logo-t2_2.png" width="230" height="104" alt="Istituto Italiano di Tecnologia">
                 </div>
-                <h3>School of Nanomedicine 2026, 7th edition</h3>
+                <div class="title-container">
+                    <h1>Standardizing nanoparticle quantification in magnetic particle imaging through an adaptive open source analysis framework</h1>
+                    <h2><span class="author-underline">Lorenci Gjurgjaj</span><sup>1,2</sup>, Niccol&ograve; Silvestri<sup>1</sup>, Giulia Eugenia Paola Nucci<sup>1</sup>, Nabila Jarmouni<sup>1</sup>,<br>Alessandro Di Girolamo<sup>1</sup>, Ehsan Sadeghi<sup>1</sup>, Abubakar Rawayau Mannir<sup>1,2</sup>, Edoardo Sinibaldi<sup>1</sup> and Teresa Pellegrino<sup>1</sup></h2>
+                    <p class="author-affiliations"><sup>1</sup> Italian Institute of Technology, via Morego 30, Genoa 16163, Italy<br><sup>2</sup> The Open University Affiliated Research Center, Italian Institute of Technology, via Morego 30, Genoa 16163, Italy</p>
+                    <h3>School of Nanomedicine 2026, 7th edition</h3>
+                </div>
                 <div class="header-logo header-logo--ou">
                     <img src="OU.png" width="230" height="104" alt="The Open University">
                 </div>
@@ -2386,6 +1800,7 @@
             </div>
 
             <div class="poster-main-columns">
+                <div class="poster-column-left">
                 <div class="section-card poster-section-pipeline">
                     <h3 class="section-title">2. Analytical Methodology: The 2D Calibration Pipeline</h3>
                     <div class="card-content">
@@ -2507,30 +1922,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="section-card poster-section-bottleneck">
-                    <h3 class="section-title">3. The Fundamental Quantification Bottleneck</h3>
-                    <div class="card-content">
-                        <div class="bottleneck-fig-row">
-                            <div class="figure-box bottleneck-fig-col--img" style="background: #f8fafc; margin-bottom: 0;">
-                                <div class="bottleneck-img-wrap">
-                                    <img src="Picture1.png" alt="2D MPI Magnetic Insight Inc. projection of eight iron oxide nanoparticle phantoms at varying concentrations; high dynamic range, manual delineation challenge"/>
-                                </div>
-                                <div class="figure-caption">
-                                    <b>Fig. 2:</b> 2D MPI (Magnetic Insight Inc.) projection of eight iron oxide nanoparticle phantoms at varying concentrations. The resulting high dynamic range demonstrates the inherent unreliability of manual delineation, as human operators struggle to consistently threshold both saturated and low-intensity signals.
-                                </div>
-                            </div>
-                            <div class="bottleneck-fig-col--text">
-                                <p>Despite MPI's high sensitivity and technical potential, cross- and intra-lab validation are hindered by non-standardized workflows that are inherently time-consuming, requiring multiple scans, extensive post-processing, and highly experienced users.</p>
-                                <ul>
-                                    <li><b>Subjective identification:</b> Visual spot detection can miss or mischaracterize low-intensity samples.</li>
-                                    <li><b>Ambiguous delineation:</b> User-defined Regions of Interest (ROIs) lack consensus; small boundary shifts can substantially change extracted intensities.</li>
-                                    <li><b>Algorithmic rigidity:</b> Fixed pipelines impose a one-size-fits-all workflow that does not adapt to diverse nanoparticle properties or complex image configurations (e.g., overlapping signals, irregular spatial arrangements).</li>
-                                    <li><b>Compounded error:</b> As these factors accumulate, obtaining consistent mass estimates from identical raw data becomes difficult, and repeated human decisions at each step reduce reproducibility.</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 <div class="section-card poster-section-benchmark">
                     <h3 class="section-title">4. Adaptive Logic &amp; Synergistic Benchmarking</h3>
                     <div class="card-content">
@@ -2595,6 +1987,107 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="section-card poster-section-conclusion">
+                    <h3 class="section-title">6. Results and Conclusions</h3>
+                    <div class="card-content">
+                        <div class="conclusion-fig5-composite">
+                            <div class="conclusion-fig5-panel conclusion-fig5-panel--a">
+                                <img class="conclusion-cal-img" src="Picture2.png" width="2643" height="1255" alt="2D MPI projection of eight IONP samples prepared with varying iron masses."/>
+                            </div>
+                            <div class="conclusion-fig5-panel conclusion-fig5-panel--b">
+                                <div class="conclusion-fig5-b-svg-wrap">
+                                <svg viewBox="0 42 480 228" preserveAspectRatio="xMidYMid meet" id="mpi-fig5-calibration" aria-label="Fig. 5 quantitative validation: eight IONP samples in 2D MPI projection; linear correlation of framework intensity versus ICP-OES standards; least squares R squared 0.997">
+                                    <defs>
+                                        <clipPath id="mpi-fig5-clip">
+                                            <rect x="50" y="48" width="405" height="180"/>
+                                        </clipPath>
+                                    </defs>
+                                    <rect x="0" y="0" width="480" height="280" fill="#ffffff"/>
+                                    <rect x="50" y="48" width="405" height="180" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" rx="2"/>
+                                    <g clip-path="url(#mpi-fig5-clip)">
+                                        <line x1="50" y1="227.80" x2="455" y2="50.71" stroke="#46095C" stroke-width="2" stroke-linecap="round"/>
+                                    </g>
+                                    <line x1="50" y1="48" x2="50" y2="228" stroke="#46095C" stroke-width="1.5"/>
+                                    <line x1="50" y1="228" x2="455" y2="228" stroke="#46095C" stroke-width="1.5"/>
+                                    <g font-family="Lexend, sans-serif" fill="#334155">
+                                        <line x1="50" y1="228" x2="50" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="142.05" y1="228" x2="142.05" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="234.09" y1="228" x2="234.09" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="326.14" y1="228" x2="326.14" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="418.18" y1="228" x2="418.18" y2="234" stroke="#46095C" stroke-width="1"/>
+                                        <text x="50" y="248" font-size="10" text-anchor="middle">0</text>
+                                        <text x="142.05" y="248" font-size="10" text-anchor="middle">5</text>
+                                        <text x="234.09" y="248" font-size="10" text-anchor="middle">10</text>
+                                        <text x="326.14" y="248" font-size="10" text-anchor="middle">15</text>
+                                        <text x="418.18" y="248" font-size="10" text-anchor="middle">20</text>
+                                        <text x="252" y="266" font-size="11" fill="#46095C" text-anchor="middle">Iron mass in &micro;g (ICP-OES)</text>
+                                        <line x1="45" y1="228" x2="50" y2="228" stroke="#46095C" stroke-width="1"/>
+                                        <line x1="45" y1="187.09" x2="50" y2="187.09" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <line x1="45" y1="146.18" x2="50" y2="146.18" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <line x1="45" y1="105.27" x2="50" y2="105.27" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <line x1="45" y1="64.36" x2="50" y2="64.36" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
+                                        <text x="42" y="231.5" font-size="10" text-anchor="end">0</text>
+                                        <text x="42" y="190.6" font-size="10" text-anchor="end">5</text>
+                                        <text x="42" y="149.7" font-size="10" text-anchor="end">10</text>
+                                        <text x="42" y="108.8" font-size="10" text-anchor="end">15</text>
+                                        <text x="42" y="67.9" font-size="10" text-anchor="end">20</text>
+                                    </g>
+                                    <text x="18" y="138" font-family="Lexend, sans-serif" font-size="11" fill="#46095C" text-anchor="middle" transform="rotate(-90,18,138)">MPI Intensity (arbitrary unit)</text>
+                                    <circle cx="55.52" cy="225.21" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="68.41" cy="219.74" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="75.77" cy="219.58" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="105.23" cy="204.92" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="158.61" cy="176.91" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="232.25" cy="143.39" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="346.39" cy="103.60" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <circle cx="421.86" cy="63.81" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
+                                    <rect x="56" y="52" width="128" height="24" fill="rgba(255,255,255,0.94)" stroke="#46095C" stroke-width="1" rx="3"/>
+                                    <text x="64" y="68" font-family="Lexend, sans-serif" font-size="10.5" fill="#46095C" text-anchor="start" font-weight="700">R² = 0.997</text>
+                                </svg>
+                                </div>
+                            </div>
+                            <div class="conclusion-fig5-caption-merged">
+                                <p><b>Fig. 5:</b> Quantitative validation of the adaptive framework. (A) 2D MPI projection of eight IONP samples prepared with varying iron masses. (B) Linear correlation between framework-quantified intensity and absolute ICP-OES reference standards. The adaptive selection yields a least-squares fit of R<sup>2</sup> = 0.997, demonstrating near-perfect agreement across the entire dynamic range.</p>
+                            </div>
+                        </div>
+                        <ul class="conclusion-points">
+                            <li>First standardization framework for absolute 2D MPI iron quantification, which enables cross-laboratory and longitudinal reproducibility.</li>
+                            <li>Linear (R<sup>2</sup> &gt; 0.99) calibration curve relative to ICP-OES standards.</li>
+                            <li>Algorithmic selection of the calibration pipelines (validated over &gt;1.1M instances across diverse SPION and setup conditions) that outperforms any fixed-pipeline approaches.</li>
+                            <li>Custom peak detection surpasses standard mathematical and ML benchmarks.</li>
+                            <li>Open-source code, promoting community-based build-up and further development.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                </div>
+                <div class="poster-column-right">
+                <div class="section-card poster-section-bottleneck">
+                    <h3 class="section-title">3. The Fundamental Quantification Bottleneck</h3>
+                    <div class="card-content">
+                        <div class="bottleneck-fig-row">
+                            <div class="figure-box bottleneck-fig-col--img" style="background: #f8fafc; margin-bottom: 0;">
+                                <div class="bottleneck-img-wrap">
+                                    <img src="Picture1.png" alt="2D MPI Magnetic Insight Inc. projection of eight iron oxide nanoparticle phantoms at varying concentrations; high dynamic range, manual delineation challenge"/>
+                                </div>
+                                <div class="figure-caption">
+                                    <b>Fig. 2:</b> 2D MPI (Magnetic Insight Inc.) projection of eight iron oxide nanoparticle phantoms at varying concentrations. The resulting high dynamic range demonstrates the inherent unreliability of manual delineation, as human operators struggle to consistently threshold both saturated and low-intensity signals.
+                                </div>
+                            </div>
+                            <div class="bottleneck-fig-col--text">
+                                <p>Despite MPI's high sensitivity and technical potential, cross- and intra-lab validation are hindered by non-standardized workflows that are inherently time-consuming, requiring multiple scans, extensive post-processing, and highly experienced users.</p>
+                                <ul>
+                                    <li><b>Subjective identification:</b> Visual spot detection can miss or mischaracterize low-intensity samples.</li>
+                                    <li><b>Ambiguous delineation:</b> User-defined Regions of Interest (ROIs) lack consensus; small boundary shifts can substantially change extracted intensities.</li>
+                                    <li><b>Algorithmic rigidity:</b> Fixed pipelines impose a one-size-fits-all workflow that does not adapt to diverse nanoparticle properties or complex image configurations (e.g., overlapping signals, irregular spatial arrangements).</li>
+                                    <li><b>Compounded error:</b> As these factors accumulate, obtaining consistent mass estimates from identical raw data becomes difficult, and repeated human decisions at each step reduce reproducibility.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="section-card poster-section-adaptive">
                     <h3 class="section-title">5. Proposed Adaptive Pipeline</h3>
                     <div class="card-content">
@@ -2668,78 +2161,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="section-card poster-section-conclusion">
-                    <h3 class="section-title">6. Results and Conclusions</h3>
-                    <div class="card-content">
-                        <div class="conclusion-fig5-composite">
-                            <div class="conclusion-fig5-panel conclusion-fig5-panel--a">
-                                <img class="conclusion-cal-img" src="Picture2.png" width="2643" height="1255" alt="2D MPI projection of eight IONP samples prepared with varying iron masses."/>
-                            </div>
-                            <div class="conclusion-fig5-panel conclusion-fig5-panel--b">
-                                <div class="conclusion-fig5-b-svg-wrap">
-                                <svg viewBox="0 42 480 228" preserveAspectRatio="xMidYMid meet" id="mpi-fig5-calibration" aria-label="Fig. 5 quantitative validation: eight IONP samples in 2D MPI projection; linear correlation of framework intensity versus ICP-OES standards; least squares R squared 0.997">
-                                    <defs>
-                                        <clipPath id="mpi-fig5-clip">
-                                            <rect x="50" y="48" width="405" height="180"/>
-                                        </clipPath>
-                                    </defs>
-                                    <rect x="0" y="0" width="480" height="280" fill="#ffffff"/>
-                                    <rect x="50" y="48" width="405" height="180" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1" rx="2"/>
-                                    <g clip-path="url(#mpi-fig5-clip)">
-                                        <line x1="50" y1="227.80" x2="455" y2="50.71" stroke="#46095C" stroke-width="2" stroke-linecap="round"/>
-                                    </g>
-                                    <line x1="50" y1="48" x2="50" y2="228" stroke="#46095C" stroke-width="1.5"/>
-                                    <line x1="50" y1="228" x2="455" y2="228" stroke="#46095C" stroke-width="1.5"/>
-                                    <g font-family="Lexend, sans-serif" fill="#334155">
-                                        <line x1="50" y1="228" x2="50" y2="234" stroke="#46095C" stroke-width="1"/>
-                                        <line x1="142.05" y1="228" x2="142.05" y2="234" stroke="#46095C" stroke-width="1"/>
-                                        <line x1="234.09" y1="228" x2="234.09" y2="234" stroke="#46095C" stroke-width="1"/>
-                                        <line x1="326.14" y1="228" x2="326.14" y2="234" stroke="#46095C" stroke-width="1"/>
-                                        <line x1="418.18" y1="228" x2="418.18" y2="234" stroke="#46095C" stroke-width="1"/>
-                                        <text x="50" y="248" font-size="10" text-anchor="middle">0</text>
-                                        <text x="142.05" y="248" font-size="10" text-anchor="middle">5</text>
-                                        <text x="234.09" y="248" font-size="10" text-anchor="middle">10</text>
-                                        <text x="326.14" y="248" font-size="10" text-anchor="middle">15</text>
-                                        <text x="418.18" y="248" font-size="10" text-anchor="middle">20</text>
-                                        <text x="252" y="266" font-size="11" fill="#46095C" text-anchor="middle">Iron mass in &micro;g (ICP-OES)</text>
-                                        <line x1="45" y1="228" x2="50" y2="228" stroke="#46095C" stroke-width="1"/>
-                                        <line x1="45" y1="187.09" x2="50" y2="187.09" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
-                                        <line x1="45" y1="146.18" x2="50" y2="146.18" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
-                                        <line x1="45" y1="105.27" x2="50" y2="105.27" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
-                                        <line x1="45" y1="64.36" x2="50" y2="64.36" stroke="rgba(70,9,92,0.35)" stroke-width="1"/>
-                                        <text x="42" y="231.5" font-size="10" text-anchor="end">0</text>
-                                        <text x="42" y="190.6" font-size="10" text-anchor="end">5</text>
-                                        <text x="42" y="149.7" font-size="10" text-anchor="end">10</text>
-                                        <text x="42" y="108.8" font-size="10" text-anchor="end">15</text>
-                                        <text x="42" y="67.9" font-size="10" text-anchor="end">20</text>
-                                    </g>
-                                    <text x="18" y="138" font-family="Lexend, sans-serif" font-size="11" fill="#46095C" text-anchor="middle" transform="rotate(-90,18,138)">MPI Intensity (arbitrary unit)</text>
-                                    <circle cx="55.52" cy="225.21" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="68.41" cy="219.74" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="75.77" cy="219.58" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="105.23" cy="204.92" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="158.61" cy="176.91" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="232.25" cy="143.39" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="346.39" cy="103.60" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <circle cx="421.86" cy="63.81" r="5" fill="#46095C" stroke="#3a0d52" stroke-width="1"/>
-                                    <rect x="56" y="52" width="128" height="24" fill="rgba(255,255,255,0.94)" stroke="#46095C" stroke-width="1" rx="3"/>
-                                    <text x="64" y="68" font-family="Lexend, sans-serif" font-size="10.5" fill="#46095C" text-anchor="start" font-weight="700">R² = 0.997</text>
-                                </svg>
-                                </div>
-                            </div>
-                            <div class="conclusion-fig5-caption-merged">
-                                <p><b>Fig. 5:</b> Quantitative validation of the adaptive framework. (A) 2D MPI projection of eight IONP samples prepared with varying iron masses. (B) Linear correlation between framework-quantified intensity and absolute ICP-OES reference standards. The adaptive selection yields a least-squares fit of R<sup>2</sup> = 0.997, demonstrating near-perfect agreement across the entire dynamic range.</p>
-                            </div>
-                        </div>
-                        <ul class="conclusion-points">
-                            <li>First standardization framework for absolute 2D MPI iron quantification, which enables cross-laboratory and longitudinal reproducibility.</li>
-                            <li>Linear (R<sup>2</sup> &gt; 0.99) calibration curve relative to ICP-OES standards.</li>
-                            <li>Algorithmic selection of the calibration pipelines (validated over &gt;1.1M instances across diverse SPION and setup conditions) that outperforms any fixed-pipeline approaches.</li>
-                            <li>Custom peak detection surpasses standard mathematical and ML benchmarks.</li>
-                            <li>Open-source code, promoting community-based build-up and further development.</li>
-                        </ul>
-                    </div>
-                </div>
+
+                <div class="poster-column-right-footer">
                 <div class="section-card poster-section-future">
                     <h3 class="section-title">7. Limitations and Perspective</h3>
                     <div class="card-content">
@@ -2753,24 +2176,27 @@
                         </ul>
                     </div>
                 </div>
-            </div>
 
-            <div class="section-card poster-section-references">
-                <h3 class="section-title">8. References</h3>
-                <div class="card-content references-minimal">
-                    <ol class="references-list">
-                        <li>A. Davida, et al., The hardware, tracer, and signal processing methods of magnetic particle imaging: A review. <i>J. Appl. Phys.</i>, 2024.</li>
-                        <li>P. Chandrasekharan, et al., A perspective on a rapid and radiation-free tracer imaging modality, magnetic particle imaging, with promise for clinical translation, <i>British Journal of Radiology</i>, Volume 91, Issue 1091, 2018.</li>
-                        <li>X. Yang, et al., Applications of Magnetic Particle Imaging in Biomedicine: Advancements and Prospects. <i>Front. Physiol.</i>, 2022.</li>
-                        <li>HJ Good, et al., Inter-user Comparison for Quantification of Superparamagnetic Iron Oxides with Magnetic Particle Imaging Across Two Institutions Highlights a Need for Standardized Approaches. <i>Mol Imaging Biol</i> 25, 2023.</li>
-                        <li>J. Ttashkandi, et al., Progress in magnetic particle imaging signal and iron quantification methods in vivo &ndash; application to long circulating SPIONs, <i>Nanoscale Adv.</i>, 5, 2023.</li>
-                        <li>Y. Shen, et al., A systematic 3-D magnetic particle imaging simulation model for quantitative analysis of reconstruction image quality, <i>Computer Methods and Programs in Biomedicine</i>, Volume 252, 2024.</li>
-                    </ol>
+                <div class="section-card poster-section-references">
+                    <h3 class="section-title">8. References</h3>
+                    <div class="card-content references-minimal">
+                        <ol class="references-list">
+                            <li>A. Davida, et al., The hardware, tracer, and signal processing methods of magnetic particle imaging: A review. <i>J. Appl. Phys.</i>, 2024.</li>
+                            <li>P. Chandrasekharan, et al., A perspective on a rapid and radiation-free tracer imaging modality, magnetic particle imaging, with promise for clinical translation, <i>British Journal of Radiology</i>, Volume 91, Issue 1091, 2018.</li>
+                            <li>X. Yang, et al., Applications of Magnetic Particle Imaging in Biomedicine: Advancements and Prospects. <i>Front. Physiol.</i>, 2022.</li>
+                            <li>HJ Good, et al., Inter-user Comparison for Quantification of Superparamagnetic Iron Oxides with Magnetic Particle Imaging Across Two Institutions Highlights a Need for Standardized Approaches. <i>Mol Imaging Biol</i> 25, 2023.</li>
+                            <li>J. Ttashkandi, et al., Progress in magnetic particle imaging signal and iron quantification methods in vivo &ndash; application to long circulating SPIONs, <i>Nanoscale Adv.</i>, 5, 2023.</li>
+                            <li>Y. Shen, et al., A systematic 3-D magnetic particle imaging simulation model for quantitative analysis of reconstruction image quality, <i>Computer Methods and Programs in Biomedicine</i>, Volume 252, 2024.</li>
+                        </ol>
+                    </div>
+                </div>
+                </div>
+
                 </div>
             </div>
 
         </div>
-
+        
         <footer>
             <div class="footer-logo">
                 <div class="footer-logo-marks">
@@ -2783,124 +2209,6 @@
 
     </div>
 
-<script>
-(function () {
-    var xlink = 'http://www.w3.org/1999/xlink';
-    /** Resolve site-root (/foo) and relative paths so <img> and SVG <image> work on file://, localhost, and production. */
-    function resolveAssetUrl(attr) {
-        if (!attr || /^https?:\/\//i.test(attr)) return attr;
-        try {
-            if (location.protocol === 'file:') {
-                var p = attr.replace(/^\//, '');
-                return new URL(p, location.href).href;
-            }
-            return new URL(attr, location.href).href;
-        } catch (e) {
-            return attr;
-        }
-    }
-    document.querySelectorAll('img[src]').forEach(function (img) {
-        var s = img.getAttribute('src');
-        if (s && !/^https?:\/\//i.test(s)) {
-            img.src = resolveAssetUrl(s);
-        }
-    });
-    document.querySelectorAll('svg image').forEach(function (el) {
-        var h = el.getAttribute('href') || el.getAttributeNS(xlink, 'href');
-        if (h && !/^https?:\/\//i.test(h)) {
-            var abs = resolveAssetUrl(h);
-            el.setAttribute('href', abs);
-            el.setAttributeNS(xlink, 'href', abs);
-        }
-    });
-})();
-</script>
-<script>
-(function () {
-    var btn = document.getElementById('floatingBackButton');
-    if (!btn) return;
-    btn.addEventListener('click', function () {
-        if (window.history.length > 1) {
-            window.history.back();
-            return;
-        }
-        window.location.href = '/';
-    });
-})();
-</script>
-<script>
-(function () {
-    var DESKTOP_MIN_WIDTH = 1001;
-    var GAP = 25;
-    var LEFT_ORDER = ['poster-section-pipeline', 'poster-section-benchmark', 'poster-section-conclusion'];
-    var RIGHT_ORDER = ['poster-section-bottleneck', 'poster-section-adaptive', 'poster-section-future'];
-
-    function getSection(root, className) {
-        return root.querySelector('.' + className);
-    }
-
-    function resetLayout(root) {
-        if (!root) return;
-        root.style.height = '';
-        Array.prototype.forEach.call(root.children, function (el) {
-            if (!el.classList || !el.classList.contains('section-card')) return;
-            el.style.left = '';
-            el.style.top = '';
-            el.style.width = '';
-        });
-    }
-
-    function layoutColumns() {
-        var root = document.querySelector('.poster-main-columns');
-        if (!root) return;
-
-        if (window.matchMedia('(max-width: 1000px)').matches) {
-            resetLayout(root);
-            return;
-        }
-
-        var containerWidth = root.clientWidth;
-        if (!containerWidth) return;
-        var colWidth = (containerWidth - GAP) / 2;
-
-        var leftY = 0;
-        LEFT_ORDER.forEach(function (cls) {
-            var el = getSection(root, cls);
-            if (!el) return;
-            el.style.width = colWidth + 'px';
-            el.style.left = '0px';
-            el.style.top = leftY + 'px';
-            leftY += el.offsetHeight + GAP;
-        });
-
-        var rightY = 0;
-        RIGHT_ORDER.forEach(function (cls) {
-            var el = getSection(root, cls);
-            if (!el) return;
-            el.style.width = colWidth + 'px';
-            el.style.left = (colWidth + GAP) + 'px';
-            el.style.top = rightY + 'px';
-            rightY += el.offsetHeight + GAP;
-        });
-
-        root.style.height = Math.max(leftY, rightY) + 'px';
-    }
-
-    var rafId = 0;
-    function scheduleLayout() {
-        if (rafId) cancelAnimationFrame(rafId);
-        rafId = requestAnimationFrame(layoutColumns);
-    }
-
-    window.addEventListener('resize', scheduleLayout);
-    window.addEventListener('load', scheduleLayout);
-    if (document.fonts && document.fonts.ready) {
-        document.fonts.ready.then(scheduleLayout);
-    }
-    document.addEventListener('DOMContentLoaded', scheduleLayout);
-    setTimeout(scheduleLayout, 150);
-})();
-</script>
 <script>
 (function () {
     var seed = 20260406;

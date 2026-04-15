@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 488" role="img" aria-label="Performances of magnetic NPs for MPI: top-left M vs H; bottom-left m(H) and m prime of H (MPS signal); right, MPS peak vs excitation field with maximum intensity, full width at half maximum of the signal distribution, baseline SNR" font-family="Lexend, sans-serif">
+    <defs>
+        <radialGradient id="fig1mps-spionGrad" cx="30%" cy="30%" r="70%">
+            <stop offset="0%" stop-color="#94a3b8" />
+            <stop offset="100%" stop-color="#0f172a" />
+        </radialGradient>
+        <marker id="fig1mps-arrowBlack" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M 0 1 L 8 5 L 0 9 z" fill="#1e293b" />
+        </marker>
+    </defs>
+
+    <g transform="translate(10, 50)">
+        <text x="10" y="20" fill="#1e293b" font-size="16" font-weight="400">
+            <tspan x="10" dy="0">SPION</tspan>
+            <tspan x="10" dy="20">Sample</tspan>
+        </text>
+        <path d="M 70 35 L 115 65" fill="none" stroke="#1e293b" stroke-width="2" marker-end="url(#fig1mps-arrowBlack)"/>
+
+        <path d="M 20 80 L 220 80" fill="none" stroke="#1e293b" stroke-width="1.5" marker-end="url(#fig1mps-arrowBlack)"/>
+        <path d="M 125 150 L 125 10" fill="none" stroke="#1e293b" stroke-width="1.5" marker-end="url(#fig1mps-arrowBlack)"/>
+        <text x="225" y="75" fill="#1e293b" font-size="16" font-weight="900">H</text>
+        <text x="105" y="15" fill="#1e293b" font-size="16" font-weight="900">M</text>
+
+        <path d="M 40 120 C 90 120, 110 100, 125 80 C 140 60, 160 40, 210 40" fill="none" stroke="#0284c7" stroke-width="3.5" stroke-linecap="round"/>
+
+        <circle cx="125" cy="80" r="12" fill="url(#fig1mps-spionGrad)"/>
+    </g>
+
+    <g transform="translate(10, 240)">
+        <path d="M 20 100 L 220 100" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+        <path d="M 125 10 L 125 160" fill="none" stroke="#94a3b8" stroke-width="1.5"/>
+        <text x="125" y="175" fill="#1e293b" font-size="14" font-weight="900" text-anchor="middle">H</text>
+
+        <g transform="translate(25, 85) rotate(-90)">
+            <text x="0" y="0" fill="#1e293b" font-size="14" font-weight="400" text-anchor="middle" dominant-baseline="central">MPS Signal</text>
+        </g>
+
+        <path d="M 40 140 C 90 140, 110 120, 125 100 C 140 80, 160 60, 210 60" fill="none" stroke="#0284c7" stroke-width="3"/>
+
+        <path d="M 60 100 C 100 100, 110 30, 125 30 C 140 30, 150 100, 190 100" fill="none" stroke="#0284c7" stroke-width="3" stroke-dasharray="6,5"/>
+
+        <g transform="translate(150, 115)">
+            <path d="M 0 0 L 20 0" fill="none" stroke="#0284c7" stroke-width="3"/>
+            <text x="25" y="4" fill="#1e293b" font-size="12" font-weight="900">m(H)</text>
+
+            <path d="M 0 18 L 20 18" fill="none" stroke="#0284c7" stroke-width="3" stroke-dasharray="5,4"/>
+            <text x="25" y="22" fill="#1e293b" font-size="12" font-weight="900">m'(H)</text>
+        </g>
+    </g>
+
+    <g transform="translate(320, 40)">
+        <path d="M 0 0 L 0 380 L 480 380" fill="none" stroke="#1e293b" stroke-width="1.5" />
+
+        <g font-size="12" fill="#1e293b" text-anchor="middle" font-weight="500">
+            <path d="M 0 380 L 0 385 M 80 380 L 80 385 M 160 380 L 160 385 M 240 380 L 240 385 M 320 380 L 320 385 M 400 380 L 400 385 M 480 380 L 480 385" fill="none" stroke="#1e293b" stroke-width="1.5" />
+
+            <text x="0" y="405">-15</text>
+            <text x="80" y="405">-10</text>
+            <text x="160" y="405">-5</text>
+            <text x="240" y="405">0</text>
+            <text x="320" y="405">5</text>
+            <text x="400" y="405">10</text>
+            <text x="480" y="405">15</text>
+
+            <text x="240" y="440" font-size="16" fill="#1e293b" font-weight="500" text-anchor="middle">Excitation field (mT)</text>
+        </g>
+
+        <g transform="translate(-25, 190) rotate(-90)">
+            <text x="0" y="0" font-size="16" fill="#1e293b" font-weight="500" text-anchor="middle">
+                MPS signal (a.u.)
+            </text>
+        </g>
+
+        <path d="M 15 360 C 130 360, 160 30, 240 30 C 320 30, 350 360, 465 360" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+
+        <line x1="240" y1="30" x2="240" y2="380" stroke="#ef4444" stroke-width="3" />
+
+        <!-- Peak marker (max of MPS trace) -->
+        <circle cx="240" cy="30" r="6" fill="#ef4444" stroke="#ffffff" stroke-width="2.5" />
+
+        <!-- FWHM: double arrow at half maximum between curve and baseline (Bézier t=0.5 ’ xH140.6 and 339.4) -->
+        <g fill="#0f172a" stroke="#0f172a" stroke-linejoin="round" aria-hidden="true">
+            <line x1="150" y1="195" x2="330" y2="195" stroke-width="2.5" />
+            <path d="M 140.625 195 L 150 190 L 150 200 Z" />
+            <path d="M 339.375 195 L 330 190 L 330 200 Z" />
+        </g>
+
+        <!-- Annotations: baseline (curve start), peak, FWHM at half maximum -->
+        <g font-size="14" font-weight="600" fill="#0f172a" stroke="#ffffff" stroke-width="3.5" paint-order="stroke fill">
+            <text x="15" y="350" text-anchor="start">Baseline (SNR)</text>
+            <text x="240" y="22" text-anchor="middle">Maximum intensity</text>
+            <text x="240" y="178" text-anchor="middle">FWHM</text>
+        </g>
+    </g>
+</svg>
