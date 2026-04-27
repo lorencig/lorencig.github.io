@@ -206,20 +206,20 @@ const ProjectDetail: React.FC = () => {
                       {!isScientific && (project.impact || project.futureEnhancements) && <TabsTrigger value="impact">Impact & Future</TabsTrigger>}
                     </TabsList>
 
-                    <TabsContent value="details" className="pt-2">
+                    <TabsContent value="details" className="pt-2 prose dark:prose-invert max-w-none text-muted-foreground font-lexend">
                       <div className="space-y-6">
                         {project.detailsTabBody && (
-                          <p className="text-foreground/90 leading-relaxed whitespace-pre-line">
+                          <p className="leading-relaxed whitespace-pre-line text-muted-foreground">
                             {project.detailsTabBody}
                           </p>
                         )}
 
                         {project.collaborators && project.collaborators.length > 0 && (
                           <div>
-                            <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-2">Collaborators</h3>
+                            <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-2 font-lexend">Collaborators</h3>
                             <ul className="list-disc list-inside space-y-1">
                               {project.collaborators.map((collaborator, index) => (
-                                <li key={index} className="text-foreground/90">{collaborator}</li>
+                                <li key={index} className="text-muted-foreground font-lexend">{collaborator}</li>
                               ))}
                             </ul>
                           </div>
@@ -255,7 +255,7 @@ const ProjectDetail: React.FC = () => {
                         {project.fundingSource && (
                             <div>
                                 <h3 className="text-sm font-semibold uppercase text-muted-foreground mb-2">Funding</h3>
-                                <p className="text-foreground/90">{project.fundingSource}</p>
+                                <p className="text-muted-foreground font-lexend">{project.fundingSource}</p>
                             </div>
                         )}
                       </div>

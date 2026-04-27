@@ -471,7 +471,7 @@ const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) =>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-3">
         <p className="text-muted-foreground text-sm">{project.description}</p>
-        {project.posterUrl && (
+        {project.posterUrl && project.slug !== "MPI" && (
           <Button
             asChild
             variant="outline"
