@@ -216,6 +216,19 @@ const Curriculum = () => {
 
   const certifications: CVItem[] = [
     {
+      id: "cert-b4i",
+      title: "Startup Pre-Acceleration Program",
+      org: "B4i - Bocconi for Innovation",
+      period: "Mar 2026 — Jun 2026",
+      location: "Milan, Italy",
+      tags: ["Startup", "Technology Commercialization", "Venture Development"],
+      details: (
+        <p>
+          Completed Bocconi&apos;s 4-month B4i Pre-Acceleration program with startup BiOXI, earning a highly competitive spot at the external Demo Day by successfully pitching and applying advanced med-tech commercialization strategies.
+        </p>
+      ),
+    },
+    {
       id: "cert-1",
       title: "Google Project Management: Professional Certificate",
       org: "Google & Coursera",

@@ -81,8 +81,18 @@ export const allPublicationsData: PublicationData[] = [
     journal: "Research Expertise from the Academic Diaspora Conference 2025",
     year: 2025,
     doi: undefined,
-    isFeatured: true,
+    isFeatured: false,
     showFullPaperButton: true,
     fullPaperRoute: "/read2025"
+  },
+  {
+    id: 9,
+    title: "Functional Repurposing of Magnetic Nanoparticle‐Assisted Hyperthermia for Immune Cell Labelling and Tracking",
+    authors: "Giulia EP Nucci, Chiara Vitale, Alessandro di Girolamo, Niccolò Silvestri, Stefano Persano, Lorenci Gjurgjaj, Cristina Bottino, Roberta Castriconi, Teresa Pellegrino",
+    journal: "Small Methods",
+    year: 2026,
+    doi: "10.1002/smtd.202502416",
+    isFeatured: true,
+    abstract: "Immune cell therapies show promise in hematologic malignancies and are becoming more effective in solid tumors like lungs, melanoma, and colorectal cancers. Magnetic nanoparticles (MNPs) are mostly used as tracers via magnetic particle imaging(MPI) or magnetic resonance imaging(MRI), and heat mediators to monitor and kill cancer cells via magnetic hyperthermia (MHT). Here, we apply a mild-MHT protocol (38–41°C/60 min) as a new means to boost MNPs uptake by immune cells under a harmless alternating magnetic field (AMF). Various MNPs formulations, including iron oxide or zinc-ferrite compositions stabilized by different polymers, were selected for their heating performance and colloidal stability. NK-92 cell line and NK cells from healthy donors exhibited enhanced MNP internalization upon AMF exposure without compromising viability, receptor expression, and effector functions. MNP-loaded NK cells retained cytotoxic activity, degranulating upon ligand engagement on glioblastoma and neuroblastoma targets. Similar outcomes were achieved with T cells. Thanks to its simplicity, this MHT-protocol is suitable for clinical translation, as it can be straightforwardly integrated into existing GMP-compliant adoptive cell therapy workflows in a hospital cell factory, enabling the preparation of magnetically tagged immune cells ready for tracking in cell therapy infusion."
   },
 ];
