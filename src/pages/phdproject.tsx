@@ -14,7 +14,8 @@ const PhDProject = () => {
     university: "The Open University, UK",
     location: "Italian Institute of Technology, Italy",
     supervisors: [
-      "Prof. Teresa Pellegrino",
+      "Dr. Teresa Pellegrino",
+      "Dr. Ing. Niccolò Silvestri",
       "Prof. Ali Abou-Hassan", 
       "Prof. Nicola Tirelli"
     ],
