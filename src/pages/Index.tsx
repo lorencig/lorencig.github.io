@@ -25,10 +25,10 @@ import { allPublicationsData } from '@/data/publications'; // Import all publica
 import { Badge } from '@/components/ui/badge';
 import { Calendar, GraduationCap, MapPin, Target, Presentation } from 'lucide-react';
 
-/** Homepage carousel order: MPI → NanoDB → Medikons */
+/** Homepage carousel order: MPI → Renaminator → Medikons */
 const featuredProjectOrder = new Map<string, number>([
   ["MPI", 0],
-  ["nanodb", 1],
+  ["pdf-renamer", 1],
   ["medikons", 2],
 ]);
 
@@ -234,32 +234,55 @@ const Index: React.FC = () => {
               Ventures
             </h2>
           </div>
-          <div className="grid grid-cols-1 max-w-2xl mx-auto gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 max-w-5xl mx-auto gap-6">
             <Card className="relative overflow-hidden bg-card/60 backdrop-blur-sm border border-border/50 hover:shadow-lg transition-all h-full rounded-2xl">
               <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#6C63FF] to-[#8F88FF]" />
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between">
-                  <div className="h-28 w-28 rounded-xl bg-background/80 border border-white/10 p-1 flex items-center justify-center overflow-hidden">
-                    <img src="/flags/π9 color.png" alt="π⁹ logo" className="h-full w-full object-contain" />
+                  <div className="h-28 w-28 rounded-xl bg-white border border-white/10 p-1 flex items-center justify-center overflow-hidden">
+                    <img src="/pi9_logo.svg" alt="π⁹ logo" className="h-full w-full object-contain" />
                   </div>
-                  <Badge className="bg-indigo-100 text-indigo-800 dark:bg-indigo-900/40 dark:text-indigo-200 border-0 text-xs">
-                    Founder & Chairman
-                  </Badge>
                 </div>
                 <CardTitle className="text-3xl mt-4">π⁹</CardTitle>
                 <CardDescription className="text-base">
-                  Tirana & Stockholm · Science & Technology
+                  Albania & Sweden · Science & Technology
                 </CardDescription>
                 <p className="text-sm text-muted-foreground">2024 — Present</p>
               </CardHeader>
               <CardContent className="space-y-5">
                 <p className="text-lg text-foreground/85 leading-relaxed">
-                  Science-driven venture builder turning frontier research into startups and scalable technologies. Our growing portfolio supports research institutions, healthcare startups, universities, and industry, with operations across Albania, Sweden, and Italy.
+                  A research-driven technology company that transforms complex scientific, technological, and operational problems into practical systems, scalable technologies, and new ventures.
                 </p>
                 <div className="flex flex-wrap gap-2">
-                  <Badge variant="outline">AI Integration</Badge>
-                  <Badge variant="outline">Automation</Badge>
+                  <Badge variant="outline">Applied R&D</Badge>
+                  <Badge variant="outline">AI & Automation</Badge>
                   <Badge variant="outline">Data Science</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="relative overflow-hidden bg-card/60 backdrop-blur-sm border border-border/50 hover:shadow-lg transition-all h-full rounded-2xl">
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#A10100] to-[#F33C04]" />
+              <CardHeader className="pb-2">
+                <div className="flex items-start justify-between">
+                  <div className="h-28 w-28 rounded-xl bg-white border border-white/10 p-1 flex items-center justify-center overflow-hidden">
+                    <img src="/Medikons Logo.svg" alt="Medikons logo" className="h-full w-full object-contain" />
+                  </div>
+                </div>
+                <CardTitle className="text-3xl mt-4">Medikons</CardTitle>
+                <CardDescription className="text-base">
+                  Albania · Preventive Health
+                </CardDescription>
+                <p className="text-sm text-muted-foreground">2024 — Present</p>
+              </CardHeader>
+              <CardContent className="space-y-5">
+                <p className="text-lg text-foreground/85 leading-relaxed">
+                  A digital preventive-health platform that helps people organize their medical information, understand laboratory results, and monitor changes in their health over time.
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="outline">Digital Health</Badge>
+                  <Badge variant="outline">Personal Health Records</Badge>
+                  <Badge variant="outline">Preventive Medicine</Badge>
                 </div>
               </CardContent>
             </Card>
@@ -406,6 +429,12 @@ interface HomePageProjectCardProps {
 }
 
 const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) => {
+  const words = project.description.trim().split(/\s+/).filter(Boolean);
+  const isTruncated = words.length > 30;
+  const displayDescription = isTruncated
+    ? words.slice(0, 30).join(" ")
+    : project.description;
+
   return (
     <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-lg hover:translate-y-[-5px] border border-border/50 bg-card/50 backdrop-blur-sm flex flex-col">
       <div className="h-48 overflow-hidden">
@@ -430,7 +459,21 @@ const HomePageProjectCard: React.FC<HomePageProjectCardProps> = ({ project }) =>
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow flex flex-col gap-3">
-        <p className="text-muted-foreground text-sm">{project.description}</p>
+        <p className="text-muted-foreground text-sm">
+          {displayDescription}
+          {isTruncated && (
+            <>
+              {" "}
+              <Link
+                to={`/projects/${project.slug}`}
+                className="text-[#F33C04] hover:underline"
+                onClick={() => window.scrollTo(0, 0)}
+              >
+                ... read more.
+              </Link>
+            </>
+          )}
+        </p>
         {project.posterUrl && project.slug !== "MPI" && (
           <Button
             asChild

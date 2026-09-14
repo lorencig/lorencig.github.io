@@ -14,9 +14,18 @@ const Navigation: React.FC = () => {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container-padding max-w-7xl mx-auto flex justify-between items-center h-16">
-      <Link to="/" className="text-xl hover-link">
-        <span className="font-bold">Lorenci</span> Gjurgjaj
-         </Link>
+      <Link to="/" className="flex items-center gap-2 text-xl hover-link">
+        <img
+          src="/favicon.ico"
+          alt=""
+          className="h-7 w-7"
+          width={28}
+          height={28}
+        />
+        <span>
+          <span className="font-bold">Lorenci</span> Gjurgjaj
+        </span>
+      </Link>
         
         <nav className="hidden md:flex items-center space-x-8">
           <Link 

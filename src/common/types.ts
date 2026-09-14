@@ -31,6 +31,8 @@ export interface ProjectData {
     keyTechnologies?: string[];
     fundingSource?: string;
     externalLink?: string;
+    /** When set, ProjectDetail embeds this URL (e.g. a tool) instead of the hero image. */
+    embeddedToolUrl?: string;
 
     doi?: string;
 

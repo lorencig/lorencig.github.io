@@ -15,7 +15,7 @@ const project1Data: ProjectData = {
   methodology: "NanoDB was built with a user-centric philosophy, featuring an intuitive graphical interface (GUI) developed in Python. Its modular architecture ensures the application is both scalable and easy to customize. To prioritize data security and accessibility, all information is stored locally, while built-in tools handle professional PDF reporting, data export, and image management, creating a complete, offline-first workflow.",
   results: "Successfully delivered a fully functional, open-source tool, now freely available on GitHub with a permanent DOI from Zenodo. The system generates FAIR-compliant datasets, directly enabling more robust and reproducible science. The user-friendly interface has been validated for ease of use, empowering researchers to manage their data with confidence.",
   nextSteps: "The future vision for NanoDB is to increase accessibility and power. The roadmap includes developing a no-code version for easier customization, integrating optional cloud storage for enhanced collaboration, and implementing direct machine learning models for predictive analysis within the app.",
-  isFeatured: true,
+  isFeatured: false,
   doi: "10.5281/zenodo.13912817",
 };
 

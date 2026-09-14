@@ -3,14 +3,17 @@ import { ProjectData } from '@/common/types';
 const project9Data: ProjectData = {
   id: 9,
   slug: "pdf-renamer",
-  title: "Papername — Scientific PDF Renamer",
+  title: "Renaminator — Scientific PDF Renamer",
   description:
-    "A privacy-first browser tool that turns inconsistent scientific PDF filenames into a clean, searchable research library.",
-  fullDescription:
-    "Papername reads scientific PDFs directly in the browser and proposes consistent filenames using the article title, authors, publication year, DOI, and publisher metadata. The documents remain on the user's device, and every suggestion can be reviewed before renamed copies are downloaded.",
-  detailsTabBody:
-    "The tool reconstructs the first-page layout, identifies likely title and author blocks, detects publication years and identifiers, and checks scholarly metadata against Crossref when available. It is delivered as a static web application, so visitors use their own browser's processing power without a backend server.",
-  image: "/Papername.svg",
+    "A small browser tool I made for a friend who needed a simple way to clean up the names of downloaded research papers.",
+  fullDescription: `A friend of mine was writing a review and struggling with the messy, inconsistent names of the papers she was downloading. Finding anything again was becoming a pain, so I made a small tool for her. It worked well, and I decided to bring it online in case it could help someone else too.
+
+Renaminator reads the first page of a scientific PDF and suggests a clean name using the FirstAuthor_Year_ShortTitle.pdf format. It uses PDF.js to read the file in your browser and can check the paper's details with Crossref when needed. You can review and edit every suggestion before downloading the renamed files.
+
+Privacy is simple: your PDFs stay on your device. The tool does not upload or store them on a server. Most of the work happens directly in your browser.
+
+I do not have a big roadmap for Renaminator. It already does the small job it was made for, so I only plan to change it if something genuinely needs improving, or if another friend asks for something useful.`,
+  image: "/Renaminator.svg",
   tags: [
     "Research Workflow",
     "PDF.js",
@@ -21,24 +24,8 @@ const project9Data: ProjectData = {
   category: "Community",
   date: "2026-09-14",
   status: "Active",
-  features: `Local first-page PDF text and layout extraction
-DOI, bioRxiv, Elsevier PII, title, author, and year detection
-Crossref-assisted scholarly metadata verification
-Editable filename suggestions
-Batch download of renamed PDFs as a ZIP`,
-  impact:
-    "Papername removes repetitive manual cleanup from literature management while keeping research documents private. Because processing happens in the browser, the tool can be used without installing Python or uploading papers to a third-party service.",
-  futureEnhancements:
-    "Planned improvements include broader validation across publisher layouts, optional direct folder access in supported browsers, and OCR support for image-only scans.",
   isFeatured: true,
-  externalLink: "/tools/pdf-renamer/",
-  keyTechnologies: [
-    "JavaScript",
-    "PDF.js",
-    "Crossref REST API",
-    "JSZip",
-    "Web Workers",
-  ],
+  embeddedToolUrl: "/tools/pdf-renamer/embed.html",
 };
 
 export default project9Data;

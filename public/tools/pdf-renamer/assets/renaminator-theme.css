@@ -1,0 +1,124 @@
+:root {
+  color: #0f172a;
+  background: #ffffff;
+  --ink: #0f172a;
+  --muted: #64748b;
+  --paper: #ffffff;
+  --line: #e2e8f0;
+  --green: #f33c04;
+  --green-dark: #a10100;
+  --green-soft: #fff0eb;
+  --amber: #b45309;
+  --red: #a10100;
+}
+
+body {
+  background: radial-gradient(circle at 50% -10%, #fff7f4 0, #ffffff 42rem);
+}
+
+.privacy-pill,
+.embed-note {
+  color: var(--green-dark);
+  background: var(--green-soft);
+}
+
+.privacy-pill span,
+.embed-note span {
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgb(243 60 4 / 12%);
+}
+
+.drop-zone {
+  background: rgb(255 255 255 / 88%);
+  border-color: #cbd5e1;
+  box-shadow: 0 18px 60px rgb(161 1 0 / 7%);
+}
+
+.drop-zone:hover,
+.drop-zone:focus-visible,
+.drop-zone.dragging {
+  background: #fff8f5;
+  box-shadow: 0 22px 70px rgb(161 1 0 / 14%);
+}
+
+.workspace {
+  box-shadow: 0 18px 60px rgb(161 1 0 / 7%);
+}
+
+.button.primary {
+  background: linear-gradient(90deg, #a10100, #f33c04);
+  box-shadow: 0 8px 20px rgb(243 60 4 / 22%);
+}
+
+.button.primary:hover:not(:disabled) {
+  background: linear-gradient(90deg, #8b0100, #dd3503);
+}
+
+.button.secondary {
+  border-color: #f2b7a5;
+}
+
+.name-input:focus {
+  outline-color: rgb(243 60 4 / 18%);
+}
+
+.progress-track {
+  background: #f1f5f9;
+}
+
+.result {
+  border-color: var(--line);
+  background: var(--paper);
+}
+
+.name-input {
+  background: #f8fafc;
+  border-color: #dbe2ea;
+}
+
+html.dark {
+  color-scheme: dark;
+  color: #f8fafc;
+  background: #020817;
+  --ink: #f8fafc;
+  --muted: #94a3b8;
+  --paper: #0f172a;
+  --line: #1e293b;
+  --green: #f33c04;
+  --green-dark: #ff835e;
+  --green-soft: #3b1816;
+  --amber: #f59e0b;
+  --red: #ff6b5f;
+}
+
+html.dark body {
+  background: radial-gradient(circle at 50% -10%, #251013 0, #020817 42rem);
+}
+
+html.dark .drop-zone {
+  background: rgb(15 23 42 / 82%);
+  border-color: #475569;
+  box-shadow: 0 18px 60px rgb(0 0 0 / 22%);
+}
+
+html.dark .drop-zone:hover,
+html.dark .drop-zone:focus-visible,
+html.dark .drop-zone.dragging {
+  background: #1c1720;
+  box-shadow: 0 22px 70px rgb(243 60 4 / 13%);
+}
+
+html.dark .workspace,
+html.dark .result {
+  background: var(--paper);
+}
+
+html.dark .name-input {
+  color: var(--ink);
+  background: #111827;
+  border-color: #334155;
+}
+
+html.dark .progress-track {
+  background: #1e293b;
+}

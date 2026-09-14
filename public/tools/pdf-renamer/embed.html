@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Rename scientific PDFs locally in your browser." />
+    <title>Renaminator — Embed</title>
+    <script type="module" crossorigin src="./assets/index-C6XsjTWM.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-vhVJDS_v.css" />
+    <link rel="stylesheet" href="./assets/renaminator-theme.css" />
+    <style>
+      html,
+      body {
+        min-height: 0;
+        background: transparent;
+      }
+      body {
+        overflow: hidden;
+        padding: clamp(10px, 2.5vw, 18px);
+      }
+      .shell {
+        width: 100%;
+        margin: 0;
+      }
+      .embed-note {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        width: max-content;
+        max-width: 100%;
+        margin: 0 0 16px;
+        padding: 8px 12px;
+        color: var(--green-dark);
+        background: var(--green-soft);
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .embed-note span {
+        width: 7px;
+        height: 7px;
+        background: #2f8b61;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px #2f8b611f;
+        flex-shrink: 0;
+      }
+      .drop-zone {
+        display: flex;
+        min-height: clamp(250px, 34vw, 340px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: clamp(28px, 6vw, 48px) clamp(14px, 4vw, 28px);
+      }
+      @media (max-width: 600px) {
+        .embed-note {
+          width: 100%;
+          justify-content: center;
+          border-radius: 12px;
+          text-align: center;
+        }
+        .drop-zone {
+          min-height: 250px;
+          border-radius: 16px;
+        }
+        .drop-zone h2 {
+          font-size: 25px;
+        }
+        .workspace {
+          margin-top: 16px;
+          padding: 14px;
+          border-radius: 16px;
+        }
+        .section-heading {
+          align-items: stretch;
+          flex-direction: column;
+        }
+        .section-heading .button,
+        .action-bar .button {
+          width: 100%;
+        }
+        .result {
+          gap: 10px;
+          padding: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="shell">
+      <div class="embed-note"><span></span> Files don’t leave your device</div>
+
+      <section id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="Choose PDF files">
+        <input id="fileInput" type="file" accept="application/pdf,.pdf" multiple hidden />
+        <div class="drop-icon" aria-hidden="true">
+          <svg viewBox="0 0 48 48" fill="none"><path d="M14 6h14l8 8v28H14z"/><path d="M28 6v9h8M18 29h12M24 23v12"/></svg>
+        </div>
+        <h2>Drop PDFs here</h2>
+        <p>or <span class="linklike">choose files</span> from your computer</p>
+        <small>Text-based scientific PDFs · select several at once</small>
+      </section>
+
+      <section id="workspace" class="workspace" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Rename queue</p>
+            <h2 id="queueTitle">Processing papers</h2>
+          </div>
+          <button id="addFiles" class="button secondary" type="button">Add PDFs</button>
+        </div>
+        <div id="progress" class="progress" role="status">
+          <div class="progress-track"><span id="progressBar"></span></div>
+          <span id="progressText">Preparing…</span>
+        </div>
+        <div id="results" class="results"></div>
+        <div class="action-bar">
+          <p><strong id="readyCount">0 files ready</strong><span>Review any name before downloading.</span></p>
+          <button id="downloadZip" class="button primary" type="button" disabled>Download renamed ZIP</button>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

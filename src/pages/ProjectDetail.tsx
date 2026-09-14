@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +10,98 @@ import {
   allProjectsData as globalAllProjectsData,
   getProjectBySlugOrLegacyId,
 } from '@/data/projects';
+
+interface EmbeddedToolFrameProps {
+  src: string;
+  title: string;
+}
+
+const EmbeddedToolFrame: React.FC<EmbeddedToolFrameProps> = ({ src, title }) => {
+  const frameRef = useRef<HTMLIFrameElement>(null);
+
+  useEffect(() => {
+    const frame = frameRef.current;
+    if (!frame) return;
+
+    let resizeObserver: ResizeObserver | undefined;
+    let themeObserver: MutationObserver | undefined;
+    let animationFrame = 0;
+
+    const syncTheme = () => {
+      try {
+        frame.contentDocument?.documentElement.classList.toggle(
+          'dark',
+          document.documentElement.classList.contains('dark'),
+        );
+      } catch {
+        // Theme syncing is only available while the tool is served from this site.
+      }
+    };
+
+    const resizeFrame = () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        try {
+          const frameDocument = frame.contentDocument;
+          if (!frameDocument) return;
+
+          const contentHeight = Math.max(
+            frameDocument.documentElement.scrollHeight,
+            frameDocument.body?.scrollHeight ?? 0,
+          );
+          const minimumHeight = window.innerWidth < 640 ? 390 : 460;
+          frame.style.height = `${Math.max(minimumHeight, contentHeight)}px`;
+        } catch {
+          // Keep the CSS fallback height if the embedded URL is ever cross-origin.
+        }
+      });
+    };
+
+    const observeFrame = () => {
+      resizeObserver?.disconnect();
+      resizeFrame();
+
+      const frameDocument = frame.contentDocument;
+      if (!frameDocument?.body) return;
+
+      syncTheme();
+      resizeObserver = new ResizeObserver(resizeFrame);
+      resizeObserver.observe(frameDocument.body);
+      resizeObserver.observe(frameDocument.documentElement);
+    };
+
+    frame.addEventListener('load', observeFrame);
+    window.addEventListener('resize', resizeFrame);
+    themeObserver = new MutationObserver(syncTheme);
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    if (frame.contentDocument?.readyState === 'complete') {
+      observeFrame();
+    }
+
+    return () => {
+      frame.removeEventListener('load', observeFrame);
+      window.removeEventListener('resize', resizeFrame);
+      resizeObserver?.disconnect();
+      themeObserver?.disconnect();
+      cancelAnimationFrame(animationFrame);
+    };
+  }, [src]);
+
+  return (
+    <iframe
+      ref={frameRef}
+      src={src}
+      title={title}
+      className="block h-[460px] w-full border-0 sm:h-[520px]"
+      loading="eager"
+      allow="clipboard-write"
+    />
+  );
+};
 
 const ProjectDetail: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -158,7 +250,7 @@ const ProjectDetail: React.FC = () => {
                   </div>
                 )}
 
-                {project.externalLink && (
+                {project.externalLink && !project.embeddedToolUrl && (
                   <div className="mb-6">
                     <a
                       href={hrefForPosterOrExternal(project.externalLink)}
@@ -180,15 +272,25 @@ const ProjectDetail: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             <div className="lg:col-span-2 space-y-8">
               <div className="bg-card/50 dark:bg-card/70 backdrop-blur-lg border border-border/30 dark:border-border/20 rounded-xl overflow-hidden shadow-sm">
-                {project.image && (
+                {project.embeddedToolUrl ? (
+                  <div className="w-full border-b border-border/30 bg-background dark:border-border/20">
+                    <EmbeddedToolFrame
+                      src={project.embeddedToolUrl}
+                      title={`${project.title} tool`}
+                    />
+                  </div>
+                ) : (
+                  project.image && (
                     <div className="aspect-video w-full border-b border-border/30 dark:border-border/20">
-                    <img
+                      <img
                         src={project.image}
                         alt={project.title}
                         className="w-full h-full object-cover"
-                    />
+                      />
                     </div>
+                  )
                 )}
+                {!project.embeddedToolUrl && (
                 <div className="p-6 md:p-8">
                   {project.fullDescription && (
                     <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed prose dark:prose-invert max-w-none whitespace-pre-line">
@@ -303,11 +405,12 @@ const ProjectDetail: React.FC = () => {
                     )}
                   </Tabs>
                 </div>
+                )}
               </div>
             </div>
 
             {/* Sidebar */}
-            <div className="lg:sticky lg:top-24 self-start">
+            <div className={project.embeddedToolUrl ? "self-start" : "self-start lg:sticky lg:top-24"}>
               <div className="bg-card/50 dark:bg-card/70 backdrop-blur-lg border border-border/30 dark:border-border/20 rounded-xl p-6 shadow-sm">
                 <h3 className="text-lg font-semibold mb-6 text-foreground">Project Highlights</h3>
 
@@ -356,6 +459,29 @@ const ProjectDetail: React.FC = () => {
                         ))}
                     </div>
                     </div>
+                )}
+
+                {project.embeddedToolUrl && (
+                  <div className="mt-6 space-y-6 border-t border-border/30 pt-6 dark:border-border/20">
+                    <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
+                      {project.fullDescription}
+                    </p>
+
+                    {project.keyTechnologies && project.keyTechnologies.length > 0 && (
+                      <div>
+                        <h4 className="mb-3 text-xs font-semibold uppercase tracking-wide text-foreground">
+                          Built with
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {project.keyTechnologies.map((tech) => (
+                            <Badge key={tech} variant="secondary" className="font-normal">
+                              {tech}
+                            </Badge>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 )}
               </div>
             </div>
