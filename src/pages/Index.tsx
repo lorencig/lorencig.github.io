@@ -28,7 +28,7 @@ import { Calendar, GraduationCap, MapPin, Target, Presentation } from 'lucide-re
 /** Homepage carousel order: MPI → Renaminator → Medikons */
 const featuredProjectOrder = new Map<string, number>([
   ["MPI", 0],
-  ["pdf-renamer", 1],
+  ["Renaminator", 1],
   ["medikons", 2],
 ]);
 

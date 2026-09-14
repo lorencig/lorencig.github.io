@@ -2,7 +2,7 @@ import { ProjectData } from '@/common/types';
 
 const project9Data: ProjectData = {
   id: 9,
-  slug: "pdf-renamer",
+  slug: "Renaminator",
   title: "Renaminator — Scientific PDF Renamer",
   description:
     "A small browser tool I made for a friend who needed a simple way to clean up the names of downloaded research papers.",
