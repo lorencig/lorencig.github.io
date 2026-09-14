@@ -11,6 +11,33 @@ import {
   getProjectBySlugOrLegacyId,
 } from '@/data/projects';
 
+const JETA_SITE = 'https://licajeta.web.app/';
+
+const renderFullDescriptionWithLinks = (text: string) => {
+  const marker = '(Jeta)';
+  const index = text.indexOf(marker);
+  if (index === -1) {
+    return text;
+  }
+
+  return (
+    <>
+      {text.slice(0, index)}
+      (
+      <a
+        href={JETA_SITE}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-[#F33C04] hover:underline"
+      >
+        Jeta
+      </a>
+      )
+      {text.slice(index + marker.length)}
+    </>
+  );
+};
+
 interface EmbeddedToolFrameProps {
   src: string;
   title: string;
@@ -294,7 +321,7 @@ const ProjectDetail: React.FC = () => {
                 <div className="p-6 md:p-8">
                   {project.fullDescription && (
                     <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed prose dark:prose-invert max-w-none whitespace-pre-line">
-                        {project.fullDescription}
+                        {renderFullDescriptionWithLinks(project.fullDescription)}
                     </p>
                   )}
 
@@ -464,7 +491,7 @@ const ProjectDetail: React.FC = () => {
                 {project.embeddedToolUrl && (
                   <div className="mt-6 space-y-6 border-t border-border/30 pt-6 dark:border-border/20">
                     <p className="whitespace-pre-line text-sm leading-relaxed text-muted-foreground">
-                      {project.fullDescription}
+                      {renderFullDescriptionWithLinks(project.fullDescription)}
                     </p>
 
                     {project.keyTechnologies && project.keyTechnologies.length > 0 && (
