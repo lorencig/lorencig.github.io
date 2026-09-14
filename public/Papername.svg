@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-labelledby="title description">
+  <title id="title">Papername scientific PDF renamer</title>
+  <desc id="description">A collection of research papers changing from cryptic filenames into readable citations.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8f5eb"/>
+      <stop offset="1" stop-color="#e4eee6"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="14" stdDeviation="18" flood-color="#173b2b" flood-opacity=".13"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="675" fill="url(#background)"/>
+  <circle cx="1090" cy="60" r="220" fill="#c8dfcf" opacity=".55"/>
+  <circle cx="90" cy="650" r="260" fill="#efe3c9" opacity=".75"/>
+  <g transform="translate(105 86)">
+    <rect width="64" height="64" rx="16" fill="#236449"/>
+    <path d="M19 15h21c10 0 16 6 16 15s-6 15-16 15H30v12H19zm11 9v12h10c4 0 6-2 6-6s-2-6-6-6z" fill="#fff"/>
+    <text x="82" y="45" fill="#17211b" font-family="Arial, sans-serif" font-size="34" font-weight="700">Papername</text>
+  </g>
+  <text x="105" y="210" fill="#236449" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="4">SCIENTIFIC PDF RENAMER</text>
+  <text x="105" y="272" fill="#17211b" font-family="Georgia, serif" font-size="54" font-weight="600">From messy downloads</text>
+  <text x="105" y="332" fill="#17211b" font-family="Georgia, serif" font-size="54" font-weight="600">to a readable library.</text>
+  <g filter="url(#shadow)" font-family="Arial, sans-serif">
+    <g transform="translate(640 155) rotate(-4)"><rect width="425" height="112" rx="15" fill="#fffdf7"/><rect width="11" height="112" rx="5" fill="#c9624c"/><text x="35" y="48" fill="#788078" font-size="15">PIIS2472555222126262.pdf</text><text x="35" y="79" fill="#17211b" font-size="18" font-weight="700">Unidentified download</text></g>
+    <path d="M843 286v56m0 0-17-17m17 17 17-17" fill="none" stroke="#236449" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <g transform="translate(605 365) rotate(2)"><rect width="485" height="145" rx="18" fill="#fffdf7"/><rect width="12" height="145" rx="6" fill="#236449"/><text x="39" y="47" fill="#236449" font-size="15" font-weight="700">VERIFIED WITH CROSSREF</text><text x="39" y="82" fill="#17211b" font-size="19" font-weight="700">(Colin et al 2019) High-Throughput DNA</text><text x="39" y="111" fill="#17211b" font-size="19" font-weight="700">Plasmid Transfection…pdf</text></g>
+  </g>
+  <g transform="translate(105 555)" font-family="Arial, sans-serif" font-size="16" fill="#526057"><circle cx="8" cy="-5" r="6" fill="#2f8b61"/><text x="25">Files stay on your device</text><circle cx="248" cy="-5" r="6" fill="#2f8b61"/><text x="265">No installation</text></g>
+</svg>

@@ -158,18 +158,17 @@ const ProjectDetail: React.FC = () => {
                   </div>
                 )}
 
-                {isCommunity && project.externalLink && (
+                {project.externalLink && (
                   <div className="mb-6">
                     <a
-                      // Use the ensureUrlScheme function to prepend https:// if missing
-                      href={ensureUrlScheme(project.externalLink)}
+                      href={hrefForPosterOrExternal(project.externalLink)}
                       target="_blank" // THIS ENSURES IT OPENS IN A NEW TAB
                       rel="noopener noreferrer" // Important for security with target="_blank"
                       className="inline-flex items-center px-3 py-1.5 rounded-md text-xs font-medium transition-colors break-all bg-emerald-100 text-emerald-700 hover:bg-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-400 dark:hover:bg-emerald-800/70"
                       title={`Visit project website`}
                     >
                       <Link2 className="mr-1.5 h-3.5 w-3.5 flex-shrink-0" />
-                      Visit Website
+                      {project.externalLink.startsWith("/tools/") ? "Open Web App" : "Visit Website"}
                     </a>
                   </div>
                 )}

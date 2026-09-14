@@ -5,6 +5,7 @@ import project3Data from './project3';
 import project4Data from './project4';
 import project5Data from './project5';
 import project8Data from './project8';
+import project9Data from './project9';
 
 
 export const allProjectsData: ProjectData[] = [
@@ -14,6 +15,7 @@ export const allProjectsData: ProjectData[] = [
   project4Data,
   project5Data,
   project8Data,
+  project9Data,
 ].sort((a, b) => a.id - b.id); // Ensure sorted by ID
 
 export const getProjectById = (id: number): ProjectData | undefined => {
