@@ -1,0 +1,20 @@
+---
+description: Skip confirmation for straightforward edits; report briefly after
+alwaysApply: true
+---
+
+# Edit confirmation preference
+
+Do **not** ask for confirmation before straightforward code changes.
+
+Straightforward means: clear copy updates, small UI tweaks, badge/style changes, renaming, adding a provided field, fixing typos, and similar single-intent edits where the request already specifies what to do.
+
+## How to work
+1. Make the change.
+2. Reply briefly with which file(s) changed and what you did (one or two lines).
+
+## Still ask first when
+- Scope is ambiguous or multiple approaches exist
+- Change is large/architectural (routing, data model, SEO system, redesign)
+- Destructive/irreversible (force push, reset, deleting many files)
+- Commit/push is involved and not explicitly requested
