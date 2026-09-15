@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Github, Mail, Linkedin } from "lucide-react";
 import { CVSection, CVItem } from "@/components/CVSection";
 import PageLayout from '@/components/PageLayout';
+import SEO from '@/components/SEO';
+import { PERSON, absoluteUrl } from '@/lib/site';
 
 const Curriculum = () => {
   const glowRef = useRef<HTMLDivElement>(null);
@@ -180,8 +182,8 @@ const Curriculum = () => {
       tags: ["Nanochemistry", "Research", "PhD"],
       details: (
         <p>
-          Doctoral research focused on Scalable Synthesis Of Magnetic-inorganic Nanomaterials For 
-          Biomedical Applications.
+          Doctoral research focused on Continuous-Flow Synthesis & Automation of Magnetic Nanoparticles
+          for biomedical applications.
           Conducting research in affiliation with Italian Institute of Technology (IIT).
         </p>
       ),
@@ -385,24 +387,24 @@ const Curriculum = () => {
   const schema = {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: "Lorenci Gjurgjaj",
-    jobTitle: "Research Fellow",
-    url: "/",
-    sameAs: [
-      "https://github.com/lorencig",
-      "https://www.linkedin.com/in/lorencigjurgjaj/"
-    ],
-    worksFor: {
-      "@type": "Organization",
-      name: "Istituto Italiano di Tecnologia"
-    },
+    name: PERSON.name,
+    jobTitle: PERSON.jobTitle,
+    description: PERSON.description,
+    url: absoluteUrl("/curriculum"),
+    image: PERSON.image,
+    email: PERSON.email,
+    sameAs: PERSON.sameAs,
+    worksFor: PERSON.worksFor,
+    alumniOf: PERSON.alumniOf,
   };
 
   return (
     <PageLayout>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      <SEO
+        title="Curriculum Vitae"
+        description="CV of Lorenci Gjurgjaj — research fellow at Istituto Italiano di Tecnologia and PhD candidate working on continuous-flow synthesis of magnetic nanoparticles, laboratory automation, and data-driven experimentation."
+        path="/curriculum"
+        jsonLd={schema}
       />
 
       <header className="pt-16">
@@ -434,7 +436,7 @@ const Curriculum = () => {
                 </a>
               </Button>
               <Button asChild variant="outline">
-                <a href="https://www.linkedin.com/in/lorencigjurgjaj/" target="_blank" rel="noreferrer" aria-label="View LinkedIn profile">
+                <a href="https://www.linkedin.com/in/gjurgjaj/" target="_blank" rel="noreferrer" aria-label="View LinkedIn profile">
                   <Linkedin className="mr-2 h-4 w-4" /> LinkedIn
                 </a>
               </Button>

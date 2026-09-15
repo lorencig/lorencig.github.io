@@ -4,6 +4,8 @@ import PageLayout from "@/components/PageLayout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { essays } from "@/data/essays";
+import SEO from "@/components/SEO";
+import { PERSON, absoluteUrl } from "@/lib/site";
 
 const Essay: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -17,6 +19,12 @@ const Essay: React.FC = () => {
   if (!essay) {
     return (
       <PageLayout>
+        <SEO
+          title="Essay not found"
+          description="The requested essay could not be found."
+          path={`/essays/${slug || ""}`}
+          noIndex
+        />
         <section className="py-20 container px-4 md:px-6 mx-auto">
           <Card className="max-w-3xl mx-auto">
             <CardHeader>
@@ -39,9 +47,37 @@ const Essay: React.FC = () => {
   const totalPages = essay.pages.length;
   const isFirstPage = pageIndex === 0;
   const isLastPage = pageIndex === totalPages - 1;
+  const essayPath = `/essays/${essay.slug}`;
 
   return (
     <PageLayout>
+      <SEO
+        title={essay.title}
+        description={essay.description}
+        path={essayPath}
+        type="article"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Article",
+          headline: essay.title,
+          description: essay.description,
+          datePublished: essay.dateISO,
+          dateModified: essay.dateISO,
+          author: {
+            "@type": "Person",
+            name: PERSON.name,
+            url: absoluteUrl("/"),
+            sameAs: PERSON.sameAs,
+          },
+          publisher: {
+            "@type": "Person",
+            name: PERSON.name,
+            url: absoluteUrl("/"),
+          },
+          mainEntityOfPage: absoluteUrl(essayPath),
+          image: PERSON.image,
+        }}
+      />
       <section className="py-12 md:py-20 relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
         <div className="absolute bottom-20 left-20 w-1/4 h-1/4 bg-purple-500/5 rounded-full blur-3xl -z-10"></div>

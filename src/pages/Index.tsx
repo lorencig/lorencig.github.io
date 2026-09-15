@@ -24,6 +24,8 @@ import { allProjectsData } from '@/data/projects';
 import { allPublicationsData } from '@/data/publications'; // Import all publications data
 import { Badge } from '@/components/ui/badge';
 import { Calendar, GraduationCap, MapPin, Target, Presentation } from 'lucide-react';
+import SEO from '@/components/SEO';
+import { PERSON, absoluteUrl } from '@/lib/site';
 
 /** Homepage carousel order: MPI → Renaminator → Medikons */
 const featuredProjectOrder = new Map<string, number>([
@@ -76,6 +78,52 @@ const Index: React.FC = () => {
 
   return (
     <PageLayout>
+      <SEO
+        title="Continuous-Flow Synthesis of Magnetic Nanoparticles"
+        description={PERSON.description}
+        path="/"
+        type="profile"
+        jsonLd={[
+          {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            name: PERSON.name,
+            url: absoluteUrl("/"),
+            mainEntity: {
+              "@type": "Person",
+              name: PERSON.name,
+              jobTitle: PERSON.jobTitle,
+              description: PERSON.description,
+              image: PERSON.image,
+              email: PERSON.email,
+              url: absoluteUrl("/"),
+              sameAs: PERSON.sameAs,
+              worksFor: PERSON.worksFor,
+              alumniOf: PERSON.alumniOf,
+              knowsAbout: [
+                "magnetic nanoparticles",
+                "continuous-flow synthesis",
+                "laboratory automation",
+                "data-driven experimentation",
+                "biomedical nanomaterials",
+                "Magnetic Particle Imaging",
+                "magnetic hyperthermia",
+              ],
+            },
+          },
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: PERSON.name,
+            url: absoluteUrl("/"),
+            description: PERSON.description,
+            author: {
+              "@type": "Person",
+              name: PERSON.name,
+            },
+          },
+        ]}
+      />
       {/* Hero Section */}
       <section className="py-20 md:py-32 container px-4 md:px-6 mx-auto overflow-hidden">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
@@ -305,16 +353,18 @@ const Index: React.FC = () => {
                 {/* Left side - Project info */}
                 <div className="p-8 lg:p-12 flex flex-col justify-center">
                   <div className="mb-6">
-                    <Badge className="mb-4 bg-primary/10 text-primary border-primary/20">
+                    <Badge className="mb-4 inline-flex items-center gap-2 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30">
+                      <span className="relative flex h-2 w-2" aria-hidden="true">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+                      </span>
                       In Progress
                     </Badge>
                     <h3 className="text-2xl lg:text-3xl font-bold mb-4 leading-tight">
-                    Scalable Synthesis Of Magnetic-inorganic Nanomaterials For Biomedical Applications
+                    Continuous-Flow Synthesis & Automation of Magnetic Nanoparticles
                     </h3>
                     <p className="text-muted-foreground text-lg leading-relaxed">
-                    Smart Nanoparticles for Sustainable & Personalized Cancer Theranostics
-
-
+                    Reproducible, scalable, and data-driven nanomaterials synthesis for biomedical applications
                     </p>
                   </div>
                   
@@ -353,9 +403,17 @@ const Index: React.FC = () => {
                       <Target className="h-12 w-12 text-white" />
                     </div>
                     <h4 className="text-lg font-semibold mb-4">Research Focus</h4>
-                    <p className="text-muted-foreground text-base mb-6 leading-relaxed">
-                    Cancer remains one of the most complex health challenges, demanding solutions that go beyond conventional treatments. This research explores nano magnetic materials with the unique ability to both detect and treat cancer within a single platform, opening possibilities for approaches that are at once more precise and more adaptable. The focus is on designing ways to produce these materials reliably and sustainably, while investigating how their properties can be harnessed in combination with cutting-edge imaging and therapeutic strategies. By pushing the boundaries of what these materials can do, the project aims to bring medicine closer to treatments tailored not only to the disease, but to the individual.
-                    </p>
+                    <div className="text-muted-foreground text-base mb-6 leading-relaxed space-y-4 text-left">
+                      <p>
+                        My research focuses on the controlled and reproducible synthesis of magnetic nanomaterials for biomedical applications, with particular emphasis on continuous-flow processing, through data-driven experimentation.
+                      </p>
+                      <p>
+                        Magnetic iron oxide nanoparticles are promising platforms for applications including magnetic hyperthermia, Magnetic Particle Imaging (MPI), drug delivery, and multimodal theranostics. However, translating these materials from laboratory-scale research toward reliable applications requires precise control over their size, morphology, composition, surface chemistry, and magnetic properties.
+                      </p>
+                      <p>
+                        My work addresses this challenge by combining nanochemistry, flow chemistry, process engineering, automation, and quantitative characterization. The long-term objective is to develop experimental systems in which synthesis parameters, nanoparticle properties, and functional performance can be systematically connected and progressively optimized.
+                      </p>
+                    </div>
                     <Button asChild size="sm" className="bg-gradient-to-r from-[#A10100] to-[#F33C04] hover:opacity-90">
                       <Link to="/phd-project" onClick={scrollToTop}>
                         Read More

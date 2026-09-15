@@ -1,6 +1,7 @@
 import React from 'react';
 import PageLayout from '@/components/PageLayout';
 import { Card, CardContent } from '@/components/ui/card';
+import SEO from '@/components/SEO';
 
 // Define DeSci-related content
 const desciPosts = [
@@ -36,6 +37,11 @@ Blockchain-based systems can provide immutable records of research contributions
 const DeSci: React.FC = () => {
   return (
     <PageLayout>
+      <SEO
+        title="Decentralized Science"
+        description="Notes on decentralized science, open research infrastructure, and the future of scientific funding and collaboration."
+        path="/desci"
+      />
       <section className="py-12 md:py-20 relative overflow-hidden">
         {/* Background elements (same as Blog page) */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>

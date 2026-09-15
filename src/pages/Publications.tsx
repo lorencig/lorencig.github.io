@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { PublicationData } from '@/common/types'; // Ensure this type includes 'doi' and 'link'
 import { allPublicationsData } from '@/data/publications';
 import { BookText, Link as LinkIcon, FileText } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 const Publications: React.FC = () => {
   const publicationsByYear = allPublicationsData.reduce((acc, pub) => {
@@ -22,6 +23,11 @@ const Publications: React.FC = () => {
 
   return (
     <PageLayout>
+      <SEO
+        title="Publications"
+        description="Publications by Lorenci Gjurgjaj on magnetic nanoparticles, biomedical nanomaterials, Magnetic Particle Imaging, and related research."
+        path="/publications"
+      />
       <section className="py-12 md:py-20 relative overflow-hidden">
         {/* Background elements (same as Projects page) */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>

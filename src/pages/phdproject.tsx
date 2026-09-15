@@ -5,11 +5,13 @@ import { Badge } from '@/components/ui/badge';
 import { Calendar, MapPin, Users, Target, BookOpen, ExternalLink, GraduationCap, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import PageLayout from '@/components/PageLayout';
+import SEO from '@/components/SEO';
+import { PERSON } from '@/lib/site';
 
 const PhDProject = () => {
   const projectDetails = {
-    title: "Scalable Synthesis Of Magnetic-inorganic Nanomaterials For Biomedical Applications",
-    subtitle: "Smart Nanoparticles for Sustainable & Personalized Cancer Theranostics",
+    title: "Continuous-Flow Synthesis & Automation of Magnetic Nanoparticles",
+    subtitle: "Reproducible, scalable, and data-driven nanomaterials synthesis for biomedical applications",
     duration: "2024 - 2028",
     university: "The Open University, UK",
     location: "Italian Institute of Technology, Italy",
@@ -23,60 +25,162 @@ const PhDProject = () => {
   };
 
   const objectives = [
-    "Build fluidic systems for large-scale, green, and reproducible synthesis of magnetic nanoparticles.",
-    "Stabilize and functionalize nanoparticles for biocompatibility, targeted delivery, and enhanced stability.",
-    "Develop hybrid nanoparticle systems that integrate multiple therapeutic modalities.",
-    "Combine hyperthermia with other conventional therapies and diagnostics."
+    "Develop continuous-flow systems for reproducible and scalable synthesis of magnetic nanoparticles.",
+    "Understand how synthesis conditions affect nanoparticle size, shape, yield, composition, and magnetic properties.",
+    "Automate reaction control and experimental data collection to improve reproducibility.",
+    "Develop surface coatings and hybrid nanoparticle systems for biomedical applications.",
+    "Connect synthesis conditions, characterization results, and experimental metadata in a structured dataset.",
+    "Use experimental data to map the design space and guide future experiments.",
+    "Evaluate nanoparticles for magnetic hyperthermia and Magnetic Particle Imaging.",
   ];
 
   /*
    * Available methodology statuses:
    * - Completed: Work fully achieved, proof of concept demonstrated
-   * - Validated: Results reproduced and protocols stabilized  
+   * - Validated: Results reproduced and protocols stabilized
+   * - Validated / Under Optimization: Validated platform still being refined
+   * - Established / Under Optimization: Platform in place, still being refined
    * - In Progress: Actively being developed/optimized
+   * - In Development: Early build-out of systems/workflows
    * - Ongoing: Continuous refinement or long-term experiments
    * - Initiated: First steps/trials started, not yet optimized
    * - Planning: Designed but not yet started
    */
   const methodology = [
     {
-      phase: "Fluidic Synthesis",
-      description: "Continuous flow systems for scalable nanoparticle production, optimizing control of size, shape, yield, and sustainability.",
-      status: "Validated"
+      phase: "Continuous-Flow Synthesis",
+      status: "Established / Under Optimization",
+      description: [
+        "I develop continuous-flow thermal-decomposition systems and study how temperature, residence time, precursor composition, and flow conditions affect nanoparticle formation.",
+        "Current work focuses on improving reproducibility, shape control, and yield.",
+      ],
+    },
+    {
+      phase: "Process Automation",
+      status: "In Development",
+      description: [
+        "I develop systems to control fluid handling, reaction conditions, experimental logging, and data collection.",
+        "The goal is to reduce manual work and make experiments more reproducible and easier to compare.",
+      ],
     },
     {
       phase: "Surface Modification",
-      description: "Chemical coatings and responsive polymers for stability, drug attachment, and cell targeting.",
-      status: "In Progress"
+      status: "In Progress",
+      description: [
+        "I transfer magnetic nanoparticles into water using different surface coatings and evaluate their colloidal stability and suitability for biomedical applications.",
+      ],
     },
     {
       phase: "Nanoparticle Assembly",
-      description: "Creation of stable hybrid clusters embedding dyes, molecules, or crystals for multifunctional therapy and imaging.",
-      status: "Validated"
+      status: "Validated",
+      description: [
+        "I develop hybrid systems that combine magnetic nanoparticles with other functional components for multimodal imaging and therapy.",
+      ],
     },
     {
-      phase: "Magnetic Evaluation",
-      description: "Testing nanoparticle magnetic responsiveness to achieve effective hyperthermia at minimal doses.",
-      status: "Ongoing"
+      phase: "Magnetic Characterization",
+      status: "Ongoing",
+      description: [
+        "I study the magnetic and heating performance of the nanoparticles and relate these properties to their size, shape, and structure.",
+      ],
+    },
+    {
+      phase: "Magnetic Particle Imaging",
+      status: "Ongoing",
+      description: [
+        "I develop MPI workflows to characterize and quantify magnetic nanoparticles.",
+        "This includes MPI relaxometry, image analysis, tracer comparison, post-processing, and quantitative imaging.",
+      ],
     },
     {
       phase: "Biomedical Evaluation",
-      description: "Assessing biocompatibility and performance from in vitro studies to in vivo applications.",
-      status: "Initiated"
+      status: "Ongoing",
+      description: [
+        "I evaluate nanoparticle stability and functional performance for biomedical applications, together with collaborators working on biological and therapeutic validation.",
+      ],
     },
     {
-      phase: "AI/ML-Driven Optimization",
-      description: "Use artificial intelligence and machine learning to design reactions, predict nanoparticle properties, and optimize synthesis conditions for targeted results.",
-      status: "Initiated"
-    }
+      phase: "Experimental Data Management",
+      status: "In Development",
+      description: [
+        "I organize synthesis conditions, characterization results, protocols, and sample history in a structured database.",
+        "This makes experiments easier to reproduce, compare, and analyze computationally.",
+      ],
+    },
+    {
+      phase: "Data-Driven Optimization",
+      status: "In Development",
+      description: [
+        "I use the experimental dataset to understand which synthesis parameters control nanoparticle properties.",
+        "The workflow is moving from design-space analysis toward Gaussian-process modelling and Bayesian sequential experimental design.",
+      ],
+    },
   ];
 
   const keyFindings = [
-    "Scalable & Reproducible Production – Proof of concept achieved using fluidic systems. Current focus on improving size/shape control and yield.",
-    "Smart Assemblies – Proof of concept achieved with dye + magnetic nanoparticle assemblies, combining magnetic hyperthermia and photothermal therapy. Next steps: scale-up and exploration of new therapeutic molecule combinations.",
-    "Theranostic Potential – Active work on Magnetic Particle Imaging (MPI), a next-generation imaging technology, establishing protocols and methodology for nanoparticle visualization.",
-    "Digital Innovation & Data Automation – Developed software platforms for automated data collection and management of synthesis conditions, characterizations, and metadata. These tools ensure systematic reproducibility of reactions and support open science (publicly available on GitHub)."
+    {
+      title: "Continuous-Flow Nanoparticle Synthesis",
+      description: [
+        "Built and established a continuous-flow platform for magnetic nanoparticle synthesis.",
+        "Current work focuses on reproducibility, shape control, yield, and understanding how reactor conditions affect the final nanoparticles.",
+      ],
+    },
+    {
+      title: "Controlled Nanoparticle Morphology",
+      description: [
+        "Systematically studied how reaction conditions affect nanoparticle size and shape, including precursor chemistry, temperature, residence time, and flow configuration.",
+      ],
+    },
+    {
+      title: "Hybrid Nanomaterial Systems",
+      description: [
+        "Demonstrated the formation of hybrid assemblies combining magnetic nanoparticles with additional functional components, including systems investigated for combined magnetic hyperthermia and photothermal applications.",
+      ],
+    },
+    {
+      title: "Magnetic Particle Imaging",
+      description: [
+        "Developed workflows for MPI relaxometry and quantitative image analysis, including tracer comparison, image post-processing, and nanoparticle quantification.",
+      ],
+    },
+    {
+      title: "Experimental Data & Automation",
+      description: [
+        "Developed software tools to organize synthesis conditions, characterization results, protocols, metadata, and sample history.",
+        "The goal is to make experiments easier to reproduce and create datasets that can be used for computational analysis.",
+      ],
+    },
+    {
+      title: "Toward Data-Driven Experimentation",
+      description: [
+        "Building a workflow in which experimental data help guide the next experiments.",
+        "Current work focuses on design-space analysis, with Gaussian-process modelling and Bayesian sequential experimental design as the next steps.",
+        "Experiment → Data → Model → Next Experiment",
+      ],
+    },
   ];
+
+  const methodologyStatusClass = (status: string) => {
+    switch (status) {
+      case "Completed":
+        return { dot: "bg-green-600", badge: "bg-green-100 text-green-800 border-green-200" };
+      case "Validated":
+        return { dot: "bg-blue-600", badge: "bg-blue-100 text-blue-800 border-blue-200" };
+      case "Validated / Under Optimization":
+      case "Established / Under Optimization":
+        return { dot: "bg-sky-600", badge: "bg-sky-100 text-sky-800 border-sky-200" };
+      case "In Progress":
+        return { dot: "bg-orange-600", badge: "bg-orange-100 text-orange-800 border-orange-200" };
+      case "In Development":
+        return { dot: "bg-teal-600", badge: "bg-teal-100 text-teal-800 border-teal-200" };
+      case "Ongoing":
+        return { dot: "bg-purple-600", badge: "bg-purple-100 text-purple-800 border-purple-200" };
+      case "Initiated":
+        return { dot: "bg-yellow-600", badge: "bg-yellow-100 text-yellow-800 border-yellow-200" };
+      default:
+        return { dot: "bg-gray-500", badge: "bg-gray-100 text-gray-800 border-gray-200" };
+    }
+  };
 
   const scrollToTop = () => {
     window.scrollTo(0, 0);
@@ -84,6 +188,31 @@ const PhDProject = () => {
 
   return (
     <PageLayout>
+      <SEO
+        title="Automated Flow Synthesis of Magnetic Nanoparticles"
+        description="PhD research on continuous-flow synthesis of magnetic nanoparticles and iron oxide nanoparticles, laboratory automation, data-driven experimentation, Bayesian experimental design, Magnetic Particle Imaging, and magnetic hyperthermia."
+        path="/phd-project"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "ScholarlyArticle",
+          headline: projectDetails.title,
+          description:
+            "PhD research on continuous-flow synthesis and automation of magnetic nanoparticles for biomedical applications, including laboratory automation, data-driven experimentation, Magnetic Particle Imaging, and magnetic hyperthermia.",
+          author: {
+            "@type": "Person",
+            name: PERSON.name,
+            url: PERSON.sameAs[0],
+          },
+          about: [
+            "continuous-flow synthesis of magnetic nanoparticles",
+            "iron oxide nanoparticles",
+            "laboratory automation",
+            "data-driven experimentation",
+            "Magnetic Particle Imaging",
+            "magnetic hyperthermia",
+          ],
+        }}
+      />
       {/* Hero Section */}
       <section className="py-20 relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
@@ -145,18 +274,32 @@ const PhDProject = () => {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground leading-relaxed">
-                Cancer remains one of the greatest health challenges of our time. Despite remarkable advances, many treatments still struggle with precision, often bringing difficult side effects and offering results that vary from patient to patient. If we want to make real progress, medicine needs tools that are not only more effective, but also more personal.
-                <br />
-                <br />
-                My research takes on this challenge by working with nano magnetic materials, structures so small that comparing one particle to a human hair is like comparing a 2 euro coin to an entire football stadium (field + seats!). These materials hold the unique ability to both treat and/or diagnose cancer at the same time, an approach known as theranostics. The promise is enormous, but so are the challenges: producing these materials consistently, sustainably, and in ways that can be tailored to different patients remains a scientific frontier.
-                <br />
-                <br />
-                Within the Nanobio Department at IIT, I am part of an exceptional team of scientists working to modestly push these boundaries. My focus is to develop new methods for producing these nanomaterials more efficiently, while also exploring how they can be combined with advanced imaging and therapeutic strategies. At the same time, I integrate in the power of artificial intelligence and machine learning, tools that allow us to predict properties, optimize performance, and design particles with the precision modern medicine demands.
-                <br />
-                <br />
-                The broader vision driving this work is personalized medicine: treatments designed not just for a disease, but for the individual who faces it. While my contribution may be modest in the scale of this global fight, it is guided by the belief that small steps in science can help open new potentials for patients and for society.
-                </p>
+                <div className="text-muted-foreground leading-relaxed space-y-4">
+                  <p>
+                    Magnetic nanoparticles can be used for applications such as magnetic hyperthermia, Magnetic Particle Imaging, drug delivery, and multimodal therapy.
+                  </p>
+                  <p>
+                    Their performance strongly depends on how they are produced. Changes in temperature, reaction time, precursor composition, flow rate, or surface chemistry can affect nanoparticle size, shape, magnetic properties, and biomedical performance.
+                  </p>
+                  <p>
+                    My PhD focuses on developing continuous-flow methods for the synthesis of iron oxide and related magnetic nanoparticles.
+                  </p>
+                  <p>
+                    Flow reactors give better control over reaction conditions and can improve reproducibility, automation, and scale-up compared with conventional batch synthesis.
+                  </p>
+                  <p>
+                    My work goes beyond nanoparticle synthesis. I also develop the experimental and digital systems around the reaction.
+                  </p>
+                  <p>
+                    I use fluidic systems to control the synthesis, software to record experimental conditions and characterization results, and structured datasets to connect synthesis parameters with nanoparticle properties.
+                  </p>
+                  <p>
+                    The next step is to use these data to understand the experimental design space, build predictive models, and select better experiments.
+                  </p>
+                  <p>
+                    The long-term goal is to move from manually optimized synthesis toward automated and data-driven experimentation.
+                  </p>
+                </div>
               </CardContent>
             </Card>
             
@@ -190,41 +333,34 @@ const PhDProject = () => {
               </CardHeader>
               <CardContent>
                 <div className="space-y-6">
-                  {methodology.map((phase, index) => (
+                  {methodology.map((phase, index) => {
+                    const statusClass = methodologyStatusClass(phase.status);
+                    return (
                     <div key={index} className="relative">
                       <div className="flex items-start space-x-4">
                         <div className="flex-shrink-0">
-                          <div className={`w-4 h-4 rounded-full ${
-                            phase.status === 'Completed' ? 'bg-green-600' :
-                            phase.status === 'Validated' ? 'bg-blue-600' :
-                            phase.status === 'In Progress' ? 'bg-orange-600' :
-                            phase.status === 'Ongoing' ? 'bg-purple-600' :
-                            phase.status === 'Initiated' ? 'bg-yellow-600' :
-                            'bg-gray-500'
-                          }`} />
+                          <div className={`w-4 h-4 rounded-full ${statusClass.dot}`} />
                         </div>
                         <div className="flex-1">
-                          <div className="flex items-center justify-between mb-2">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between mb-2">
                             <h4 className="font-semibold text-foreground">{phase.phase}</h4>
-                            <Badge className={`${
-                              phase.status === 'Completed' ? 'bg-green-100 text-green-800 border-green-200' :
-                              phase.status === 'Validated' ? 'bg-blue-100 text-blue-800 border-blue-200' :
-                              phase.status === 'In Progress' ? 'bg-orange-100 text-orange-800 border-orange-200' :
-                              phase.status === 'Ongoing' ? 'bg-purple-100 text-purple-800 border-purple-200' :
-                              phase.status === 'Initiated' ? 'bg-yellow-100 text-yellow-800 border-yellow-200' :
-                              'bg-gray-100 text-gray-800 border-gray-200'
-                            }`}>
+                            <Badge className={`${statusClass.badge} w-fit`}>
                               {phase.status}
                             </Badge>
                           </div>
-                          <p className="text-muted-foreground">{phase.description}</p>
+                          <div className="space-y-3 text-muted-foreground">
+                            {phase.description.map((paragraph, paragraphIndex) => (
+                              <p key={paragraphIndex}>{paragraph}</p>
+                            ))}
+                          </div>
                         </div>
                       </div>
                       {index < methodology.length - 1 && (
                         <div className="absolute left-2 top-6 w-px h-12 bg-border" />
                       )}
                     </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </CardContent>
             </Card>
@@ -245,7 +381,14 @@ const PhDProject = () => {
                         <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                           <div className="w-2 h-2 bg-primary rounded-full" />
                         </div>
-                        <p className="text-foreground font-medium">{finding}</p>
+                        <div className="space-y-2">
+                          <h4 className="text-foreground font-semibold">{finding.title}</h4>
+                          {finding.description.map((paragraph, paragraphIndex) => (
+                            <p key={paragraphIndex} className="text-muted-foreground text-sm leading-relaxed">
+                              {paragraph}
+                            </p>
+                          ))}
+                        </div>
                       </div>
                     </div>
                   ))}

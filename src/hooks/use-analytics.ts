@@ -14,12 +14,9 @@ export const useAnalytics = () => {
   // Track page views
   useEffect(() => {
     if (window.gtag) {
-      // HashRouter URLs are stored after '#', so parse hash first.
-      const hashPath = window.location.hash.replace(/^#/, "");
-      const fallbackPath = location.pathname + location.search;
-      const pagePath = hashPath || fallbackPath || "/";
+      const pagePath = location.pathname + location.search || "/";
 
-      window.gtag('event', 'page_view', {
+      window.gtag("event", "page_view", {
         send_to: measurementId,
         page_path: pagePath,
         page_location: window.location.href,

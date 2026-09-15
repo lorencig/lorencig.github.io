@@ -4,6 +4,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Link } from 'react-router-dom';
 import { Pin, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import SEO from '@/components/SEO';
 
 // Define multi-line content using backticks (template literals)
 const quotes = [
@@ -84,6 +85,11 @@ Using relativity as an argument is just an acceptance of our weak logical detect
 const Blog: React.FC = () => {
   return (
     <PageLayout>
+      <SEO
+        title="Thoughts & Reflections"
+        description="Short reflections and essays by Lorenci Gjurgjaj on science, automation, universities, and research culture."
+        path="/blog"
+      />
       <section className="py-12 md:py-20 relative overflow-hidden">
         {/* Background elements (same as Publications/Projects page) */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>

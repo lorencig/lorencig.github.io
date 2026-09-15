@@ -8,6 +8,7 @@ import { ArrowRight } from 'lucide-react';
 import { ProjectData } from '@/common/types';
 import { allProjectsData } from '@/data/projects';
 import { Link as LinkIcon } from 'lucide-react'
+import SEO from '@/components/SEO';
 
 const Projects: React.FC = () => {
   const [activeTab, setActiveTab] = useState<string>("all");
@@ -30,6 +31,11 @@ const Projects: React.FC = () => {
 
   return (
     <PageLayout>
+      <SEO
+        title="Projects"
+        description="Scientific and community projects by Lorenci Gjurgjaj spanning magnetic nanoparticle synthesis, laboratory automation, software tools, and biomedical nanomaterials."
+        path="/projects"
+      />
       <section className="py-12 md:py-20 relative overflow-hidden">
         {/* Background elements */}
         <div className="absolute top-0 right-0 w-1/3 h-1/3 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>

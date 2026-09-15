@@ -1,9 +1,9 @@
-
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { HashRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Projects from "./pages/Projects";
@@ -21,7 +21,6 @@ import { useAnalytics } from "./hooks/use-analytics";
 const queryClient = new QueryClient();
 
 const AppContent = () => {
-  // Initialize analytics tracking
   useAnalytics();
 
   return (
@@ -36,24 +35,25 @@ const AppContent = () => {
       <Route path="/curriculum" element={<Curriculum />} />
       <Route path="/phd-project" element={<PhDProject />} />
       <Route path="/read2025" element={<READ2025 />} />
-      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
 };
 
 const App = () => (
-  <ThemeProvider>
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <HashRouter>
-          <AppContent />
-        </HashRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
-  </ThemeProvider>
+  <HelmetProvider>
+    <ThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <AppContent />
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ThemeProvider>
+  </HelmetProvider>
 );
 
 export default App;

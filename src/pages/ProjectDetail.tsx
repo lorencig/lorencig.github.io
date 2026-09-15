@@ -10,6 +10,8 @@ import {
   allProjectsData as globalAllProjectsData,
   getProjectBySlugOrLegacyId,
 } from '@/data/projects';
+import SEO from '@/components/SEO';
+import { absoluteUrl } from '@/lib/site';
 
 const JETA_SITE = 'https://licajeta.web.app/';
 
@@ -165,12 +167,23 @@ const ProjectDetail: React.FC = () => {
 
 
   if (loading) {
-    return <PageLayout><div className="container mx-auto px-4 py-16 text-center">Loading project details...</div></PageLayout>;
+    return (
+      <PageLayout>
+        <SEO title="Loading project" description="Loading project details." path={`/projects/${slug || ""}`} noIndex />
+        <div className="container mx-auto px-4 py-16 text-center">Loading project details...</div>
+      </PageLayout>
+    );
   }
 
   if (error || !project) {
     return (
       <PageLayout>
+        <SEO
+          title="Project not found"
+          description="The requested project could not be found."
+          path={`/projects/${slug || ""}`}
+          noIndex
+        />
         <div className="container mx-auto px-4 py-16 text-center">
           <h1 className="text-2xl font-bold text-red-500">{error || "Project not found"}</h1>
           <Button asChild className="mt-6">
@@ -203,6 +216,12 @@ const ProjectDetail: React.FC = () => {
 
   return (
     <PageLayout>
+      <SEO
+        title={project.title}
+        description={project.description}
+        path={`/projects/${project.slug}`}
+        image={project.image?.startsWith("http") ? project.image : absoluteUrl(project.image || "/LogoXSOCIAL.svg")}
+      />
       <div className="relative overflow-hidden bg-background text-foreground">
         <div className="absolute top-0 -left-1/4 w-full h-full bg-gradient-to-br from-primary/5 via-transparent to-secondary/5 opacity-30 rounded-full blur-3xl animate-pulse-slow pointer-events-none -z-10"></div>
         <div className="absolute bottom-0 -right-1/4 w-full h-full bg-gradient-to-tl from-accent/5 via-transparent to-primary/5 opacity-30 rounded-full blur-3xl animate-pulse-slower pointer-events-none -z-10"></div>

@@ -1,7 +1,7 @@
 // src/common/types.ts
 export interface ProjectData {
     id: number;
-    /** URL segment for HashRouter links, e.g. /#/projects/MPI */
+    /** URL segment for project routes, e.g. /projects/MPI */
     slug: string;
     title: string;
     description: string; // Short description for cards

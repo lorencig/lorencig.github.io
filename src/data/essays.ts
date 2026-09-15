@@ -3,6 +3,8 @@ export interface Essay {
   title: string;
   subtitle: string;
   date: string;
+  dateISO: string;
+  description: string;
   pages: string[];
 }
 
@@ -13,6 +15,9 @@ export const essays: Essay[] = [
     subtitle:
       "The fall of Archaic Science. Autonomous labs. Decentralised science. Blockchain Book of Thoth. The rise of the Thought Artist.",
     date: "14 III 2026",
+    dateISO: "2026-03-14",
+    description:
+      "An essay on autonomous labs, decentralised science, continuous-flow magnetic nanoparticle research, and how science reshapes the university.",
     pages: [
       `At first glance, the answer seems obvious. Universities house laboratories, fund researchers, and grant the degrees that certify scientific authority. But look closer and the relationship inverts. The university as we know it, the research-intensive, grant-hungry, publish-or-perish institution, was largely shaped by the demands of organised science, not the other way around. The ancient agora had no concept of a chemistry department or a particle accelerator. Those came later, dragged into existence by the needs of inquiry itself.
 

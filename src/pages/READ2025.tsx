@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import PageLayout from "@/components/PageLayout";
+import SEO from "@/components/SEO";
 import { 
   Scroll, 
   BookOpen, 
@@ -162,6 +163,12 @@ const READ2025 = () => {
 
   return (
     <PageLayout>
+    <SEO
+      title="Retrieval-Augmented Generation AI for Specialized Higher Education"
+      description="Conference paper on Prof. Ivo, a curated RAG AI system for specialized higher education, evaluated with dental technology students."
+      path="/read2025"
+      type="article"
+    />
     <div className="min-h-screen bg-background">
         {/* Progress Bar */}
         <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-gradient-to-r from-[#A10100] to-[#F33C04]">

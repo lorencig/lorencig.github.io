@@ -1,11 +1,11 @@
-import { createRoot } from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import { createRoot } from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
 
-// Initialize Google Analytics
-if (typeof window !== 'undefined' && window.gtag) {
-  // Analytics is already initialized in the HTML head
-  console.log('Google Analytics initialized');
+// Preserve old HashRouter bookmarks (/#/phd-project → /phd-project)
+if (typeof window !== "undefined" && window.location.hash.startsWith("#/")) {
+  const path = window.location.hash.slice(1);
+  window.history.replaceState(null, "", path + window.location.search);
 }
 
 createRoot(document.getElementById("root")!).render(<App />);
